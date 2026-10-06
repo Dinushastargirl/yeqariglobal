@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Approach — YEQARI GLOBAL</title>
+  <meta name="description" content="The Bridge: Idea to Growth. Discover how YEQARI GLOBAL moves initiatives from conception to market acceleration.">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-base: #FAF9F6;
+      --bg-warm: #F4F2EC;
+      --border-light: rgba(18, 17, 16, 0.08);
+      --border-medium: rgba(18, 17, 16, 0.16);
+      --text-black: #121110;
+      --text-charcoal: #2A2825;
+      --text-secondary: #57544F;
+      --text-muted: #848079;
+      --yeqari-violet: #6D28D9;
+      --container-max: 1360px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-base); color: var(--text-charcoal); line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: var(--container-max); margin: 0 auto; padding: 0 32px; }
+    @media (max-width: 768px) { .container { padding: 0 20px; } }
+
+    .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); display: inline-flex; align-items: center; gap: 8px; }
+    .eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--yeqari-violet); }
+
+    .nav-wrapper { position: sticky; top: 0; z-index: 900; background: rgba(250, 249, 246, 0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-light); }
+    nav { max-width: var(--container-max); margin: 0 auto; padding: 20px 32px; display: flex; justify-content: space-between; align-items: center; }
+    .nav-brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.05rem; color: var(--text-black); }
+    .nav-logo-mark { width: 28px; height: 28px; border-radius: 6px; overflow: hidden; background: #120A24; }
+    .nav-center { display: flex; align-items: center; gap: 36px; list-style: none; }
+    .nav-link { font-size: 0.88rem; font-weight: 500; color: var(--text-secondary); }
+    .nav-link:hover, .nav-link.active { color: var(--text-black); font-weight: 700; }
+    .btn-talk { display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 600; color: var(--text-black); padding: 9px 18px; border-radius: 999px; border: 1px solid var(--border-medium); }
+    .btn-talk:hover { background: var(--text-black); color: #fff; }
+    @media (max-width: 860px) { .nav-center { display: none; } }
+
+    .page-hero { padding: 90px 0 60px; border-bottom: 1px solid var(--border-light); }
+    .page-title { font-size: clamp(3rem, 6.5vw, 5.5rem); font-weight: 800; letter-spacing: -0.04em; color: var(--text-black); margin: 20px 0 24px; }
+    .page-subtitle { font-size: clamp(1.15rem, 1.8vw, 1.35rem); color: var(--text-secondary); max-width: 680px; line-height: 1.55; }
+
+    .step-row { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; padding: 48px 0; border-bottom: 1px solid var(--border-light); align-items: start; }
+    .step-indicator { width: 44px; height: 44px; border-radius: 50%; background: #121110; color: #FAF9F6; font-family: 'JetBrains Mono'; font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    .step-title { font-size: 2.2rem; font-weight: 800; color: var(--text-black); margin-bottom: 6px; }
+    .step-sub { font-family: 'JetBrains Mono'; font-size: 0.75rem; color: var(--yeqari-violet); font-weight: 700; text-transform: uppercase; margin-bottom: 16px; display: block; }
+    .step-headline { font-size: 1.25rem; font-weight: 700; color: var(--text-black); margin-bottom: 12px; }
+    .step-desc { font-size: 0.98rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 24px; }
+
+    .step-box { background: var(--bg-warm); border: 1px solid var(--border-light); border-radius: 16px; padding: 28px; }
+    .activity-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .activity-item { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; font-weight: 600; color: var(--text-black); }
+
+    footer { background: #FAF9F6; padding: 70px 0 40px; border-top: 1px solid var(--border-light); margin-top: 100px; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 50px; border-bottom: 1px solid var(--border-light); }
+    @media (max-width: 860px) { .step-row { grid-template-columns: 1fr; gap: 20px; } .activity-grid { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr 1fr; } }
+  </style>
+</head>
+<body>
+
+  <div class="nav-wrapper">
+    <nav>
+      <a href="index.html" class="nav-brand">
+        <div class="nav-logo-mark"><img src="./assets/yeqari global.jpg" alt="Logo"></div>
+        <span>YEQARI GLOBAL</span>
+      </a>
+      <ul class="nav-center">
+        <li><a href="work.html" class="nav-link">Work</a></li>
+        <li><a href="services.html" class="nav-link">Services</a></li>
+        <li><a href="approach.html" class="nav-link active">Approach</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+      </ul>
+      <div><a href="contact.html" class="btn-talk">Let's talk ↗</a></div>
+    </nav>
+  </div>
+
+  <main class="container">
+    <header class="page-hero">
+      <span class="eyebrow">OUR CORE PURPOSE</span>
+      <h1 class="page-title">The Bridge: Idea to Growth.</h1>
+      <p class="page-subtitle">
+        You do not need five fragmented partners. YEQARI guides an idea through the complete journey from initial hypothesis to compounding scale.
+      </p>
+    </header>
+
+    <div style="margin-top: 40px;">
+      <!-- Step 01 -->
+      <div class="step-row">
+        <div>
+          <div class="step-indicator">01</div>
+          <h2 class="step-title">Idea</h2>
+          <span class="step-sub">SPARK OF INSPIRATION</span>
+          <div class="step-headline">A raw concept with potential.</div>
+        </div>
+        <div class="step-box">
+          <p class="step-desc">Every initiative starts with a question and a hypothesis. We deconstruct the opportunity, evaluate technical feasibility, and uncover latent market whitespace before committing capital.</p>
+          <div class="activity-grid">
+            <div class="activity-item"><span style="color: #6D28D9;">✦</span> Problem space interrogation</div>
+            <div class="activity-item"><span style="color: #6D28D9;">✦</span> Market whitespace benchmarking</div>
+            <div class="activity-item"><span style="color: #6D28D9;">✦</span> Technical viability audit</div>
+            <div class="activity-item"><span style="color: #6D28D9;">✦</span> Value hypothesis formulation</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 02 -->
+      <div class="step-row">
+        <div>
+          <div class="step-indicator">02</div>
+          <h2 class="step-title">Strategy</h2>
+          <span class="step-sub">EXECUTION ROADMAP</span>
+          <div class="step-headline">Aligning purpose with market data.</div>
+        </div>
+        <div class="step-box">
+          <p class="step-desc">Great execution demands clarity. We define the product architecture, unit economics, go-to-market positioning, and milestone governance to keep risk low and trajectory high.</p>
+          <div class="activity-grid">
+            <div class="activity-item"><span style="color: #6D28D9;">✦</span> Product architecture (PRD)</div>
+            <div class="activity-item"><span style="color: #6D28D9;">✦</span> Commercial positioning</div>
+            <div class="activity-item"><span style="color: #6D28D9;">✦</span> Unit economics planning</div>
+            <div class="activity-item"><span style="color: #6D28D9;">✦</span> Sprint schedule governance</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 03 -->
+      <div class="step-row">
+        <div>
+          <div class="step-indicator">03</div>
+          <h2 class="step-title">Design</h2>
+          <span class="step-sub">USER EXPERIENCE</span>
+          <div class="step-headline">Premium interface layouts.</div>
+        </div>
+        <div class="step-box">
+          <p class="step-desc">Design is how it works and how it feels. We build bespoke visual systems, intuitive interaction patterns, and human ergonomics that build instant credibility.</p>
+          <div class="activity-grid">
+            <div class="activity-item"><span style="color: #6D28D9;">✦</span> Swiss typography & visual identity</div>
+            <div class="activity-item"><span style="color: #6D28D9;">✦</span> UX user flow & wireframing</div>
+            <div class="activity-item"><span style="color: #6D28D9;">✦</span> Component tokenization</div>
+            <div class="activity-item"><span style="color: #6D28D9;">✦</span> Interactive usability prototypes</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 04 -->
+      <div class="step-row">
+        <div>
+          <div class="step-indicator">04</div>
+          <h2 class="step-title">Technology</h2>
+          <span class="step-sub">NEXT.JS & CLOUD BUILD</span>
+          <div class="step-headline">Rigorous software engineering.</div>
+        </div>
+        <div class="step-box">
+          <p class="step-desc">We write clean, resilient, production-grade code. From distributed APIs and AI agent workflows to sub-second edge web applications on Next.js, we build for longevity.</p>
+          <div class="activity-grid">
+            <div class="activity-item"><span style="color: #6D28D9;">✦</span> Performant Next.js frontend</div>
+            <div class="activity-item"><span style="color: #6D28D9;">✦</span> Resilient API architecture</div>
+            <div class="activity-item"><span style="color: #6D28D9;">✦</span> AI agents & LLM integration</div>
+            <div class="activity-item"><span style="color: #6D28D9;">✦</span> Automated CI/CD pipelines</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 05 -->
+      <div class="step-row">
+        <div>
+          <div class="step-indicator">05</div>
+          <h2 class="step-title">Growth</h2>
+          <span class="step-sub">SCALE & ACCELERATION</span>
+          <div class="step-headline">Vercel hosting and live scaling.</div>
+        </div>
+        <div class="step-box">
+          <p class="step-desc">Launch is merely day zero. We deploy onto high-availability edge networks, observe telemetry, optimize conversions, and run iterative growth flywheels.</p>
+          <div class="activity-grid">
+            <div class="activity-item"><span style="color: #6D28D9;">✦</span> Global Vercel edge deployment</div>
+            <div class="activity-item"><span style="color: #6D28D9;">✦</span> Conversion rate optimization (CRO)</div>
+            <div class="activity-item"><span style="color: #6D28D9;">✦</span> Telemetry observation</div>
+            <div class="activity-item"><span style="color: #6D28D9;">✦</span> Expansion & referral loops</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div style="font-weight: 800; font-size: 1.2rem; color: #121110; margin-bottom: 8px;">YEQARI GLOBAL</div>
+          <p style="font-size: 0.9rem; color: #57544F;">Built for More. Helping businesses and ideas move from possibility to reality.</p>
+        </div>
+        <div>
+          <div style="font-family: 'JetBrains Mono'; font-size: 0.72rem; color: #848079; margin-bottom: 12px; text-transform: uppercase;">Divisions</div>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.88rem; color: #57544F;">
+            <li>Yeqari Digital</li>
+            <li>Yeqari Ventures</li>
+            <li>Yeqari Academy</li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-family: 'JetBrains Mono'; font-size: 0.72rem; color: #848079; margin-bottom: 12px; text-transform: uppercase;">Direct Contact</div>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.88rem; color: #57544F;">
+            <li><a href="mailto:yeqariglobal.info@gmail.com">yeqariglobal.info@gmail.com</a></li>
+            <li><a href="tel:0722346167">0722346167</a></li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-family: 'JetBrains Mono'; font-size: 0.72rem; color: #848079; margin-bottom: 12px; text-transform: uppercase;">Socials</div>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.88rem; color: #57544F;">
+            <li><a href="https://instagram.com/yeqariglobal" target="_blank">Instagram @yeqariglobal</a></li>
+            <li><a href="https://facebook.com/yeqariglobal" target="_blank">Facebook @yeqariglobal</a></li>
+            <li><a href="https://tiktok.com/@yeqariglobal" target="_blank">TikTok @yeqariglobal</a></li>
+          </ul>
+        </div>
+      </div>
+      <div style="padding-top: 30px; font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #848079; display: flex; justify-content: space-between;">
+        <div>© 2026 YEQARI GLOBAL (PVT) LTD. ALL RIGHTS RESERVED.</div>
+        <div>COORDINATES: DIGITAL FIRST</div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

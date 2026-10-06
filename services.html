@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services & Ecosystem — YEQARI GLOBAL</title>
+  <meta name="description" content="Explore Yeqari Digital, Yeqari Ventures, and Yeqari Academy. Helping businesses, startups, and learners move from idea to growth.">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-base: #FAF9F6;
+      --bg-warm: #F4F2EC;
+      --border-light: rgba(18, 17, 16, 0.08);
+      --border-medium: rgba(18, 17, 16, 0.16);
+      --text-black: #121110;
+      --text-charcoal: #2A2825;
+      --text-secondary: #57544F;
+      --text-muted: #848079;
+      --text-inverse: #FAF9F6;
+      --yeqari-violet: #6D28D9;
+      --yeqari-green: #059669;
+      --yeqari-purple: #A855F7;
+      --container-max: 1360px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-base); color: var(--text-charcoal); line-height: 1.6; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: var(--container-max); margin: 0 auto; padding: 0 32px; }
+    @media (max-width: 768px) { .container { padding: 0 20px; } }
+
+    .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); display: inline-flex; align-items: center; gap: 8px; }
+    .eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--yeqari-violet); }
+
+    .nav-wrapper { position: sticky; top: 0; z-index: 900; background: rgba(250, 249, 246, 0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-light); }
+    nav { max-width: var(--container-max); margin: 0 auto; padding: 20px 32px; display: flex; justify-content: space-between; align-items: center; }
+    .nav-brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.05rem; color: var(--text-black); }
+    .nav-logo-mark { width: 28px; height: 28px; border-radius: 6px; overflow: hidden; background: #120A24; }
+    .nav-center { display: flex; align-items: center; gap: 36px; list-style: none; }
+    .nav-link { font-size: 0.88rem; font-weight: 500; color: var(--text-secondary); transition: color 0.2s; }
+    .nav-link:hover, .nav-link.active { color: var(--text-black); font-weight: 700; }
+    .btn-talk { display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 600; color: var(--text-black); padding: 9px 18px; border-radius: 999px; border: 1px solid var(--border-medium); transition: all 0.25s; }
+    .btn-talk:hover { background: var(--text-black); color: var(--text-inverse); }
+    @media (max-width: 860px) { .nav-center { display: none; } }
+
+    .page-hero { padding: 90px 0 60px; border-bottom: 1px solid var(--border-light); }
+    .page-title { font-size: clamp(3rem, 6.5vw, 5.5rem); font-weight: 800; letter-spacing: -0.04em; color: var(--text-black); margin: 20px 0 24px; }
+    .page-subtitle { font-size: clamp(1.15rem, 1.8vw, 1.35rem); color: var(--text-secondary); max-width: 760px; line-height: 1.55; }
+
+    .division-block { background: var(--bg-warm); border: 1px solid var(--border-light); border-radius: 24px; padding: 48px; margin-bottom: 60px; }
+    .division-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 12px; border-radius: 999px; background: white; border: 1px solid var(--border-light); display: inline-block; margin-bottom: 14px; }
+    .division-title { font-size: clamp(2.2rem, 4vw, 3.2rem); font-weight: 800; color: var(--text-black); margin-bottom: 12px; }
+    .division-desc { font-size: 1.05rem; color: var(--text-secondary); max-width: 680px; margin-bottom: 36px; }
+
+    .service-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .service-card { background: var(--bg-base); border: 1px solid var(--border-light); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; gap: 16px; }
+    .service-name { font-size: 1.15rem; font-weight: 800; color: var(--text-black); display: flex; align-items: center; gap: 8px; }
+    .service-desc { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; }
+
+    .bridge-section { background: #121110; color: #FAF9F6; border-radius: 24px; padding: 60px 48px; margin: 80px 0; }
+    .bridge-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-top: 40px; }
+    .bridge-card { background: #1A1918; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+
+    footer { background: #FAF9F6; padding: 70px 0 40px; border-top: 1px solid var(--border-light); margin-top: 100px; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 50px; border-bottom: 1px solid var(--border-light); }
+    @media (max-width: 860px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  </style>
+</head>
+<body>
+
+  <div class="nav-wrapper">
+    <nav>
+      <a href="index.html" class="nav-brand">
+        <div class="nav-logo-mark"><img src="./assets/yeqari global.jpg" alt="Logo"></div>
+        <span>YEQARI GLOBAL</span>
+      </a>
+      <ul class="nav-center">
+        <li><a href="work.html" class="nav-link">Work</a></li>
+        <li><a href="services.html" class="nav-link active">Services</a></li>
+        <li><a href="approach.html" class="nav-link">Approach</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+      </ul>
+      <div><a href="contact.html" class="btn-talk">Let's talk ↗</a></div>
+    </nav>
+  </div>
+
+  <main class="container">
+    <header class="page-hero">
+      <span class="eyebrow">ORGANIZATIONAL ECOSYSTEM</span>
+      <h1 class="page-title">Our services.</h1>
+      <p class="page-subtitle">
+        YEQARI operates through three specialized divisions: <strong>Yeqari Digital</strong> for digital product execution, <strong>Yeqari Ventures</strong> for startup creation, and <strong>Yeqari Academy</strong> for future-proof tech education.
+      </p>
+    </header>
+
+    <!-- DIVISION 1: YEQARI DIGITAL -->
+    <section class="division-block" style="margin-top: 60px;">
+      <span class="division-badge" style="color: #6D28D9;">DIGITAL & PRODUCT EXECUTION</span>
+      <h2 class="division-title">YEQARI DIGITAL</h2>
+      <p class="division-desc">Complete design, engineering, and digital marketing execution for established brands and modern enterprises.</p>
+      
+      <div class="service-cards">
+        <div class="service-card">
+          <div>
+            <h3 class="service-name"><span style="color: #6D28D9;">✦</span> Website Development</h3>
+            <p class="service-desc">High-performance websites, custom platforms, and responsive web applications engineered for speed, conversion, and global reach.</p>
+          </div>
+          <a href="contact.html" style="font-size: 0.75rem; font-weight: 700; color: #6D28D9;">Inquire ↗</a>
+        </div>
+        <div class="service-card">
+          <div>
+            <h3 class="service-name"><span style="color: #6D28D9;">✦</span> Branding & Identity</h3>
+            <p class="service-desc">Distinctive visual systems, logo architecture, typography, guidelines, and brand narratives that make companies iconic.</p>
+          </div>
+          <a href="contact.html" style="font-size: 0.75rem; font-weight: 700; color: #6D28D9;">Inquire ↗</a>
+        </div>
+        <div class="service-card">
+          <div>
+            <h3 class="service-name"><span style="color: #6D28D9;">✦</span> Social Media Management</h3>
+            <p class="service-desc">Multi-platform brand presence, content curation, community building, and algorithmic distribution.</p>
+          </div>
+          <a href="contact.html" style="font-size: 0.75rem; font-weight: 700; color: #6D28D9;">Inquire ↗</a>
+        </div>
+        <div class="service-card">
+          <div>
+            <h3 class="service-name"><span style="color: #6D28D9;">✦</span> Content Strategy</h3>
+            <p class="service-desc">Editorial copywriting, multimedia assets, storytelling frameworks, and positioning that captivate audience attention.</p>
+          </div>
+          <a href="contact.html" style="font-size: 0.75rem; font-weight: 700; color: #6D28D9;">Inquire ↗</a>
+        </div>
+        <div class="service-card">
+          <div>
+            <h3 class="service-name"><span style="color: #6D28D9;">✦</span> Marketing Strategy</h3>
+            <p class="service-desc">Full-funnel digital campaigns, paid performance advertising, search optimization, and data-driven customer acquisition.</p>
+          </div>
+          <a href="contact.html" style="font-size: 0.75rem; font-weight: 700; color: #6D28D9;">Inquire ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIVISION 2: YEQARI VENTURES -->
+    <section class="division-block">
+      <span class="division-badge" style="color: #059669;">STARTUP INCUBATION & ACCELERATION</span>
+      <h2 class="division-title">YEQARI VENTURES</h2>
+      <p class="division-desc">Dedicated venture-building support to take early-stage founders and raw concepts into funded, operating realities.</p>
+      
+      <div class="service-cards">
+        <div class="service-card">
+          <div>
+            <h3 class="service-name"><span style="color: #059669;">✦</span> Startup Launch Package</h3>
+            <p class="service-desc">All-in-one turnkey foundation: brand setup, launch page, pitch materials, infrastructure setup, and go-to-market plan.</p>
+          </div>
+          <a href="contact.html" style="font-size: 0.75rem; font-weight: 700; color: #059669;">Inquire ↗</a>
+        </div>
+        <div class="service-card">
+          <div>
+            <h3 class="service-name"><span style="color: #059669;">✦</span> Business Proposal Development</h3>
+            <p class="service-desc">Institutional-grade investment proposals, pitch decks, market whitespace analysis, and financial feasibility models.</p>
+          </div>
+          <a href="contact.html" style="font-size: 0.75rem; font-weight: 700; color: #059669;">Inquire ↗</a>
+        </div>
+        <div class="service-card">
+          <div>
+            <h3 class="service-name"><span style="color: #059669;">✦</span> MVP Planning</h3>
+            <p class="service-desc">Scoping core feature sets, user journey architecture, product requirement definitions (PRD), and prototype execution.</p>
+          </div>
+          <a href="contact.html" style="font-size: 0.75rem; font-weight: 700; color: #059669;">Inquire ↗</a>
+        </div>
+        <div class="service-card">
+          <div>
+            <h3 class="service-name"><span style="color: #059669;">✦</span> Digital Presence Setup</h3>
+            <p class="service-desc">Corporate domain, email infrastructure, CRM integrations, analytics pipelines, and official digital touchpoint deployment.</p>
+          </div>
+          <a href="contact.html" style="font-size: 0.75rem; font-weight: 700; color: #059669;">Inquire ↗</a>
+        </div>
+        <div class="service-card">
+          <div>
+            <h3 class="service-name"><span style="color: #059669;">✦</span> Startup Growth Strategy</h3>
+            <p class="service-desc">Early traction experiments, product-market fit validation, CAC/LTV tuning, and initial customer acquisition flywheels.</p>
+          </div>
+          <a href="contact.html" style="font-size: 0.75rem; font-weight: 700; color: #059669;">Inquire ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIVISION 3: YEQARI ACADEMY -->
+    <section class="division-block">
+      <span class="division-badge" style="color: #A855F7;">EDUCATION & AI EMPOWERMENT</span>
+      <h2 class="division-title">YEQARI ACADEMY</h2>
+      <p class="division-desc">Upskilling corporate teams, professionals, and students in applied AI, modern technology, and digital mastery.</p>
+      
+      <div class="service-cards">
+        <div class="service-card">
+          <div>
+            <h3 class="service-name"><span style="color: #A855F7;">✦</span> Corporate Training</h3>
+            <p class="service-desc">Tailored executive and team workshops on modern software workflows, digital transformation, and organizational AI adoption.</p>
+          </div>
+          <a href="contact.html" style="font-size: 0.75rem; font-weight: 700; color: #A855F7;">Inquire ↗</a>
+        </div>
+        <div class="service-card">
+          <div>
+            <h3 class="service-name"><span style="color: #A855F7;">✦</span> Webinars</h3>
+            <p class="service-desc">Live interactive digital masterclasses on emerging tech trends, digital marketing architecture, and product building.</p>
+          </div>
+          <a href="contact.html" style="font-size: 0.75rem; font-weight: 700; color: #A855F7;">Inquire ↗</a>
+        </div>
+        <div class="service-card">
+          <div>
+            <h3 class="service-name"><span style="color: #A855F7;">✦</span> Student Training</h3>
+            <p class="service-desc">Hands-on development, design, and entrepreneurial bootcamps designed to bridge the gap between academic theory and real-world tech.</p>
+          </div>
+          <a href="contact.html" style="font-size: 0.75rem; font-weight: 700; color: #A855F7;">Inquire ↗</a>
+        </div>
+        <div class="service-card">
+          <div>
+            <h3 class="service-name"><span style="color: #A855F7;">✦</span> AI Awareness Programs</h3>
+            <p class="service-desc">Demystifying artificial intelligence, generative tools, and intelligent automation for businesses and non-technical stakeholders.</p>
+          </div>
+          <a href="contact.html" style="font-size: 0.75rem; font-weight: 700; color: #A855F7;">Inquire ↗</a>
+        </div>
+        <div class="service-card">
+          <div>
+            <h3 class="service-name"><span style="color: #A855F7;">✦</span> AI Cert Awareness Program</h3>
+            <p class="service-desc">Guided pathways and certification readiness for recognized international AI standards and professional accreditations.</p>
+          </div>
+          <a href="contact.html" style="font-size: 0.75rem; font-weight: 700; color: #A855F7;">Inquire ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE BRIDGE -->
+    <section class="bridge-section">
+      <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; letter-spacing: 0.12em; color: #A855F7; text-transform: uppercase;">OUR CORE PURPOSE</span>
+        <h2 style="font-size: 2.8rem; font-weight: 800; color: #fff; margin-top: 8px;">The Bridge: Idea to Growth</h2>
+      </div>
+
+      <div class="bridge-grid">
+        <div class="bridge-card">
+          <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #A855F7;">01</span>
+          <h4 style="font-size: 1.15rem; font-weight: 800; color: #fff;">Idea</h4>
+          <span style="font-size: 0.68rem; font-family: 'JetBrains Mono'; color: #A855F7;">SPARK OF INSPIRATION</span>
+          <p style="font-size: 0.8rem; color: #848079;">A raw concept with potential.</p>
+        </div>
+        <div class="bridge-card">
+          <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #A855F7;">02</span>
+          <h4 style="font-size: 1.15rem; font-weight: 800; color: #fff;">Strategy</h4>
+          <span style="font-size: 0.68rem; font-family: 'JetBrains Mono'; color: #A855F7;">EXECUTION ROADMAP</span>
+          <p style="font-size: 0.8rem; color: #848079;">Aligning purpose with market data.</p>
+        </div>
+        <div class="bridge-card">
+          <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #A855F7;">03</span>
+          <h4 style="font-size: 1.15rem; font-weight: 800; color: #fff;">Design</h4>
+          <span style="font-size: 0.68rem; font-family: 'JetBrains Mono'; color: #A855F7;">USER EXPERIENCE</span>
+          <p style="font-size: 0.8rem; color: #848079;">Premium interface layouts.</p>
+        </div>
+        <div class="bridge-card">
+          <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #A855F7;">04</span>
+          <h4 style="font-size: 1.15rem; font-weight: 800; color: #fff;">Technology</h4>
+          <span style="font-size: 0.68rem; font-family: 'JetBrains Mono'; color: #A855F7;">NEXT.JS & CLOUD BUILD</span>
+          <p style="font-size: 0.8rem; color: #848079;">Rigorous software engineering.</p>
+        </div>
+        <div class="bridge-card">
+          <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #A855F7;">05</span>
+          <h4 style="font-size: 1.15rem; font-weight: 800; color: #fff;">Growth</h4>
+          <span style="font-size: 0.68rem; font-family: 'JetBrains Mono'; color: #A855F7;">SCALE & ACCELERATION</span>
+          <p style="font-size: 0.8rem; color: #848079;">Vercel hosting and live scaling.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div style="font-weight: 800; font-size: 1.2rem; color: #121110; margin-bottom: 8px;">YEQARI GLOBAL</div>
+          <p style="font-size: 0.9rem; color: #57544F;">Built for More. Helping businesses and ideas move from possibility to reality.</p>
+        </div>
+        <div>
+          <div style="font-family: 'JetBrains Mono'; font-size: 0.72rem; color: #848079; margin-bottom: 12px; text-transform: uppercase;">Divisions</div>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.88rem; color: #57544F;">
+            <li>Yeqari Digital</li>
+            <li>Yeqari Ventures</li>
+            <li>Yeqari Academy</li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-family: 'JetBrains Mono'; font-size: 0.72rem; color: #848079; margin-bottom: 12px; text-transform: uppercase;">Direct Contact</div>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.88rem; color: #57544F;">
+            <li><a href="mailto:yeqariglobal.info@gmail.com">yeqariglobal.info@gmail.com</a></li>
+            <li><a href="tel:0722346167">0722346167</a></li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-family: 'JetBrains Mono'; font-size: 0.72rem; color: #848079; margin-bottom: 12px; text-transform: uppercase;">Socials</div>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.88rem; color: #57544F;">
+            <li><a href="https://instagram.com/yeqariglobal" target="_blank">Instagram @yeqariglobal</a></li>
+            <li><a href="https://facebook.com/yeqariglobal" target="_blank">Facebook @yeqariglobal</a></li>
+            <li><a href="https://tiktok.com/@yeqariglobal" target="_blank">TikTok @yeqariglobal</a></li>
+          </ul>
+        </div>
+      </div>
+      <div style="padding-top: 30px; font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #848079; display: flex; justify-content: space-between;">
+        <div>© 2026 YEQARI GLOBAL (PVT) LTD. ALL RIGHTS RESERVED.</div>
+        <div>COORDINATES: DIGITAL FIRST</div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

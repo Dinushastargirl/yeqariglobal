@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — YEQARI GLOBAL</title>
+  <meta name="description" content="Built for More. Learn about YEQARI GLOBAL, our leadership ethos, and our commitment to turning possibility into reality.">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-base: #FAF9F6;
+      --bg-warm: #F4F2EC;
+      --border-light: rgba(18, 17, 16, 0.08);
+      --border-medium: rgba(18, 17, 16, 0.16);
+      --text-black: #121110;
+      --text-charcoal: #2A2825;
+      --text-secondary: #57544F;
+      --text-muted: #848079;
+      --yeqari-violet: #6D28D9;
+      --container-max: 1360px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-base); color: var(--text-charcoal); line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: var(--container-max); margin: 0 auto; padding: 0 32px; }
+    @media (max-width: 768px) { .container { padding: 0 20px; } }
+
+    .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); display: inline-flex; align-items: center; gap: 8px; }
+    .eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--yeqari-violet); }
+
+    .nav-wrapper { position: sticky; top: 0; z-index: 900; background: rgba(250, 249, 246, 0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-light); }
+    nav { max-width: var(--container-max); margin: 0 auto; padding: 20px 32px; display: flex; justify-content: space-between; align-items: center; }
+    .nav-brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.05rem; color: var(--text-black); }
+    .nav-logo-mark { width: 28px; height: 28px; border-radius: 6px; overflow: hidden; background: #120A24; }
+    .nav-center { display: flex; align-items: center; gap: 36px; list-style: none; }
+    .nav-link { font-size: 0.88rem; font-weight: 500; color: var(--text-secondary); }
+    .nav-link:hover, .nav-link.active { color: var(--text-black); font-weight: 700; }
+    .btn-talk { display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 600; color: var(--text-black); padding: 9px 18px; border-radius: 999px; border: 1px solid var(--border-medium); }
+    .btn-talk:hover { background: var(--text-black); color: #fff; }
+    @media (max-width: 860px) { .nav-center { display: none; } }
+
+    .page-hero { padding: 90px 0 60px; border-bottom: 1px solid var(--border-light); }
+    .page-title { font-size: clamp(3rem, 6.5vw, 5.5rem); font-weight: 800; letter-spacing: -0.04em; color: var(--text-black); margin: 20px 0 24px; }
+    .page-subtitle { font-size: clamp(1.15rem, 1.8vw, 1.35rem); color: var(--text-secondary); max-width: 760px; line-height: 1.55; }
+
+    .ethos-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; padding: 80px 0; border-bottom: 1px solid var(--border-light); }
+    .pillars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 36px; margin-top: 40px; }
+    .pillar-card { border-top: 2px solid var(--text-black); padding-top: 20px; display: flex; flex-direction: column; gap: 12px; }
+
+    footer { background: #FAF9F6; padding: 70px 0 40px; border-top: 1px solid var(--border-light); margin-top: 100px; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 50px; border-bottom: 1px solid var(--border-light); }
+    @media (max-width: 860px) { .ethos-grid { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr 1fr; } }
+  </style>
+</head>
+<body>
+
+  <div class="nav-wrapper">
+    <nav>
+      <a href="index.html" class="nav-brand">
+        <div class="nav-logo-mark"><img src="./assets/yeqari global.jpg" alt="Logo"></div>
+        <span>YEQARI GLOBAL</span>
+      </a>
+      <ul class="nav-center">
+        <li><a href="work.html" class="nav-link">Work</a></li>
+        <li><a href="services.html" class="nav-link">Services</a></li>
+        <li><a href="approach.html" class="nav-link">Approach</a></li>
+        <li><a href="about.html" class="nav-link active">About</a></li>
+      </ul>
+      <div><a href="contact.html" class="btn-talk">Let's talk ↗</a></div>
+    </nav>
+  </div>
+
+  <main class="container">
+    <header class="page-hero">
+      <span class="eyebrow">ORGANIZATIONAL ETHOS</span>
+      <h1 class="page-title">Not another agency.</h1>
+      <p class="page-subtitle">
+        A partner for what you're building. YEQARI GLOBAL is a technology and digital growth company created to help ideas, platforms, and teams move from possibility to reality.
+      </p>
+    </header>
+
+    <section class="ethos-grid">
+      <div style="font-family: 'JetBrains Mono'; font-size: 0.8rem; font-weight: 700; color: #848079; text-transform: uppercase;">
+        THE YEQARI PREMISE
+      </div>
+      <div style="font-size: 1.15rem; color: #57544F; line-height: 1.7; display: flex; flex-direction: column; gap: 20px;">
+        <p>
+          The world does not lack ideas. It lacks the cohesive velocity to execute them properly. Most initiatives get fragmented across a web design boutique, a software contractor, an SEO freelancer, and an ad agency—leading to diluted vision, ballooning budgets, and missed market windows.
+        </p>
+        <p>
+          We established <strong>YEQARI GLOBAL</strong> to provide a singular, disciplined bridge. Through our three operating arms—<strong>Yeqari Digital</strong>, <strong>Yeqari Ventures</strong>, and <strong>Yeqari Academy</strong>—we provide institutional-grade design, software engineering, startup incubation, and tech education under one roof.
+        </p>
+        <p style="color: #121110; font-weight: 700;">
+          We operate with rigorous international standards, modern Swiss typography, and clean architectures built for longevity.
+        </p>
+      </div>
+    </section>
+
+    <section style="padding: 80px 0;">
+      <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #6D28D9; font-weight: 700; text-transform: uppercase;">FOUNDATIONAL PILLARS</span>
+      <h2 style="font-size: 2.8rem; font-weight: 800; color: #121110; margin-top: 8px;">How we think and work.</h2>
+
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <span style="font-family: 'JetBrains Mono'; font-size: 0.8rem; color: #6D28D9; font-weight: 700;">01</span>
+          <h3 style="font-size: 1.25rem; font-weight: 800; color: #121110;">THINK BEYOND THE BRIEF</h3>
+          <p style="font-size: 0.92rem; color: #57544F; line-height: 1.6;">We do not just execute instructions. We interrogate assumptions, uncover latent market opportunities, and help shape the better product.</p>
+        </div>
+        <div class="pillar-card">
+          <span style="font-family: 'JetBrains Mono'; font-size: 0.8rem; color: #6D28D9; font-weight: 700;">02</span>
+          <h3 style="font-size: 1.25rem; font-weight: 800; color: #121110;">BUILD WITH PURPOSE</h3>
+          <p style="font-size: 0.92rem; color: #57544F; line-height: 1.6;">Technology should solve something meaningful. We avoid complexity for its own sake and focus exclusively on what moves the business forward.</p>
+        </div>
+        <div class="pillar-card">
+          <span style="font-family: 'JetBrains Mono'; font-size: 0.8rem; color: #6D28D9; font-weight: 700;">03</span>
+          <h3 style="font-size: 1.25rem; font-weight: 800; color: #121110;">DESIGN FOR PEOPLE</h3>
+          <p style="font-size: 0.92rem; color: #57544F; line-height: 1.6;">Beautiful is never enough. The experience has to feel effortless, fast, and respectful of the human on the other side of the glass.</p>
+        </div>
+        <div class="pillar-card">
+          <span style="font-family: 'JetBrains Mono'; font-size: 0.8rem; color: #6D28D9; font-weight: 700;">04</span>
+          <h3 style="font-size: 1.25rem; font-weight: 800; color: #121110;">STAY CLOSE TO THE OUTCOME</h3>
+          <p style="font-size: 0.92rem; color: #57544F; line-height: 1.6;">Launch is not the finish line. It is the beginning of empirical learning. We stay engaged to measure, refine, and accelerate.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div style="font-weight: 800; font-size: 1.2rem; color: #121110; margin-bottom: 8px;">YEQARI GLOBAL</div>
+          <p style="font-size: 0.9rem; color: #57544F;">Built for More. Helping businesses and ideas move from possibility to reality.</p>
+        </div>
+        <div>
+          <div style="font-family: 'JetBrains Mono'; font-size: 0.72rem; color: #848079; margin-bottom: 12px; text-transform: uppercase;">Divisions</div>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.88rem; color: #57544F;">
+            <li>Yeqari Digital</li>
+            <li>Yeqari Ventures</li>
+            <li>Yeqari Academy</li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-family: 'JetBrains Mono'; font-size: 0.72rem; color: #848079; margin-bottom: 12px; text-transform: uppercase;">Direct Contact</div>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.88rem; color: #57544F;">
+            <li><a href="mailto:yeqariglobal.info@gmail.com">yeqariglobal.info@gmail.com</a></li>
+            <li><a href="tel:0722346167">0722346167</a></li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-family: 'JetBrains Mono'; font-size: 0.72rem; color: #848079; margin-bottom: 12px; text-transform: uppercase;">Socials</div>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.88rem; color: #57544F;">
+            <li><a href="https://instagram.com/yeqariglobal" target="_blank">Instagram @yeqariglobal</a></li>
+            <li><a href="https://facebook.com/yeqariglobal" target="_blank">Facebook @yeqariglobal</a></li>
+            <li><a href="https://tiktok.com/@yeqariglobal" target="_blank">TikTok @yeqariglobal</a></li>
+          </ul>
+        </div>
+      </div>
+      <div style="padding-top: 30px; font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #848079; display: flex; justify-content: space-between;">
+        <div>© 2026 YEQARI GLOBAL (PVT) LTD. ALL RIGHTS RESERVED.</div>
+        <div>COORDINATES: DIGITAL FIRST</div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

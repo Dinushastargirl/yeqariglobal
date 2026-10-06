@@ -1,247 +1,262 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
-import { Check, Sparkles, Globe, Cpu, Layers, Award, Code, ArrowRight } from "lucide-react";
+import React from "react";
 import Link from "next/link";
+import type { Metadata } from "next";
 
-function ServicesContent() {
-  const [activeTab, setActiveTab] = useState<string>("digital");
-  const searchParams = useSearchParams();
+export const metadata: Metadata = {
+  title: "Services & Ecosystem — YEQARI GLOBAL",
+  description: "Explore Yeqari Digital, Yeqari Ventures, and Yeqari Academy. Helping businesses, startups, and learners move from idea to growth.",
+};
 
-  useEffect(() => {
-    // Read category parameter from hash/query
-    const hash = window.location.hash.replace("#", "");
-    if (hash && ["digital", "labs", "ventures", "academy"].includes(hash)) {
-      setActiveTab(hash);
+export default function ServicesPage() {
+  const divisions = [
+    {
+      title: "YEQARI DIGITAL",
+      badge: "DIGITAL & PRODUCT EXECUTION",
+      accent: "#6D28D9",
+      description: "Complete design, engineering, and digital marketing execution for established brands and modern enterprises.",
+      services: [
+        {
+          name: "Website Development",
+          desc: "High-performance websites, custom platforms, and responsive web applications engineered for speed, conversion, and global reach."
+        },
+        {
+          name: "Branding & Identity",
+          desc: "Distinctive visual systems, logo architecture, typography, guidelines, and brand narratives that make companies iconic."
+        },
+        {
+          name: "Social Media Management",
+          desc: "Multi-platform brand presence, content curation, community building, and algorithmic distribution across Instagram, TikTok, Facebook, and LinkedIn."
+        },
+        {
+          name: "Content Strategy",
+          desc: "Editorial copywriting, multimedia assets, storytelling frameworks, and positioning that captivate audience attention."
+        },
+        {
+          name: "Marketing Strategy",
+          desc: "Full-funnel digital campaigns, paid performance advertising, search optimization, and data-driven customer acquisition."
+        }
+      ]
+    },
+    {
+      title: "YEQARI VENTURES",
+      badge: "STARTUP INCUBATION & ACCELERATION",
+      accent: "#059669",
+      description: "Dedicated venture-building support to take early-stage founders and raw concepts into funded, operating realities.",
+      services: [
+        {
+          name: "Startup Launch Package",
+          desc: "All-in-one turnkey foundation: brand setup, launch page, pitch materials, infrastructure setup, and go-to-market plan."
+        },
+        {
+          name: "Business Proposal Development",
+          desc: "Institutional-grade investment proposals, pitch decks, market whitespace analysis, and financial feasibility models."
+        },
+        {
+          name: "MVP Planning",
+          desc: "Scoping core feature sets, user journey architecture, product requirement definitions (PRD), and prototype execution."
+        },
+        {
+          name: "Digital Presence Setup",
+          desc: "Corporate domain, email infrastructure, CRM integrations, analytics pipelines, and official digital touchpoint deployment."
+        },
+        {
+          name: "Startup Growth Strategy",
+          desc: "Early traction experiments, product-market fit validation, CAC/LTV tuning, and initial customer acquisition flywheels."
+        }
+      ]
+    },
+    {
+      title: "YEQARI ACADEMY",
+      badge: "EDUCATION & AI EMPOWERMENT",
+      accent: "#A855F7",
+      description: "Upskilling corporate teams, professionals, and students in applied AI, modern technology, and digital mastery.",
+      services: [
+        {
+          name: "Corporate Training",
+          desc: "Tailored executive and team workshops on modern software workflows, digital transformation, and organizational AI adoption."
+        },
+        {
+          name: "Webinars",
+          desc: "Live interactive digital masterclasses on emerging tech trends, digital marketing architecture, and product building."
+        },
+        {
+          name: "Student Training",
+          desc: "Hands-on development, design, and entrepreneurial bootcamps designed to bridge the gap between academic theory and real-world tech."
+        },
+        {
+          name: "AI Awareness Programs",
+          desc: "Demystifying artificial intelligence, generative tools, and intelligent automation for businesses and non-technical stakeholders."
+        },
+        {
+          name: "AI Cert Awareness Program",
+          desc: "Guided pathways and certification readiness for recognized international AI standards and professional accreditations."
+        }
+      ]
     }
-  }, [searchParams]);
-
-  const categories = [
-    { id: "digital", name: "Yeqari Digital", tagline: "Establishing Brand Authority & Presence" },
-    { id: "labs", name: "Yeqari Labs", tagline: "Engineering the Future with Code & AI" },
-    { id: "ventures", name: "Yeqari Ventures", tagline: "Building Napkin Sketches into SaaS Businesses" },
-    { id: "academy", name: "Yeqari Academy", tagline: "Nurturing Creators & Developers" },
   ];
 
-  const services = [
+  const bridgeSteps = [
     {
-      id: "web-dev",
-      category: "digital",
-      title: "Website Development",
-      desc: "Fast, responsive, search-engine-optimized Next.js web systems styled using custom Tailwind utility classes.",
-      deliverables: ["Full server-side rendering (SSR)", "Google Lighthouse performance auditing", "Dynamic database forms", "Vercel optimized hosting deployment"],
-      tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
+      num: "01",
+      name: "Idea",
+      sub: "SPARK OF INSPIRATION",
+      desc: "A raw concept with potential."
     },
     {
-      id: "ui-ux",
-      category: "digital",
-      title: "UI/UX Design",
-      desc: "High-end visual prototypes, modern fonts, glassmorphism layouts, and smooth micro-animations that improve conversions.",
-      deliverables: ["High-fidelity interactive Figma wireframes", "Custom layout design systems", "User journey and clickable mockups", "Theme color palettes"],
-      tech: ["Figma", "Tailwind", "CSS Gradients", "Framer Motion"],
+      num: "02",
+      name: "Strategy",
+      sub: "EXECUTION ROADMAP",
+      desc: "Aligning purpose with market data."
     },
     {
-      id: "branding",
-      category: "digital",
-      title: "Branding & Identity",
-      desc: "Creating memorable vector logos, vector assets, styling sheets, and brand design guidelines.",
-      deliverables: ["Custom vector logo (SVG/PNG formats)", "Asset books with brand colors", "Typography matching guides", "Slide deck templates"],
-      tech: ["Illustrator", "Inkscape", "SVG Code"],
+      num: "03",
+      name: "Design",
+      sub: "USER EXPERIENCE",
+      desc: "Premium interface layouts."
     },
     {
-      id: "personal-branding",
-      category: "digital",
-      title: "Personal Branding",
-      desc: "Positioning founders and technical leaders as domain authorities through clean portfolio websites and content strategy.",
-      deliverables: ["Clean personal portfolio site", "Social media graphic kits", "Domain setup and business email config"],
-      tech: ["Next.js", "Tailwind", "Resend API"],
+      num: "04",
+      name: "Technology",
+      sub: "NEXT.JS & CLOUD BUILD",
+      desc: "Rigorous software engineering."
     },
     {
-      id: "ai-solutions",
-      category: "labs",
-      title: "AI Solutions",
-      desc: "Deploying custom cognitive AI nodes, Large Language Model (LLM) agents, and search index scrapers to augment team actions.",
-      deliverables: ["Custom chatbot widgets", "Private document parsing pipelines", "Retrieval-Augmented Generation (RAG) configs"],
-      tech: ["OpenAI API", "Langchain", "Python", "Vector Databases"],
-    },
-    {
-      id: "automation",
-      category: "labs",
-      title: "Workflow Automation",
-      desc: "Eliminating manual spreadsheets and repetitive tasks by setting up database triggers and webhook workflows.",
-      deliverables: ["API database synchronization scripts", "Automated email newsletters", "Slack notification bots"],
-      tech: ["n8n", "Zapier", "Node.js", "FastAPI"],
-    },
-    {
-      id: "software-dev",
-      category: "labs",
-      title: "Software Development",
-      desc: "Custom operational software designed to solve specific organizational issues.",
-      deliverables: ["Custom business portals", "Secure API development & integration", "Robust database schemas"],
-      tech: ["TypeScript", "Node.js", "PostgreSQL", "Docker"],
-    },
-    {
-      id: "saas",
-      category: "ventures",
-      title: "SaaS Development",
-      desc: "Building cloud subscription platforms featuring membership tiers, stripe integration, and user analytics.",
-      deliverables: ["Stripe subscription webhooks", "Multi-tenant user authentication", "Admin dashboard control pages"],
-      tech: ["Next.js Auth", "Stripe API", "PostgreSQL", "SupaBase"],
-    },
-    {
-      id: "mvp",
-      category: "ventures",
-      title: "MVP Development",
-      desc: "Rapid onboarding and coding of Minimum Viable Products in 4-6 weeks to validate ideas in the real market.",
-      deliverables: ["Core feature layout coding", "Fast feedback collection integration", "Analytics dashboards"],
-      tech: ["Next.js", "Tailwind CSS", "Prisma ORM", "Vercel"],
-    },
-    {
-      id: "marketing-consulting",
-      category: "ventures",
-      title: "Digital Marketing Consulting",
-      desc: "Consulting on organic analytics tracking, search auditing (SEO), and funnel automation models.",
-      deliverables: ["SEO rank audit blueprints", "Funnel mapping blueprints", "Google Analytics dashboards"],
-      tech: ["Google Analytics", "Ahrefs", "Hotjar"],
-    },
-    {
-      id: "academy-workshops",
-      category: "academy",
-      title: "Education & Workshops",
-      desc: "Custom team training on Next.js, headless CMS management (Sanity/Strapi), and AI tool integration.",
-      deliverables: ["Screencast workshops", "Code templates & starter boilerplate packages", "Direct Q&A hours"],
-      tech: ["Zoom", "GitHub Guides", "MDX docs"],
-    },
+      num: "05",
+      name: "Growth",
+      sub: "SCALE & ACCELERATION",
+      desc: "Vercel hosting and live scaling."
+    }
   ];
-
-  const activeServices = services.filter((s) => s.category === activeTab);
 
   return (
-    <div className="relative w-full py-16 px-6 md:px-12 max-w-7xl mx-auto flex flex-col gap-16">
-      {/* Background Radial Glow */}
-      <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-[#D4AF37]/5 rounded-full blur-[120px] pointer-events-none -z-10" />
-
-      {/* Header */}
-      <div className="max-w-3xl flex flex-col gap-6">
-        <div className="flex items-center gap-2 border border-gold/20 bg-gold/5 px-4 py-1.5 rounded-full self-start">
-          <Award className="w-3.5 h-3.5 text-gold" />
-          <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-gold">
-            Services Architecture
-          </span>
-        </div>
-        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight font-sans">
-          Your Business Deserves <br />
-          <span className="text-gradient-gold">A Premium Digital Home</span>
-        </h1>
-        <p className="text-zinc-400 text-sm md:text-base max-w-2xl leading-relaxed">
-          Explore all our capabilities across Yeqari. We organize our 10 service profiles into distinct operational pillars. Select a category below to explore specific details.
-        </p>
-      </div>
-
-      {/* Category Tabs */}
-      <div className="flex flex-wrap gap-3 border-b border-white/5 pb-6">
-        {categories.map((cat) => (
-          <button
-            key={cat.id}
-            onClick={() => {
-              setActiveTab(cat.id);
-              window.location.hash = cat.id;
-            }}
-            className={`px-6 py-3 rounded-full text-xs font-semibold uppercase tracking-widest border transition-all duration-300 ${
-              activeTab === cat.id
-                ? "border-[#D4AF37] bg-[#D4AF37] text-black"
-                : "border-white/5 bg-[#0a0a0a]/50 text-zinc-400 hover:border-white/10 hover:text-white"
-            }`}
-          >
-            {cat.name}
-          </button>
-        ))}
-      </div>
-
-      {/* Services List inside selected category */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {activeServices.map((service) => (
-          <div
-            key={service.id}
-            className="p-6 md:p-8 rounded-3xl border border-white/5 bg-[#0a0a0a]/80 flex flex-col justify-between gap-6 hover:border-gold/20 transition-all duration-300 relative overflow-hidden group"
-          >
-            {/* Background absolute ambient glow */}
-            <div className="absolute top-0 right-0 w-24 h-24 bg-[#D4AF37]/5 rounded-full blur-2xl pointer-events-none transition-opacity duration-300 opacity-0 group-hover:opacity-100" />
-
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center justify-between border-b border-white/5 pb-3">
-                <h3 className="text-lg font-bold text-white tracking-wide">{service.title}</h3>
-                <Sparkles className="w-4 h-4 text-gold/60" />
-              </div>
-              <p className="text-zinc-500 text-xs md:text-sm leading-relaxed">{service.desc}</p>
-            </div>
-
-            {/* Deliverables List */}
-            <div className="flex flex-col gap-2.5">
-              <span className="text-[9px] uppercase tracking-widest text-[#D4AF37] font-bold">
-                Deliverables:
-              </span>
-              <ul className="flex flex-col gap-2">
-                {service.deliverables.map((item) => (
-                  <li key={item} className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-zinc-600 mt-1.5" />
-                    <span className="text-zinc-400 text-xs">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Tech Stack tags */}
-            <div className="flex flex-wrap gap-1.5 pt-4 border-t border-white/5">
-              {service.tech.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-[9px] uppercase tracking-wider font-semibold border border-white/5 bg-white/5 px-2.5 py-1 rounded-md text-zinc-500"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
+    <div className="py-20 md:py-28">
+      <div className="max-w-[1360px] mx-auto px-6 md:px-8">
+        
+        {/* Header */}
+        <div className="border-b border-[#121110]/8 pb-16 mb-20">
+          <div className="inline-flex items-center gap-2 font-mono text-xs font-semibold tracking-wider text-[#848079] uppercase mb-4">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#6D28D9]" />
+            ORGANIZATIONAL STRUCTURE
           </div>
-        ))}
-      </div>
-
-      {/* CTA Box */}
-      <div className="border border-gold/20 bg-gold/5 p-8 rounded-3xl backdrop-blur-md flex flex-col md:flex-row md:items-center justify-between gap-6 max-w-4xl mx-auto w-full mt-8">
-        <div className="flex flex-col gap-1.5">
-          <span className="text-[10px] uppercase font-bold tracking-widest text-gold">
-            Ready to Take Action?
-          </span>
-          <h3 className="text-lg font-bold text-white tracking-wide">
-            Let&apos;s Build Your Custom Brand Architecture
-          </h3>
-          <p className="text-zinc-400 text-xs">
-            Open our interactive builder to specify your goals and get direct roadmap reviews.
+          <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight text-[#121110] mb-6">
+            Our ecosystem of services.
+          </h1>
+          <p className="text-xl text-[#57544F] max-w-3xl leading-relaxed">
+            YEQARI operates through three specialized divisions: <strong>Yeqari Digital</strong> for digital product execution, <strong>Yeqari Ventures</strong> for startup creation, and <strong>Yeqari Academy</strong> for future-proof tech education.
           </p>
         </div>
-        <Link
-          href="/contact"
-          className="group flex items-center justify-center gap-2 rounded-full bg-[#D4AF37] text-black font-semibold text-xs uppercase tracking-widest px-6 py-3.5 transition-colors self-start md:self-center"
-        >
-          <span>Build Your Solution</span>
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-        </Link>
+
+        {/* 3 Main Divisions */}
+        <div className="flex flex-col gap-24">
+          {divisions.map((div) => (
+            <section
+              key={div.title}
+              className="p-8 sm:p-12 rounded-3xl bg-[#F4F2EC] border border-[#121110]/10"
+            >
+              <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-4 mb-10 pb-8 border-b border-[#121110]/10">
+                <div>
+                  <span
+                    className="font-mono text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full bg-white border border-[#121110]/10 inline-block mb-3"
+                    style={{ color: div.accent }}
+                  >
+                    {div.badge}
+                  </span>
+                  <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[#121110]">
+                    {div.title}
+                  </h2>
+                </div>
+                <p className="text-base text-[#57544F] max-w-lg leading-relaxed">
+                  {div.description}
+                </p>
+              </div>
+
+              {/* Service Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {div.services.map((svc) => (
+                  <div
+                    key={svc.name}
+                    className="p-6 rounded-2xl bg-[#FAF9F6] border border-[#121110]/8 flex flex-col justify-between hover:border-[#121110]/25 transition-all shadow-sm"
+                  >
+                    <div>
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="text-base" style={{ color: div.accent }}>✦</span>
+                        <h3 className="text-lg font-extrabold text-[#121110] tracking-tight">
+                          {svc.name}
+                        </h3>
+                      </div>
+                      <p className="text-sm text-[#57544F] leading-relaxed">
+                        {svc.desc}
+                      </p>
+                    </div>
+
+                    <Link
+                      href="/contact"
+                      className="mt-6 inline-flex items-center gap-1.5 text-xs font-bold hover:underline"
+                      style={{ color: div.accent }}
+                    >
+                      Inquire service ↗
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
+
+        {/* The Bridge: Idea to Growth */}
+        <section className="mt-32 p-10 sm:p-16 rounded-3xl bg-[#121110] text-[#FAF9F6]">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <span className="font-mono text-xs font-bold tracking-widest text-[#A855F7] uppercase block mb-3">
+              OUR CORE PURPOSE
+            </span>
+            <h2 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+              The Bridge: Idea to Growth
+            </h2>
+            <p className="text-sm sm:text-base text-[#848079] mt-4">
+              A seamless, structured pipeline designed to eliminate friction and translate pure ambition into compounding market success.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+            {bridgeSteps.map((step) => (
+              <div
+                key={step.num}
+                className="p-6 rounded-2xl bg-[#1A1918] border border-white/10 flex flex-col gap-3"
+              >
+                <div className="w-8 h-8 rounded-full bg-white/10 border border-white/15 flex items-center justify-center font-mono text-xs font-bold text-[#E9D5FF]">
+                  {step.num}
+                </div>
+                <div>
+                  <h3 className="text-xl font-extrabold text-white">{step.name}</h3>
+                  <div className="font-mono text-[11px] text-[#A855F7] tracking-wider uppercase font-semibold mt-0.5 mb-2">
+                    {step.sub}
+                  </div>
+                  <p className="text-xs text-[#848079] leading-relaxed">
+                    {step.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* CTA */}
+        <div className="mt-28 p-12 md:p-16 rounded-2xl bg-[#F4F2EC] border border-[#121110]/10 text-center flex flex-col items-center">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#121110] mb-4">
+            Which division can we help you with?
+          </h2>
+          <p className="text-base text-[#57544F] max-w-md mb-8">
+            Reach out directly to discuss Yeqari Digital, Ventures, or Academy programs.
+          </p>
+          <Link
+            href="/contact"
+            className="px-8 py-3.5 rounded-full bg-[#121110] text-[#FAF9F6] text-sm font-semibold hover:bg-[#6D28D9] transition-colors"
+          >
+            Start a conversation ↗
+          </Link>
+        </div>
+
       </div>
     </div>
   );
 }
-
-export default function ServicesPage() {
-  return (
-    <React.Suspense fallback={
-      <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4 text-center">
-        <div className="w-6 h-6 border-2 border-gold border-t-transparent rounded-full animate-spin" />
-        <span className="text-[10px] text-zinc-500 uppercase tracking-[0.2em]">Synchronizing Universe...</span>
-      </div>
-    }>
-      <ServicesContent />
-    </React.Suspense>
-  );
-}
-

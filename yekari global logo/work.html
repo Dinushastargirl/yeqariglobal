@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selected Work — YEQARI GLOBAL</title>
+  <meta name="description" content="Explore selected case studies and digital systems engineered by YEQARI GLOBAL across mobile platforms, intelligent systems, digital gifting, and brand ecosystems.">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-base: #FAF9F6;
+      --bg-warm: #F4F2EC;
+      --border-light: rgba(18, 17, 16, 0.08);
+      --border-medium: rgba(18, 17, 16, 0.16);
+      --text-black: #121110;
+      --text-charcoal: #2A2825;
+      --text-secondary: #57544F;
+      --text-muted: #848079;
+      --text-inverse: #FAF9F6;
+      --yeqari-violet: #6D28D9;
+      --yeqari-purple: #7C3AED;
+      --container-max: 1360px;
+      --transition-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-charcoal);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    .container { max-width: var(--container-max); margin: 0 auto; padding: 0 32px; }
+    @media (max-width: 768px) { .container { padding: 0 20px; } }
+
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .eyebrow::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--yeqari-violet);
+    }
+
+    /* Navigation */
+    .nav-wrapper {
+      position: sticky; top: 0; z-index: 900;
+      background: rgba(250, 249, 246, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-light);
+    }
+    nav {
+      max-width: var(--container-max); margin: 0 auto; padding: 20px 32px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .nav-brand {
+      display: flex; align-items: center; gap: 12px;
+      font-weight: 800; font-size: 1.05rem; letter-spacing: -0.02em; color: var(--text-black);
+    }
+    .nav-logo-mark {
+      width: 28px; height: 28px; border-radius: 6px; overflow: hidden; background: #120A24;
+    }
+    .nav-center { display: flex; align-items: center; gap: 36px; list-style: none; }
+    .nav-link {
+      font-size: 0.88rem; font-weight: 500; color: var(--text-secondary); transition: color 0.2s;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--text-black); font-weight: 700; }
+    .btn-talk {
+      display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 600;
+      color: var(--text-black); padding: 9px 18px; border-radius: 999px;
+      border: 1px solid var(--border-medium); transition: all 0.25s var(--transition-editorial);
+    }
+    .btn-talk:hover {
+      background: var(--text-black); color: var(--text-inverse);
+    }
+    @media (max-width: 860px) { .nav-center { display: none; } }
+
+    /* Page Hero */
+    .page-hero {
+      padding: 90px 0 60px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .page-title {
+      font-size: clamp(3rem, 6.5vw, 5.5rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.02;
+      color: var(--text-black);
+      margin: 20px 0 24px;
+    }
+    .page-subtitle {
+      font-size: clamp(1.15rem, 1.8vw, 1.35rem);
+      color: var(--text-secondary);
+      max-width: 680px;
+      line-height: 1.55;
+    }
+
+    /* Filter Bar */
+    .filter-wrap {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 40px 0 70px;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 24px;
+    }
+    .filter-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border-medium);
+      color: var(--text-secondary);
+      transition: all 0.2s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--text-black);
+      color: var(--text-inverse);
+      border-color: var(--text-black);
+    }
+
+    /* Case Studies Detailed Grid */
+    .work-showcase-list {
+      display: flex;
+      flex-direction: column;
+      gap: 120px;
+      padding-bottom: 120px;
+    }
+    .project-card {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .project-card:nth-child(even) {
+      grid-template-columns: 0.75fr 1.25fr;
+    }
+    .project-card:nth-child(even) .project-media { order: 2; }
+    .project-card:nth-child(even) .project-info { order: 1; }
+
+    .project-media {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border-light);
+      background: var(--bg-warm);
+      box-shadow: 0 20px 45px rgba(18, 17, 16, 0.06);
+      transition: transform 0.4s var(--transition-editorial);
+    }
+    .project-media:hover {
+      transform: translateY(-4px);
+    }
+    .project-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s var(--transition-editorial);
+    }
+    .project-media:hover img {
+      transform: scale(1.03);
+    }
+
+    .project-info {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .project-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--yeqari-violet);
+      font-weight: 600;
+    }
+    .project-name {
+      font-size: clamp(2.4rem, 4vw, 3.4rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: var(--text-black);
+    }
+    .project-desc {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .project-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      padding: 20px 0;
+      border-top: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+      margin: 8px 0;
+    }
+    .metric-val {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--text-black);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .metric-lbl {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .project-tech {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* CTA Section */
+    .cta-banner {
+      background: var(--bg-warm);
+      border-top: 1px solid var(--border-light);
+      padding: 100px 0;
+      text-align: center;
+    }
+    .cta-heading {
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text-black);
+      margin-bottom: 20px;
+    }
+    .btn-main {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-inverse);
+      background: var(--text-black);
+      padding: 14px 28px;
+      border-radius: 999px;
+      transition: all 0.25s;
+    }
+    .btn-main:hover {
+      background: var(--yeqari-violet);
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    footer {
+      background: #FAF9F6;
+      padding: 70px 0 40px;
+      border-top: 1px solid var(--border-light);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 50px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .footer-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; color: var(--text-black); }
+    .footer-col-lbl {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .footer-link { font-size: 0.88rem; color: var(--text-secondary); transition: color 0.2s; }
+    .footer-link:hover { color: var(--yeqari-violet); }
+    .footer-meta {
+      padding-top: 30px; display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem; color: var(--text-muted); flex-wrap: wrap; gap: 12px;
+    }
+    @media (max-width: 860px) {
+      .project-card, .project-card:nth-child(even) { grid-template-columns: 1fr; gap: 32px; }
+      .project-card:nth-child(even) .project-media { order: 1; }
+      .project-card:nth-child(even) .project-info { order: 2; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <div class="nav-wrapper">
+    <nav>
+      <a href="index.html" class="nav-brand">
+        <div class="nav-logo-mark">
+          <img src="./assets/yeqari global.jpg" alt="Logo">
+        </div>
+        <span>YEQARI GLOBAL</span>
+      </a>
+
+      <ul class="nav-center">
+        <li><a href="work.html" class="nav-link active">Work</a></li>
+        <li><a href="services.html" class="nav-link">Services</a></li>
+        <li><a href="approach.html" class="nav-link">Approach</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <a href="contact.html" class="btn-talk">Let's talk ↗</a>
+      </div>
+    </nav>
+  </div>
+
+  <main>
+    <!-- Hero Header -->
+    <header class="page-hero">
+      <div class="container">
+        <span class="eyebrow">PORTFOLIO & CASE ARCHIVES</span>
+        <h1 class="page-title">Selected work.</h1>
+        <p class="page-subtitle">
+          A curated selection of platforms, intelligent systems, brand ecosystems, and digital products engineered by YEQARI GLOBAL.
+        </p>
+
+        <!-- Category Filters -->
+        <div class="filter-wrap">
+          <button class="filter-btn active" onclick="filterProjects('all', this)">All Projects (4)</button>
+          <button class="filter-btn" onclick="filterProjects('mobility', this)">Mobility & Safety</button>
+          <button class="filter-btn" onclick="filterProjects('ai', this)">Voice AI & Intelligence</button>
+          <button class="filter-btn" onclick="filterProjects('ecommerce', this)">Digital Gifting & Commerce</button>
+          <button class="filter-btn" onclick="filterProjects('ecosystem', this)">Brand Ecosystem</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Project List -->
+    <section class="container" style="padding-top: 60px;">
+      <div class="work-showcase-list">
+
+        <!-- 01: PICKHER -->
+        <article class="project-card" data-cat="mobility">
+          <div class="project-media">
+            <img src="./assets/case-pickher.jpg" alt="PICKHER Platform">
+          </div>
+          <div class="project-info">
+            <span class="project-tag">Mobility Platform & Safety Systems</span>
+            <h2 class="project-name">PICKHER</h2>
+            <p class="project-desc">
+              The first dedicated women-to-women mobility platform engineered from the ground up for safety, verification, and dignity. We architected the complete dual-app ecosystem featuring realtime dispatch, cryptographic rider & driver verification, automated emergency route monitoring, and a high-velocity city launch strategy.
+            </p>
+            <div class="project-metrics">
+              <div>
+                <div class="metric-val">25,000+</div>
+                <div class="metric-lbl">Active Riders Q1</div>
+              </div>
+              <div>
+                <div class="metric-val">99.98%</div>
+                <div class="metric-lbl">Safety Verification Score</div>
+              </div>
+            </div>
+            <div class="project-tech">TECH: React Native • Geospatial Engine • WebSockets • Redis Dispatch</div>
+          </div>
+        </article>
+
+        <!-- 02: SAMARANNA -->
+        <article class="project-card" data-cat="ecommerce">
+          <div class="project-media">
+            <img src="./assets/case-samaranna.jpg" alt="SAMARANNA Digital Gifting">
+          </div>
+          <div class="project-info">
+            <span class="project-tag">E-Commerce & Interactive Storytelling</span>
+            <h2 class="project-name">SAMARANNA</h2>
+            <p class="project-desc">
+              Bespoke personalized digital gifting and sensory memory experiences. Built with a bespoke WebGL unboxing visualizer, automated media rendering pipeline that stitches memories into dynamic films in sub-3 seconds, and a high-conversion checkout flow.
+            </p>
+            <div class="project-metrics">
+              <div>
+                <div class="metric-val">+42%</div>
+                <div class="metric-lbl">Conversion Lift</div>
+              </div>
+              <div>
+                <div class="metric-val">&lt; 3.2s</div>
+                <div class="metric-lbl">Video Synthesis Latency</div>
+              </div>
+            </div>
+            <div class="project-tech">TECH: Next.js • WebGL Three.js • Cloud Media Transcoder • Stripe Custom</div>
+          </div>
+        </article>
+
+        <!-- 03: SPEECHXYZ -->
+        <article class="project-card" data-cat="ai">
+          <div class="project-media">
+            <img src="./assets/case-speechxyz.jpg" alt="SPEECHXYZ Voice Intelligence">
+          </div>
+          <div class="project-info">
+            <span class="project-tag">Intelligent Systems & Voice AI</span>
+            <h2 class="project-name">SPEECHXYZ</h2>
+            <p class="project-desc">
+              Sub-50ms conversational voice intelligence and speech interface. We engineered custom browser audio worklets handling bidirectional streaming over WebSockets, neural speech recognition with ambient noise rejection, and an extensible SDK for enterprise integration.
+            </p>
+            <div class="project-metrics">
+              <div>
+                <div class="metric-val">42ms</div>
+                <div class="metric-lbl">Average Pipeline Latency</div>
+              </div>
+              <div>
+                <div class="metric-val">99.7%</div>
+                <div class="metric-lbl">Speech Accuracy</div>
+              </div>
+            </div>
+            <div class="project-tech">TECH: Custom Audio Worklets • WebSockets • Neural STT/TTS • Python Core</div>
+          </div>
+        </article>
+
+        <!-- 04: YEQARI GLOBAL -->
+        <article class="project-card" data-cat="ecosystem">
+          <div class="project-media">
+            <img src="./assets/case-yeqari.jpg" alt="YEQARI GLOBAL Ecosystem">
+          </div>
+          <div class="project-info">
+            <span class="project-tag">Brand Identity & Digital Ecosystem</span>
+            <h2 class="project-name">YEQARI GLOBAL</h2>
+            <p class="project-desc">
+              Our own master digital ecosystem. Designed to demonstrate that technical rigor and creative restraint create superior human outcomes. Incorporates precision typography, responsive mathematical canvas lattices, and multi-tier project delivery workflows.
+            </p>
+            <div class="project-metrics">
+              <div>
+                <div class="metric-val">60 FPS</div>
+                <div class="metric-lbl">Canvas Lattice Engine</div>
+              </div>
+              <div>
+                <div class="metric-val">100%</div>
+                <div class="metric-lbl">Proprietary Architecture</div>
+              </div>
+            </div>
+            <div class="project-tech">TECH: Modern Web Architecture • Custom Canvas Engine • Unified Design System</div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Bottom CTA -->
+    <section class="cta-banner">
+      <div class="container">
+        <h2 class="cta-heading">Ready to build something iconic?</h2>
+        <a href="contact.html" class="btn-main">Start a conversation ↗</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-title">YEQARI GLOBAL</div>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); max-width: 280px;">
+            Built for More. Helping businesses and ideas move from possibility to reality.
+          </p>
+        </div>
+        <div>
+          <div class="footer-col-lbl">Navigation</div>
+          <ul class="footer-links">
+            <li><a href="work.html" class="footer-link">Selected Work</a></li>
+            <li><a href="services.html" class="footer-link">Capabilities</a></li>
+            <li><a href="approach.html" class="footer-link">Approach</a></li>
+            <li><a href="about.html" class="footer-link">About Us</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-lbl">Direct Contact</div>
+          <ul class="footer-links">
+            <li><a href="mailto:yeqariglobal.info@gmail.com" class="footer-link">yeqariglobal.info@gmail.com</a></li>
+            <li><a href="tel:0722346167" class="footer-link">0722346167</a></li>
+            <li><a href="contact.html" class="footer-link" style="color: var(--yeqari-violet); font-weight: 700;">Initiate Brief ↗</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-lbl">Social Channels</div>
+          <ul class="footer-links">
+            <li><a href="https://instagram.com/yeqariglobal" target="_blank" rel="noopener" class="footer-link">Instagram @yeqariglobal</a></li>
+            <li><a href="https://facebook.com/yeqariglobal" target="_blank" rel="noopener" class="footer-link">Facebook @yeqariglobal</a></li>
+            <li><a href="https://tiktok.com/@yeqariglobal" target="_blank" rel="noopener" class="footer-link">TikTok @yeqariglobal</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-meta">
+        <div>© 2026 YEQARI GLOBAL (PVT) LTD. ALL RIGHTS RESERVED.</div>
+        <div>COORDINATES: GLOBAL // MULTI-TIMEZONE</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function filterProjects(cat, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.project-card').forEach(card => {
+        if (cat === 'all' || card.getAttribute('data-cat') === cat) {
+          card.style.display = 'grid';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
