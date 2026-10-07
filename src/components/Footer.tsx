@@ -1,121 +1,172 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import { divisionLists } from "@/data/servicesData";
 
 export default function Footer() {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <footer className="bg-[#FAF9F6] border-t border-[#121110]/8 pt-20 pb-12">
-      <div className="max-w-[1360px] mx-auto px-6 md:px-8">
+    <footer className="pt-24 pb-12 bg-[#0D0422] text-white border-t border-purple-900/30">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 pb-16 border-b border-[#121110]/8">
+        {/* Top Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 mb-20">
           
-          {/* Col 1: Brand */}
-          <div className="md:col-span-1">
-            <div className="text-xl font-extrabold tracking-tight text-[#121110] mb-3">
-              YEQARI GLOBAL
-            </div>
-            <p className="text-sm text-[#57544F] leading-relaxed max-w-xs">
-              Built for More. Helping businesses and ideas move from possibility to reality.
+          {/* Brand Col (4 cols) */}
+          <div className="lg:col-span-4">
+            <Link href="/" className="flex items-center gap-3 mb-6 group">
+              <div className="w-11 h-11 rounded-xl bg-purple-950/80 p-2 flex items-center justify-center border border-purple-500/20 group-hover:rotate-12 transition-transform duration-300">
+                <img src="/assets/yekari-symbol-transparent.png" alt="YEQARI Logo" className="w-full h-full object-contain" />
+              </div>
+              <span className="text-2xl font-bold font-['Outfit'] tracking-tight">
+                YEQARI GLOBAL<span className="text-[#D946EF]">.</span>
+              </span>
+            </Link>
+
+            <p className="text-slate-300 text-lg font-['Outfit'] font-normal leading-relaxed max-w-sm mb-6">
+              BUILT FOR MORE — Creating a revolution to revaluate people&apos;s lives through transformative, human-centered technology.
             </p>
+
+            <div className="font-mono text-xs uppercase tracking-widest text-[#C084FC] mb-4">
+              HQ: Colombo, Sri Lanka • Global Delivery
+            </div>
+
+            <div className="text-xs font-mono text-slate-400 mb-6">
+              Inquiries: <a href="mailto:hello@yeqari.global" className="text-purple-300 hover:underline">hello@yeqari.global</a><br />
+              Direct: <a href="tel:+94722346167" className="text-purple-300 hover:underline">+94 72 234 6167</a>
+            </div>
+
+            {/* Social Icons */}
+            <div className="flex gap-2.5">
+              <a
+                href="https://wa.me/94722346167"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-emerald-600/30 transition-all text-xs font-bold"
+                aria-label="WhatsApp"
+              >
+                WA
+              </a>
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-purple-600/30 transition-all text-xs font-bold"
+                aria-label="LinkedIn"
+              >
+                IN
+              </a>
+              <a
+                href="https://github.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-purple-600/30 transition-all text-xs font-bold"
+                aria-label="GitHub"
+              >
+                GH
+              </a>
+            </div>
           </div>
 
-          {/* Col 2: Navigation */}
-          <div>
-            <div className="font-mono text-xs uppercase tracking-widest text-[#848079] mb-4">
-              Navigation
+          {/* Division 1: IT Infrastructure (3 cols) */}
+          <div className="lg:col-span-3">
+            <div className="font-mono text-xs uppercase tracking-widest text-[#7C3AED] mb-4 font-bold flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED]" />
+              IT Infrastructure
             </div>
-            <ul className="flex flex-col gap-2.5 text-sm">
-              <li>
-                <Link href="/work" className="text-[#57544F] hover:text-[#6D28D9] transition-colors">
-                  Selected Work
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" className="text-[#57544F] hover:text-[#6D28D9] transition-colors">
-                  Core Capabilities
-                </Link>
-              </li>
-              <li>
-                <Link href="/approach" className="text-[#57544F] hover:text-[#6D28D9] transition-colors">
-                  Our Approach
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="text-[#57544F] hover:text-[#6D28D9] transition-colors">
-                  About & Ethos
-                </Link>
-              </li>
+            <ul className="flex flex-col gap-2 text-xs text-slate-300">
+              {divisionLists.itInfrastructure.map((item) => (
+                <li key={item.slug}>
+                  <Link href={`/services/${item.slug}`} className="hover:text-white hover:underline transition-colors">
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Col 3: Direct Contact */}
-          <div>
-            <div className="font-mono text-xs uppercase tracking-widest text-[#848079] mb-4">
-              Direct Contact
+          {/* Division 2: YEQARI Digital (2 cols) */}
+          <div className="lg:col-span-2">
+            <div className="font-mono text-xs uppercase tracking-widest text-[#D946EF] mb-4 font-bold flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D946EF]" />
+              YEQARI Digital
             </div>
-            <ul className="flex flex-col gap-2.5 text-sm">
-              <li>
-                <a href="mailto:yeqariglobal.info@gmail.com" className="text-[#57544F] hover:text-[#6D28D9] transition-colors">
-                  yeqariglobal.info@gmail.com
-                </a>
-              </li>
-              <li>
-                <a href="tel:0722346167" className="text-[#57544F] hover:text-[#6D28D9] transition-colors">
-                  0722346167
-                </a>
-              </li>
-              <li>
-                <Link href="/contact" className="text-[#6D28D9] font-semibold hover:underline">
-                  Initiate Brief ↗
-                </Link>
-              </li>
+            <ul className="flex flex-col gap-2 text-xs text-slate-300">
+              {divisionLists.digital.map((item) => (
+                <li key={item.slug}>
+                  <Link href={`/services/${item.slug}`} className="hover:text-white hover:underline transition-colors">
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Col 4: Social Channels */}
-          <div>
-            <div className="font-mono text-xs uppercase tracking-widest text-[#848079] mb-4">
-              Social Channels
+          {/* Programs: Startup & Academy (3 cols) */}
+          <div className="lg:col-span-3">
+            
+            {/* Startup Hub */}
+            <div className="mb-6">
+              <div className="font-mono text-xs uppercase tracking-widest text-[#C084FC] mb-2 font-bold flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#C084FC]" />
+                YEQARI STARTUP
+              </div>
+              <div className="text-[11px] font-mono text-purple-300 mb-2">NOT ANOTHER STARTUP PROGRAM</div>
+              <ul className="flex flex-col gap-1.5 text-xs text-slate-300">
+                <li><Link href="/startup#pathways" className="hover:text-white hover:underline">IDEA → MVP</Link></li>
+                <li><Link href="/startup#pathways" className="hover:text-white hover:underline">IDEA → ROADMAP</Link></li>
+                <li><Link href="/startup#pathways" className="hover:text-white hover:underline">IDEA → STARTUP</Link></li>
+              </ul>
             </div>
-            <ul className="flex flex-col gap-2.5 text-sm">
-              <li>
-                <a
-                  href="https://instagram.com/yeqariglobal"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#57544F] hover:text-[#6D28D9] transition-colors"
-                >
-                  Instagram @yeqariglobal
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://facebook.com/yeqariglobal"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#57544F] hover:text-[#6D28D9] transition-colors"
-                >
-                  Facebook @yeqariglobal
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://tiktok.com/@yeqariglobal"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#57544F] hover:text-[#6D28D9] transition-colors"
-                >
-                  TikTok @yeqariglobal
-                </a>
-              </li>
-            </ul>
+
+            {/* Academy */}
+            <div>
+              <div className="font-mono text-xs uppercase tracking-widest text-emerald-400 mb-2 font-bold flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                YEQARI ACADEMY
+              </div>
+              <ul className="flex flex-col gap-1.5 text-xs text-slate-300">
+                {divisionLists.academy.map((item) => (
+                  <li key={item.slug}>
+                    <Link href={`/services/${item.slug}`} className="hover:text-white hover:underline">
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <Link href="/academy" className="text-emerald-400 hover:underline">
+                    SLMC² Math Circle ↗
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
           </div>
 
         </div>
 
-        {/* Bottom bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-[#848079]">
-          <div>© {new Date().getFullYear()} YEQARI GLOBAL (PVT) LTD. ALL RIGHTS RESERVED.</div>
-          <div>COORDINATES: DIGITAL FIRST • SCALE WORLDWIDE</div>
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-purple-900/40 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-400">
+          <div>
+            &copy; {new Date().getFullYear()} YEQARI GLOBAL (PVT) LTD. ALL RIGHTS RESERVED.
+          </div>
+          <div className="flex items-center gap-6">
+            <Link href="/about" className="hover:text-white">ABOUT</Link>
+            <Link href="/services" className="hover:text-white">SERVICES</Link>
+            <Link href="/startup" className="hover:text-white">STARTUP</Link>
+            <Link href="/contact" className="hover:text-white">CONTACT</Link>
+            <button
+              onClick={scrollToTop}
+              className="text-[#C084FC] hover:text-white flex items-center gap-1 cursor-pointer"
+            >
+              <span>TOP</span>
+              <span>↑</span>
+            </button>
+          </div>
         </div>
 
       </div>

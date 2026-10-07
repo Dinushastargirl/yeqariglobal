@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
+  <title>YEQARI STARTUP | NOT ANOTHER STARTUP PROGRAM</title>
+  <meta name="description" content="YEQARI STARTUP — NOT ANOTHER STARTUP PROGRAM. Helping students, young entrepreneurs, and early founders move from an idea to something real with 3 concrete pathways: IDEA → MVP, IDEA → ROADMAP, and IDEA → STARTUP.">
+
+  <!-- Typography: Outfit (Display), Inter (Body), JetBrains Mono (Code/Mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-display: 'Outfit', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --yeqari-cosmic-dark: #0D0422;
+      --yeqari-imperial-violet: #2B075C;
+      --yeqari-ultraviolet: #7C3AED;
+      --yeqari-orchid: #C084FC;
+      --yeqari-fuchsia: #D946EF;
+      --yeqari-specular-white: #FFFFFF;
+
+      --color-background: #0D0422;
+      --color-text-main: #FFFFFF;
+      --color-text-muted: #C084FC;
+      --color-border: rgba(124, 58, 237, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--yeqari-cosmic-dark);
+      color: #ffffff;
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .max-w-7xl {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header Nav */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(13, 4, 34, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(124, 58, 237, 0.25);
+      height: 76px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .brand-logo-lockup {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-symbol {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .brand-symbol img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-link-btn {
+      padding: 8px 16px;
+      border-radius: 9999px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.85);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-link-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    .nav-link-active {
+      background: rgba(124, 58, 237, 0.2);
+      border: 1px solid rgba(192, 132, 252, 0.4);
+      color: var(--yeqari-orchid);
+    }
+
+    .btn-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: 9999px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-pill-gradient {
+      background: linear-gradient(135deg, var(--yeqari-ultraviolet), var(--yeqari-fuchsia));
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+    }
+
+    .btn-pill-gradient:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(217, 70, 239, 0.45);
+    }
+
+    /* Ambient Glows */
+    .ambient-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.3;
+    }
+
+    .glow-sphere {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translate(-50%, 0);
+      width: 700px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.4) 0%, rgba(217, 70, 239, 0.2) 50%, transparent 80%);
+      filter: blur(140px);
+    }
+
+    /* Hero */
+    .hero-section {
+      padding-top: 140px;
+      padding-bottom: 80px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+      .nav-links {
+        display: none;
+      }
+    }
+
+    .program-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(192, 132, 252, 0.3);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--yeqari-orchid);
+      margin-bottom: 24px;
+      letter-spacing: 0.1em;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--yeqari-fuchsia);
+      box-shadow: 0 0 10px var(--yeqari-fuchsia);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6.5vw, 5.5rem);
+      font-weight: 900;
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+      margin-bottom: 24px;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: rgba(255, 255, 255, 0.85);
+      font-weight: 300;
+      line-height: 1.6;
+      max-width: 620px;
+      margin-bottom: 32px;
+    }
+
+    .loop-strip {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--yeqari-orchid);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 12px 20px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Logo Card */
+    .logo-badge-card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(43, 7, 92, 0.3) 50%, rgba(13, 4, 34, 0.7) 100%);
+      border: 1px solid rgba(192, 132, 252, 0.35);
+      border-radius: 28px;
+      padding: 32px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 60px rgba(124, 58, 237, 0.25), 0 0 40px rgba(217, 70, 239, 0.15);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-img-wrapper {
+      width: 100%;
+      max-width: 280px;
+      aspect-ratio: 1;
+      margin: 0 auto 20px auto;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(192, 132, 252, 0.4);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+      background: #000;
+    }
+
+    .logo-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .logo-badge-card:hover .logo-img-wrapper img {
+      transform: scale(1.04);
+    }
+
+    /* Pathway Cards */
+    .pathways-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin: 40px 0;
+    }
+
+    .pathway-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(124, 58, 237, 0.3);
+      border-radius: 24px;
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.3s ease;
+    }
+
+    .pathway-card:hover {
+      border-color: var(--yeqari-orchid);
+      box-shadow: 0 15px 40px rgba(124, 58, 237, 0.2);
+      transform: translateY(-4px);
+    }
+
+    .pathway-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 24px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .pathway-card ul li span {
+      color: var(--yeqari-fuchsia);
+      font-weight: 800;
+      margin-right: 6px;
+    }
+
+    /* Comparison Section */
+    .diff-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 36px;
+    }
+
+    @media (max-width: 768px) {
+      .diff-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Application Form */
+    .form-container {
+      background: linear-gradient(180deg, rgba(24, 11, 56, 0.9) 0%, rgba(13, 4, 34, 0.95) 100%);
+      border: 1px solid rgba(192, 132, 252, 0.35);
+      border-radius: 28px;
+      padding: 48px;
+      max-width: 800px;
+      margin: 60px auto;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--yeqari-orchid);
+      margin-bottom: 8px;
+    }
+
+    .form-input, .form-textarea, .form-select {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      border-color: var(--yeqari-orchid);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .form-select option {
+      background: #180B38;
+      color: #fff;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(124, 58, 237, 0.25);
+      padding: 60px 0 40px 0;
+      background: #080216;
+      font-size: 0.88rem;
+      color: rgba(255, 255, 255, 0.6);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Light -->
+  <div class="ambient-bg">
+    <div class="glow-sphere"></div>
+  </div>
+
+  <!-- Header Navigation -->
+  <header>
+    <div class="max-w-7xl nav-container">
+      <a href="index.html" class="brand-logo-lockup">
+        <div class="brand-symbol">
+          <img src="./assets/yekari-symbol-transparent.png" alt="Yeqari Global">
+        </div>
+        <span>YEQARI GLOBAL</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link-btn">Home</a>
+        <a href="index.html#services" class="nav-link-btn">Services</a>
+        <a href="startup.html" class="nav-link-btn nav-link-active">
+          <span class="pulse-dot"></span>
+          YEQARI STARTUP
+        </a>
+        <a href="index.html#academy" class="nav-link-btn">Academy</a>
+        <a href="index.html#about" class="nav-link-btn">About</a>
+        <a href="#apply" class="btn-pill btn-pill-gradient">Apply Now</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="hero-section">
+      <div class="max-w-7xl">
+        <div class="hero-grid">
+          
+          <div>
+            <div class="program-badge">
+              <span class="pulse-dot"></span>
+              <span>YEQARI STARTUP</span>
+            </div>
+
+            <div style="font-family: var(--font-mono); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.25em; color: var(--yeqari-orchid); font-weight: 800; margin-bottom: 16px;">
+              NOT ANOTHER STARTUP PROGRAM
+            </div>
+
+            <h1 class="hero-title">
+              Your idea does not need to stay an idea.
+            </h1>
+
+            <p class="hero-subtitle">
+              We help students, young entrepreneurs and early-stage founders move from an idea to something real. No academic lectures, no generic slide decks. Just real engineering, design, and execution.
+            </p>
+
+            <div class="loop-strip">
+              <span>IDEA</span> <span style="color: var(--yeqari-fuchsia);">→</span>
+              <span>BUILD</span> <span style="color: var(--yeqari-fuchsia);">→</span>
+              <span>TEST</span> <span style="color: var(--yeqari-fuchsia);">→</span>
+              <span>LEARN</span> <span style="color: var(--yeqari-fuchsia);">→</span>
+              <span style="background: var(--yeqari-ultraviolet); color: #fff; padding: 2px 10px; border-radius: 6px;">GROW</span>
+            </div>
+          </div>
+
+          <!-- Official 3D Holographic NAS Logo Presentation -->
+          <div>
+            <div class="logo-badge-card">
+              <div class="logo-img-wrapper">
+                <img src="./assets/nas-logo.jpg" alt="NAS — not another startup | YEQARI STARTUP Official Identity">
+              </div>
+              <div class="program-badge" style="margin-bottom: 8px;">
+                <span class="pulse-dot"></span>
+                <span>OFFICIAL PROGRAM IDENTITY</span>
+              </div>
+              <h3 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 900; margin-bottom: 4px;">YEQARI STARTUP</h3>
+              <p style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--yeqari-orchid); text-transform: uppercase; margin-bottom: 12px;">NOT ANOTHER STARTUP PROGRAM</p>
+              <p style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.75); line-height: 1.5;">
+                A high-conviction incubator for students, young entrepreneurs, and first-time builders moving from idea to real software.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Who This Is For -->
+    <section style="padding: 40px 0 80px 0; border-top: 1px solid rgba(124, 58, 237, 0.25); border-bottom: 1px solid rgba(124, 58, 237, 0.25);">
+      <div class="max-w-7xl">
+        <div style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--yeqari-orchid); margin-bottom: 24px; text-align: center;">
+          WHO THIS IS SPECIFICALLY DESIGNED FOR
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;">
+          <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 20px; text-align: center;">
+            <div class="pulse-dot" style="margin: 0 auto 10px auto;"></div>
+            <div style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 600;">Students With Ideas</div>
+          </div>
+          <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 20px; text-align: center;">
+            <div class="pulse-dot" style="margin: 0 auto 10px auto;"></div>
+            <div style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 600;">Young Entrepreneurs</div>
+          </div>
+          <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 20px; text-align: center;">
+            <div class="pulse-dot" style="margin: 0 auto 10px auto;"></div>
+            <div style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 600;">Aspiring Founders</div>
+          </div>
+          <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 20px; text-align: center;">
+            <div class="pulse-dot" style="margin: 0 auto 10px auto;"></div>
+            <div style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 600;">First-Time Builders</div>
+          </div>
+          <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 20px; text-align: center;">
+            <div class="pulse-dot" style="margin: 0 auto 10px auto;"></div>
+            <div style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 600;">Early-Stage Builders</div>
+          </div>
+          <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 20px; text-align: center;">
+            <div class="pulse-dot" style="margin: 0 auto 10px auto;"></div>
+            <div style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 600;">Makers From Zero</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The 3 Pathways -->
+    <section id="pathways" style="padding: 100px 0;">
+      <div class="max-w-7xl">
+        <div style="text-align: center; max-width: 700px; margin: 0 auto 50px auto;">
+          <div class="program-badge">
+            <span class="pulse-dot"></span>
+            <span>CHOOSE YOUR STARTING POINT</span>
+          </div>
+          <h2 style="font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; letter-spacing: -0.03em; margin-bottom: 16px;">
+            Three Pathways to Something Real
+          </h2>
+          <p style="color: rgba(255, 255, 255, 0.8); font-size: 1.1rem; font-weight: 300;">
+            Every founder starts from a different place. Pick the pathway that fits where you are right now.
+          </p>
+        </div>
+
+        <div class="pathways-grid">
+          
+          <!-- Pathway 1: IDEA -> MVP -->
+          <div class="pathway-card">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <span style="font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--yeqari-orchid);">PATHWAY 01</span>
+                <span style="font-family: var(--font-mono); font-size: 0.7rem; padding: 3px 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.1);">WORKING SOFTWARE</span>
+              </div>
+              <h3 style="font-family: var(--font-display); font-size: 2.2rem; font-weight: 900; margin-bottom: 8px;">IDEA → MVP</h3>
+              <div style="font-style: italic; color: var(--yeqari-orchid); margin-bottom: 18px; font-size: 0.95rem;">
+                “I have an idea. Help me build the first real version.”
+              </div>
+              <p style="font-size: 0.88rem; color: rgba(255, 255, 255, 0.75); line-height: 1.5; margin-bottom: 24px;">
+                Turn an initial concept into a working, testable product in users' hands fast with production UI/UX and database setup.
+              </p>
+              <ul>
+                <li><span>✓</span> Idea validation & product definition</li>
+                <li><span>✓</span> MVP scope planning & PRD</li>
+                <li><span>✓</span> User experience & UI/UX design</li>
+                <li><span>✓</span> Rapid full-stack development & QA</li>
+                <li><span>✓</span> Live launch preparation</li>
+              </ul>
+            </div>
+            <a href="#apply" onclick="selectPathway('IDEA → MVP')" class="btn-pill btn-pill-gradient" style="width: 100%; justify-content: center;">
+              Choose IDEA → MVP
+            </a>
+          </div>
+
+          <!-- Pathway 2: IDEA -> ROADMAP -->
+          <div class="pathway-card">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <span style="font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--yeqari-fuchsia);">PATHWAY 02</span>
+                <span style="font-family: var(--font-mono); font-size: 0.7rem; padding: 3px 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.1);">EXECUTION BLUEPRINT</span>
+              </div>
+              <h3 style="font-family: var(--font-display); font-size: 2.2rem; font-weight: 900; margin-bottom: 8px;">IDEA → ROADMAP</h3>
+              <div style="font-style: italic; color: var(--yeqari-fuchsia); margin-bottom: 18px; font-size: 0.95rem;">
+                “I have an idea, but I don't know what comes next.”
+              </div>
+              <p style="font-size: 0.88rem; color: rgba(255, 255, 255, 0.75); line-height: 1.5; margin-bottom: 24px;">
+                For founders feeling overwhelmed by technology options, business direction, or execution sequence.
+              </p>
+              <ul>
+                <li><span>✓</span> Idea clarification & business direction</li>
+                <li><span>✓</span> Product & technology roadmap</li>
+                <li><span>✓</span> Market research & competitor gaps</li>
+                <li><span>✓</span> Feature prioritization & phases</li>
+                <li><span>✓</span> Growth planning & launch timeline</li>
+              </ul>
+            </div>
+            <a href="#apply" onclick="selectPathway('IDEA → ROADMAP')" class="btn-pill btn-pill-gradient" style="width: 100%; justify-content: center;">
+              Choose IDEA → ROADMAP
+            </a>
+          </div>
+
+          <!-- Pathway 3: IDEA -> STARTUP -->
+          <div class="pathway-card">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <span style="font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--yeqari-orchid);">PATHWAY 03</span>
+                <span style="font-family: var(--font-mono); font-size: 0.7rem; padding: 3px 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.1);">FULL VENTURE LAUNCH</span>
+              </div>
+              <h3 style="font-family: var(--font-display); font-size: 2.2rem; font-weight: 900; margin-bottom: 8px;">IDEA → STARTUP</h3>
+              <div style="font-style: italic; color: var(--yeqari-orchid); margin-bottom: 18px; font-size: 0.95rem;">
+                “I want to turn my idea into a real startup.”
+              </div>
+              <p style="font-size: 0.88rem; color: rgba(255, 255, 255, 0.75); line-height: 1.5; margin-bottom: 24px;">
+                Take an idea beyond a project and build an actual defensible startup with software, brand identity, and GTM engine.
+              </p>
+              <ul>
+                <li><span>✓</span> Business model & monetization</li>
+                <li><span>✓</span> Complete product engineering</li>
+                <li><span>✓</span> Brand identity & digital presence</li>
+                <li><span>✓</span> Go-to-market strategy</li>
+                <li><span>✓</span> Startup launch & growth strategy</li>
+              </ul>
+            </div>
+            <a href="#apply" onclick="selectPathway('IDEA → STARTUP')" class="btn-pill btn-pill-gradient" style="width: 100%; justify-content: center;">
+              Choose IDEA → STARTUP
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Why This Exists Comparison -->
+    <section style="padding: 80px 0; border-top: 1px solid rgba(124, 58, 237, 0.25);">
+      <div class="max-w-7xl">
+        <div style="text-align: center; max-width: 650px; margin: 0 auto 30px auto;">
+          <div class="program-badge">
+            <span class="pulse-dot"></span>
+            <span>WHY THIS EXISTS</span>
+          </div>
+          <h2 style="font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; letter-spacing: -0.03em;">
+            How We Differ From Generic Programs
+          </h2>
+        </div>
+
+        <div class="diff-grid">
+          <div style="background: rgba(225, 29, 72, 0.08); border: 1px solid rgba(225, 29, 72, 0.3); border-radius: 24px; padding: 36px;">
+            <div style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700; color: #f43f5e; margin-bottom: 20px;">
+              ✕ Generic Incubators & Government Schemes
+            </div>
+            <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 14px; font-size: 0.9rem; color: rgba(255, 255, 255, 0.8);">
+              <li>• Endless theoretical lectures from people who haven't coded or shipped software in 10 years.</li>
+              <li>• Obsession with pitch decks, business model canvases, and jargon while nothing is built.</li>
+              <li>• You leave with a certificate of completion and zero working software or live users.</li>
+            </ul>
+          </div>
+
+          <div style="background: rgba(124, 58, 237, 0.15); border: 1px solid rgba(192, 132, 252, 0.4); border-radius: 24px; padding: 36px;">
+            <div style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700; color: var(--yeqari-orchid); margin-bottom: 20px;">
+              ✓ YEQARI STARTUP — NOT ANOTHER STARTUP PROGRAM
+            </div>
+            <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 14px; font-size: 0.9rem; color: #ffffff;">
+              <li>• Direct collaboration with active software engineers, product designers, and technical builders.</li>
+              <li>• We write actual code, build real UI systems, and deploy to real domains that accept payments.</li>
+              <li>• You walk away with an actual working product or real roadmap that is 100% owned by you.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Direct Application Form -->
+    <section id="apply" style="padding: 100px 0;">
+      <div class="max-w-7xl">
+        <div class="form-container">
+          <div style="text-align: center; margin-bottom: 36px;">
+            <div class="program-badge">
+              <span class="pulse-dot"></span>
+              <span>COHORT INTAKE</span>
+            </div>
+            <h2 style="font-family: var(--font-display); font-size: 2.8rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 8px;">
+              Apply to YEQARI STARTUP
+            </h2>
+            <p style="color: rgba(255, 255, 255, 0.8); font-size: 1rem; font-weight: 300;">
+              Tell us about what you want to build. We review every application personally and reply within 24 hours.
+            </p>
+          </div>
+
+          <div id="form-success-box" style="display: none; background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; border-radius: 18px; padding: 32px; text-align: center;">
+            <div style="font-size: 2.5rem; margin-bottom: 12px;">✓</div>
+            <h3 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 8px;">Application Submitted!</h3>
+            <p style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.9); margin-bottom: 24px;" id="success-msg">
+              Thank you! We've received your submission and will get in touch within 24 hours.
+            </p>
+            <a id="fast-track-wa-btn" href="#" target="_blank" class="btn-pill" style="background: #10b981; color: #000; font-weight: 800;">
+              Fast-Track via WhatsApp →
+            </a>
+          </div>
+
+          <form id="startup-apply-form" onsubmit="handleStartupApply(event)">
+            <div class="form-group">
+              <label class="form-label">Chosen Pathway *</label>
+              <select id="field-pathway" class="form-select" required>
+                <option value="IDEA → MVP">IDEA → MVP (Working Software in 4-8 weeks)</option>
+                <option value="IDEA → ROADMAP">IDEA → ROADMAP (Execution Blueprint in 2-3 weeks)</option>
+                <option value="IDEA → STARTUP">IDEA → STARTUP (Full Venture Launch in 8-12 weeks)</option>
+              </select>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div class="form-group">
+                <label class="form-label">Your Name *</label>
+                <input type="text" id="field-name" class="form-input" required placeholder="e.g. Alex Morgan">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email Address *</label>
+                <input type="email" id="field-email" class="form-input" required placeholder="alex@example.com">
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div class="form-group">
+                <label class="form-label">WhatsApp / Phone Number</label>
+                <input type="tel" id="field-phone" class="form-input" placeholder="+94 77 123 4567">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Current Stage</label>
+                <select id="field-stage" class="form-select">
+                  <option value="Just an Idea">Just an Idea (Zero to One)</option>
+                  <option value="Wireframes / Figma Ready">Wireframes / Figma Ready</option>
+                  <option value="Half-Built Prototype">Half-Built Prototype</option>
+                  <option value="Existing Product Looking to Pivot">Existing Product Looking to Pivot</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Idea / Venture Name</label>
+              <input type="text" id="field-idea-name" class="form-input" placeholder="e.g. CampusRent">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Brief Pitch / Problem Statement *</label>
+              <textarea id="field-pitch" class="form-textarea" rows="4" required placeholder="What problem does your idea solve, who will use it, and what are you looking to achieve?"></textarea>
+            </div>
+
+            <button type="submit" class="btn-pill btn-pill-gradient" style="width: 100%; justify-content: center; padding: 16px; font-size: 1rem;">
+              Submit Application to YEQARI STARTUP →
+            </button>
+            <div style="text-align: center; margin-top: 12px; font-family: var(--font-mono); font-size: 0.75rem; color: rgba(255, 255, 255, 0.5);">
+              100% IP ownership guaranteed • Non-disclosure protected
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="max-w-7xl">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+        <div class="brand-logo-lockup">
+          <div class="brand-symbol">
+            <img src="./assets/yekari-symbol-transparent.png" alt="Yeqari Global">
+          </div>
+          <span>YEQARI GLOBAL</span>
+        </div>
+        <div>
+          <a href="index.html" style="margin-right: 20px;">Home</a>
+          <a href="index.html#services" style="margin-right: 20px;">Services</a>
+          <a href="startup.html" style="margin-right: 20px; color: var(--yeqari-orchid); font-weight: 700;">YEQARI STARTUP</a>
+          <a href="index.html#academy" style="margin-right: 20px;">Academy</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
+      </div>
+      <div style="margin-top: 30px; font-family: var(--font-mono); font-size: 0.8rem; text-align: center;">
+        © 2026 YEQARI GLOBAL. All Rights Reserved. NOT ANOTHER STARTUP PROGRAM is a division of YEQARI.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function selectPathway(pathwayName) {
+      const select = document.getElementById('field-pathway');
+      if (select) {
+        for (let i = 0; i < select.options.length; i++) {
+          if (select.options[i].value.includes(pathwayName) || select.options[i].text.includes(pathwayName)) {
+            select.selectedIndex = i;
+            break;
+          }
+        }
+      }
+      document.getElementById('apply')?.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function handleStartupApply(e) {
+      e.preventDefault();
+      const name = document.getElementById('field-name').value;
+      const pathway = document.getElementById('field-pathway').value;
+      const idea = document.getElementById('field-idea-name').value || 'Startup Idea';
+
+      document.getElementById('startup-apply-form').style.display = 'none';
+      const successBox = document.getElementById('form-success-box');
+      successBox.style.display = 'block';
+
+      document.getElementById('success-msg').textContent = 
+        `Thank you, ${name}! Your application for ${pathway} has been logged. We will review it within 24 hours.`;
+
+      const waText = encodeURIComponent(`Hi YEQARI, I just applied to YEQARI STARTUP for ${idea} on the ${pathway} pathway! Name: ${name}`);
+      document.getElementById('fast-track-wa-btn').href = `https://wa.me/94722346167?text=${waText}`;
+    }
+  </script>
+</body>
+</html>
