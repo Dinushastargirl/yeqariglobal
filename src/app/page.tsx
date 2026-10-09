@@ -194,112 +194,114 @@ export default function HomePage() {
     <div className="bg-[#FFFFFF] text-slate-900 selection:bg-purple-200 selection:text-[#0D0422] min-h-screen">
       
       {/* =========================================================================
-          1. HERO REEL SECTION (SURGE GLOBAL ARCHITECTURE WITH YEQARI BRAND)
+          1. HERO REEL SECTION (EXPANSIVE FULL-WIDTH HERO VIDEO FILLING WHOLE AREA)
           ========================================================================= */}
-      <section className="pt-24 sm:pt-28 pb-12 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto">
+      <section className="pt-20 sm:pt-24 pb-12 w-full">
         
-        {/* Full-Width Hero Reel Video Container (Spreading & Filling Screen Like Surge Global) */}
-        <div
-          ref={heroContainerRef}
-          className="relative w-full aspect-[9/16] sm:aspect-[16/9] lg:aspect-[21/9] rounded-[24px] sm:rounded-[36px] overflow-hidden bg-[#0D0422] border border-slate-200/90 shadow-2xl shadow-purple-950/20 group"
-        >
-          {/* Ambient Video Backlight Glow */}
-          <div className="absolute -inset-4 bg-gradient-to-r from-[#7C3AED]/30 via-[#D946EF]/20 to-[#7C3AED]/30 rounded-[40px] blur-2xl -z-10 pointer-events-none" />
-
-          {/* Phone Video Version (Displays on Phone / Mobile Screens) */}
-          <video
-            ref={mobileVideoRef}
-            onClick={togglePlay}
-            className="block sm:hidden w-full h-full object-cover cursor-pointer"
-            autoPlay
-            loop
-            muted={isMuted}
-            playsInline
-            preload="auto"
-            poster="/assets/case-yeqari.jpg"
+        {/* Full-Width Video Container Spreading & Filling Whole Area */}
+        <div className="w-full px-2 sm:px-4 lg:px-6 box-border">
+          <div
+            ref={heroContainerRef}
+            className="relative w-full h-[75vh] sm:h-[82vh] lg:h-[88vh] min-h-[520px] sm:min-h-[640px] max-h-[960px] rounded-[24px] sm:rounded-[36px] overflow-hidden bg-[#0D0422] border border-slate-200/90 shadow-2xl shadow-purple-950/20 group"
           >
-            <source src="/assets/intro video/YEQARI_GLOBAL_brand_film_production_20261009145209.mp4" type="video/mp4" />
-            <source src="/assets/hero-reel-mobile.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+            {/* Ambient Video Backlight Glow */}
+            <div className="absolute -inset-4 bg-gradient-to-r from-[#7C3AED]/30 via-[#D946EF]/20 to-[#7C3AED]/30 rounded-[40px] blur-2xl -z-10 pointer-events-none" />
 
-          {/* Laptop / Desktop Video Version (Displays on Laptop / Desktop Screens) */}
-          <video
-            ref={desktopVideoRef}
-            onClick={togglePlay}
-            className="hidden sm:block w-full h-full object-cover cursor-pointer"
-            autoPlay
-            loop
-            muted={isMuted}
-            playsInline
-            preload="auto"
-            poster="/assets/case-yeqari.jpg"
-          >
-            <source src="/assets/intro video/yeqari global hero reel.mp4" type="video/mp4" />
-            <source src="/assets/hero-reel.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-
-          {/* Clean Top-Right Controls: Sound & Fullscreen */}
-          <div className="absolute top-4 sm:top-6 right-4 sm:right-6 z-20 flex items-center gap-2">
-            <button
-              type="button"
-              onClick={toggleMute}
-              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-bold backdrop-blur-md border transition-all duration-200 cursor-pointer ${
-                isMuted
-                  ? "bg-black/50 text-white border-white/20 hover:bg-black/70"
-                  : "bg-gradient-to-r from-[#7C3AED] to-[#D946EF] text-white border-white/40 shadow-lg shadow-purple-500/30"
-              }`}
-            >
-              {isMuted ? (
-                <>
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
-                  </svg>
-                  <span>Sound Off</span>
-                </>
-              ) : (
-                <>
-                  <div className="flex items-center gap-0.5 h-3">
-                    <span className="w-0.5 h-3 bg-white animate-[bounce_0.8s_infinite]" />
-                    <span className="w-0.5 h-2 bg-white animate-[bounce_0.6s_infinite_0.2s]" />
-                    <span className="w-0.5 h-3.5 bg-white animate-[bounce_0.7s_infinite_0.4s]" />
-                  </div>
-                  <span>Sound On</span>
-                </>
-              )}
-            </button>
-
-            <button
-              type="button"
-              onClick={toggleFullscreen}
-              className="p-2 rounded-full bg-black/50 hover:bg-[#7C3AED] text-white backdrop-blur-md border border-white/20 transition-all cursor-pointer"
-              title="Full Screen"
-            >
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0 0l-5-5m5 11v4m0 0h-4m4 0l-5-5M4 16v4m0 0h4m-4 0l5-5" />
-              </svg>
-            </button>
-          </div>
-
-          {/* Center Play/Pause button on hover / pause */}
-          {!isPlaying && (
-            <div
+            {/* Phone Video Version (Displays on Phone / Mobile Screens) */}
+            <video
+              ref={mobileVideoRef}
               onClick={togglePlay}
-              className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-[2px] cursor-pointer"
+              className="block sm:hidden w-full h-full object-cover cursor-pointer"
+              autoPlay
+              loop
+              muted={isMuted}
+              playsInline
+              preload="auto"
+              poster="/assets/case-yeqari.jpg"
             >
-              <div className="w-20 h-20 rounded-full bg-white/20 hover:bg-[#7C3AED] text-white flex items-center justify-center backdrop-blur-xl border border-white/30 shadow-2xl transition-all">
-                <svg className="w-8 h-8 ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z" />
+              <source src="/assets/intro video/YEQARI_GLOBAL_brand_film_production_20261009145209.mp4" type="video/mp4" />
+              <source src="/assets/hero-reel-mobile.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+
+            {/* Laptop / Desktop Video Version (Displays on Laptop / Desktop Screens) */}
+            <video
+              ref={desktopVideoRef}
+              onClick={togglePlay}
+              className="hidden sm:block w-full h-full object-cover cursor-pointer"
+              autoPlay
+              loop
+              muted={isMuted}
+              playsInline
+              preload="auto"
+              poster="/assets/case-yeqari.jpg"
+            >
+              <source src="/assets/intro video/yeqari global hero reel.mp4" type="video/mp4" />
+              <source src="/assets/hero-reel.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+
+            {/* Clean Top-Right Controls: Sound & Fullscreen */}
+            <div className="absolute top-4 sm:top-6 right-4 sm:right-6 z-20 flex items-center gap-2">
+              <button
+                type="button"
+                onClick={toggleMute}
+                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-bold backdrop-blur-md border transition-all duration-200 cursor-pointer ${
+                  isMuted
+                    ? "bg-black/50 text-white border-white/20 hover:bg-black/70"
+                    : "bg-gradient-to-r from-[#7C3AED] to-[#D946EF] text-white border-white/40 shadow-lg shadow-purple-500/30"
+                }`}
+              >
+                {isMuted ? (
+                  <>
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+                    </svg>
+                    <span>Sound Off</span>
+                  </>
+                ) : (
+                  <>
+                    <div className="flex items-center gap-0.5 h-3">
+                      <span className="w-0.5 h-3 bg-white animate-[bounce_0.8s_infinite]" />
+                      <span className="w-0.5 h-2 bg-white animate-[bounce_0.6s_infinite_0.2s]" />
+                      <span className="w-0.5 h-3.5 bg-white animate-[bounce_0.7s_infinite_0.4s]" />
+                    </div>
+                    <span>Sound On</span>
+                  </>
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={toggleFullscreen}
+                className="p-2 rounded-full bg-black/50 hover:bg-[#7C3AED] text-white backdrop-blur-md border border-white/20 transition-all cursor-pointer"
+                title="Full Screen"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0 0l-5-5m5 11v4m0 0h-4m4 0l-5-5M4 16v4m0 0h4m-4 0l5-5" />
                 </svg>
-              </div>
+              </button>
             </div>
-          )}
+
+            {/* Center Play/Pause button on hover / pause */}
+            {!isPlaying && (
+              <div
+                onClick={togglePlay}
+                className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-[2px] cursor-pointer"
+              >
+                <div className="w-20 h-20 rounded-full bg-white/20 hover:bg-[#7C3AED] text-white flex items-center justify-center backdrop-blur-xl border border-white/30 shadow-2xl transition-all">
+                  <svg className="w-8 h-8 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Hero Title & Subtitle Just Like Surge Global with YEQARI Logo Gradient */}
-        <div className="mt-12 sm:mt-16 lg:mt-20">
+        {/* Hero Title & Subtitle in Container */}
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-16 lg:mt-20">
           <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[84px] font-['Outfit'] font-black tracking-tight leading-[0.98] text-slate-950 max-w-6xl">
             Best-in-class{" "}
             <span className="bg-gradient-to-r from-[#7C3AED] via-[#C084FC] to-[#D946EF] bg-clip-text text-transparent">
