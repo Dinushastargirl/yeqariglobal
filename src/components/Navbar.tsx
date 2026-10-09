@@ -61,173 +61,99 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1.5">
+          {/* Desktop Navigation (Surge Global Architecture with YEQARI Brand) */}
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
             
-            {/* 2. SERVICES MEGA MENU */}
-            <div
-              className="relative"
-              ref={dropdownRef}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
+            {/* 1. DESIGN */}
+            <Link
+              href="/services#design"
+              className={`px-3.5 py-2 rounded-full text-xs font-mono font-bold tracking-wider uppercase transition-all ${
+                pathname === "/services" && typeof window !== "undefined" && window.location.hash === "#design"
+                  ? "text-[#7C3AED] bg-purple-50"
+                  : "text-slate-700 hover:text-slate-950 hover:bg-slate-100"
+              }`}
             >
-              <button
-                onClick={() => setServicesDropdown(!servicesDropdown)}
-                className={`px-4 py-2 rounded-full text-xs font-mono font-bold tracking-wider uppercase flex items-center gap-1.5 transition-all cursor-pointer ${
-                  servicesDropdown || pathname.startsWith("/services")
-                    ? "text-[#7C3AED] bg-purple-50"
-                    : "text-slate-700 hover:text-slate-900 hover:bg-slate-100"
-                }`}
-              >
-                SERVICES
-                <svg
-                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                    servicesDropdown ? "rotate-180" : ""
-                  }`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
+              DESIGN
+            </Link>
 
-              {/* Mega Menu Dropdown */}
-              {servicesDropdown && (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-[920px] animate-in fade-in duration-200">
-                  <div className="bg-white border border-slate-200/90 rounded-3xl p-8 shadow-2xl grid grid-cols-3 gap-8">
-                    
-                    {/* Column 1: YEQARI IT INFRASTRUCTURE (9 Services) */}
-                    <div className="border-r border-slate-100 pr-4">
-                      <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#7C3AED] mb-4 flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-[#7C3AED]" />
-                        <span>YEQARI IT INFRASTRUCTURE</span>
-                      </div>
-                      <div className="flex flex-col gap-1 text-xs">
-                        {divisionLists.itInfrastructure.map((item) => (
-                          <Link
-                            key={item.slug}
-                            href={`/services/${item.slug}`}
-                            className="text-slate-600 hover:text-slate-950 hover:bg-purple-50 px-2 py-1.5 rounded-lg transition-colors font-medium flex items-center justify-between group"
-                          >
-                            <span>{item.name}</span>
-                            <span className="text-[#7C3AED] opacity-0 group-hover:opacity-100 transition-opacity">→</span>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
+            {/* 2. MARKETING */}
+            <Link
+              href="/services#marketing"
+              className="px-3.5 py-2 rounded-full text-xs font-mono font-bold tracking-wider uppercase text-slate-700 hover:text-slate-950 hover:bg-slate-100 transition-all"
+            >
+              MARKETING
+            </Link>
 
-                    {/* Column 2: YEQARI DIGITAL (6 Services) */}
-                    <div className="border-r border-slate-100 pr-4">
-                      <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#D946EF] mb-4 flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-[#D946EF]" />
-                        <span>YEQARI DIGITAL</span>
-                      </div>
-                      <div className="flex flex-col gap-1 text-xs">
-                        {divisionLists.digital.map((item) => (
-                          <Link
-                            key={item.slug}
-                            href={`/services/${item.slug}`}
-                            className="text-slate-600 hover:text-slate-950 hover:bg-pink-50 px-2 py-1.5 rounded-lg transition-colors font-medium flex items-center justify-between group"
-                          >
-                            <span>{item.name}</span>
-                            <span className="text-[#D946EF] opacity-0 group-hover:opacity-100 transition-opacity">→</span>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
+            {/* 3. TECHNOLOGY */}
+            <Link
+              href="/services#technology"
+              className="px-3.5 py-2 rounded-full text-xs font-mono font-bold tracking-wider uppercase text-slate-700 hover:text-slate-950 hover:bg-slate-100 transition-all"
+            >
+              TECHNOLOGY
+            </Link>
 
-                    {/* Column 3: YEQARI ACADEMY (5 Programs) */}
-                    <div>
-                      <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-emerald-600 mb-4 flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                        <span>YEQARI ACADEMY</span>
-                      </div>
-                      <div className="flex flex-col gap-1 text-xs mb-6">
-                        {divisionLists.academy.map((item) => (
-                          <Link
-                            key={item.slug}
-                            href={`/services/${item.slug}`}
-                            className="text-slate-600 hover:text-slate-950 hover:bg-emerald-50 px-2 py-1.5 rounded-lg transition-colors font-medium flex items-center justify-between group"
-                          >
-                            <span>{item.name}</span>
-                            <span className="text-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
-                          </Link>
-                        ))}
-                      </div>
-
-                      {/* Jump to All Services overview */}
-                      <Link
-                        href="/services"
-                        className="block text-center py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-mono font-bold uppercase tracking-wider transition-colors"
-                      >
-                        View All Services Hub →
-                      </Link>
-                    </div>
-
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* 3. YEQARI STARTUP (Separate Item with distinct badge) */}
+            {/* 4. NOT ANOTHER STARTUP — Dedicated Prominent Headline in Navbar */}
             <Link
               href="/startup"
-              className={`px-4 py-2 rounded-full text-xs font-mono font-bold tracking-wider uppercase transition-all flex items-center gap-2 ${
+              className={`px-4 py-2 rounded-full text-xs font-mono font-bold tracking-wider uppercase transition-all flex items-center gap-2 border shadow-sm ${
                 pathname === "/startup"
-                  ? "bg-[#0D0422] text-[#C084FC] shadow-sm"
-                  : "text-slate-800 hover:text-[#7C3AED] hover:bg-purple-50"
+                  ? "bg-gradient-to-r from-[#7C3AED] to-[#D946EF] text-white border-transparent shadow-purple-500/30 shadow-lg scale-105"
+                  : "bg-gradient-to-r from-purple-50 to-fuchsia-50 text-[#7C3AED] border-purple-200/80 hover:border-purple-400 hover:shadow-md hover:scale-[1.03]"
               }`}
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D946EF] animate-pulse" />
-              <span>YEQARI STARTUP</span>
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D946EF] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#D946EF]"></span>
+              </span>
+              <span className="font-extrabold bg-gradient-to-r from-[#7C3AED] to-[#D946EF] bg-clip-text text-transparent">
+                NOT ANOTHER STARTUP
+              </span>
             </Link>
 
-            {/* 4. ACADEMY */}
+            {/* 5. EXPERTISE */}
             <Link
-              href="/academy"
-              className={`px-4 py-2 rounded-full text-xs font-mono font-bold tracking-wider uppercase transition-all ${
-                pathname === "/academy"
-                  ? "text-emerald-800 bg-emerald-50"
-                  : "text-slate-700 hover:text-slate-900 hover:bg-slate-100"
-              }`}
+              href="/services"
+              className="px-3.5 py-2 rounded-full text-xs font-mono font-bold tracking-wider uppercase text-slate-700 hover:text-slate-950 hover:bg-slate-100 transition-all"
             >
-              ACADEMY
+              EXPERTISE
             </Link>
 
-            {/* 5. ABOUT */}
+            {/* 6. WORK */}
+            <Link
+              href="/work"
+              className={`px-3.5 py-2 rounded-full text-xs font-mono font-bold tracking-wider uppercase transition-all ${
+                pathname.startsWith("/work") || pathname.startsWith("/portfolio")
+                  ? "text-[#7C3AED] bg-purple-50 font-bold"
+                  : "text-slate-700 hover:text-slate-950 hover:bg-slate-100"
+              }`}
+            >
+              WORK
+            </Link>
+
+            {/* 7. ABOUT */}
             <Link
               href="/about"
-              className={`px-4 py-2 rounded-full text-xs font-mono font-bold tracking-wider uppercase transition-all ${
+              className={`px-3.5 py-2 rounded-full text-xs font-mono font-bold tracking-wider uppercase transition-all ${
                 pathname === "/about"
                   ? "text-slate-950 bg-slate-100 font-bold"
-                  : "text-slate-700 hover:text-slate-900 hover:bg-slate-100"
+                  : "text-slate-700 hover:text-slate-950 hover:bg-slate-100"
               }`}
             >
               ABOUT
             </Link>
 
-            {/* 6. CONTACT */}
-            <Link
-              href="/contact"
-              className={`px-4 py-2 rounded-full text-xs font-mono font-bold tracking-wider uppercase transition-all ${
-                pathname === "/contact"
-                  ? "text-slate-950 bg-slate-100 font-bold"
-                  : "text-slate-700 hover:text-slate-900 hover:bg-slate-100"
-              }`}
-            >
-              CONTACT
-            </Link>
-
           </nav>
 
-          {/* Desktop Right CTA */}
+          {/* Desktop Right CTA: Speak with Experts */}
           <div className="hidden lg:flex items-center gap-3">
             <Link
               href="/contact"
-              className="px-5 py-2.5 rounded-full bg-[#0D0422] hover:bg-[#2B075C] text-white text-xs font-mono font-bold tracking-wider uppercase shadow-md transition-all hover:scale-[1.02]"
+              className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#0D0422] to-[#2B075C] hover:from-[#7C3AED] hover:to-[#D946EF] text-white text-xs font-mono font-bold tracking-wider uppercase shadow-md transition-all hover:scale-[1.03] flex items-center gap-2 group"
             >
-              Get In Touch
+              <span>Speak to our experts</span>
+              <svg className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
             </Link>
           </div>
 
@@ -255,98 +181,60 @@ export default function Navbar() {
           <div className="flex flex-col gap-4 max-w-md mx-auto">
             
             <Link
-              href="/"
-              className="py-3 px-4 rounded-xl text-base font-bold text-slate-900 hover:bg-slate-100"
+              href="/services#design"
+              className="py-3 px-4 rounded-xl text-base font-bold text-slate-900 hover:bg-slate-100 flex items-center justify-between"
             >
-              Home
+              <span>Design</span>
+              <span className="text-xs font-mono text-[#7C3AED]">Capabilities →</span>
             </Link>
 
-            {/* Mobile Services Accordion */}
-            <div>
-              <button
-                onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                className="w-full flex items-center justify-between py-3 px-4 rounded-xl text-base font-bold text-slate-900 hover:bg-slate-100"
-              >
-                <span>Services (3 Divisions)</span>
-                <span className="text-xs font-mono text-[#7C3AED]">{mobileServicesOpen ? "−" : "+"}</span>
-              </button>
+            <Link
+              href="/services#marketing"
+              className="py-3 px-4 rounded-xl text-base font-bold text-slate-900 hover:bg-slate-100 flex items-center justify-between"
+            >
+              <span>Marketing</span>
+              <span className="text-xs font-mono text-[#7C3AED]">Growth Engine →</span>
+            </Link>
 
-              {mobileServicesOpen && (
-                <div className="pl-4 pr-2 py-3 space-y-4 bg-slate-50 rounded-2xl mt-2 border border-slate-200">
-                  {/* Division 1 */}
-                  <div>
-                    <div className="text-xs font-mono font-bold text-[#7C3AED] uppercase mb-2">
-                      01 — YEQARI IT INFRASTRUCTURE
-                    </div>
-                    <div className="space-y-1.5 pl-2 text-xs">
-                      {divisionLists.itInfrastructure.map((item) => (
-                        <Link
-                          key={item.slug}
-                          href={`/services/${item.slug}`}
-                          className="block text-slate-600 hover:text-slate-950 py-1"
-                        >
-                          • {item.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
+            <Link
+              href="/services#technology"
+              className="py-3 px-4 rounded-xl text-base font-bold text-slate-900 hover:bg-slate-100 flex items-center justify-between"
+            >
+              <span>Technology</span>
+              <span className="text-xs font-mono text-[#7C3AED]">Engineering →</span>
+            </Link>
 
-                  {/* Division 2 */}
-                  <div>
-                    <div className="text-xs font-mono font-bold text-[#D946EF] uppercase mb-2">
-                      02 — YEQARI DIGITAL
-                    </div>
-                    <div className="space-y-1.5 pl-2 text-xs">
-                      {divisionLists.digital.map((item) => (
-                        <Link
-                          key={item.slug}
-                          href={`/services/${item.slug}`}
-                          className="block text-slate-600 hover:text-slate-950 py-1"
-                        >
-                          • {item.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Division 3 */}
-                  <div>
-                    <div className="text-xs font-mono font-bold text-emerald-600 uppercase mb-2">
-                      03 — YEQARI ACADEMY
-                    </div>
-                    <div className="space-y-1.5 pl-2 text-xs">
-                      {divisionLists.academy.map((item) => (
-                        <Link
-                          key={item.slug}
-                          href={`/services/${item.slug}`}
-                          className="block text-slate-600 hover:text-slate-950 py-1"
-                        >
-                          • {item.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* YEQARI STARTUP */}
+            {/* NOT ANOTHER STARTUP */}
             <Link
               href="/startup"
-              className="py-3 px-4 rounded-xl text-base font-bold text-[#7C3AED] bg-purple-50 flex items-center justify-between"
+              className="py-3.5 px-4 rounded-2xl text-base font-extrabold text-[#7C3AED] bg-gradient-to-r from-purple-50 to-fuchsia-50 border border-purple-200 flex items-center justify-between shadow-sm"
             >
-              <span>YEQARI STARTUP</span>
-              <span className="text-[10px] font-mono uppercase bg-[#7C3AED] text-white px-2 py-0.5 rounded">
-                NOT ANOTHER STARTUP PROGRAM
+              <div className="flex items-center gap-2">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D946EF] opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#D946EF]"></span>
+                </span>
+                <span>NOT ANOTHER STARTUP</span>
+              </div>
+              <span className="text-[10px] font-mono uppercase bg-gradient-to-r from-[#7C3AED] to-[#D946EF] text-white px-2.5 py-0.5 rounded-full font-bold">
+                VENTURE ACCELERATOR
               </span>
             </Link>
 
-            {/* ACADEMY */}
+            {/* EXPERTISE */}
             <Link
-              href="/academy"
+              href="/services"
               className="py-3 px-4 rounded-xl text-base font-bold text-slate-900 hover:bg-slate-100"
             >
-              Academy
+              Expertise & Industries
+            </Link>
+
+            {/* WORK */}
+            <Link
+              href="/work"
+              className="py-3 px-4 rounded-xl text-base font-bold text-slate-900 hover:bg-slate-100"
+            >
+              Work & Case Studies
             </Link>
 
             {/* ABOUT */}
@@ -370,7 +258,7 @@ export default function Navbar() {
                 href="/contact"
                 className="w-full block text-center py-3.5 rounded-full bg-gradient-to-r from-[#7C3AED] to-[#D946EF] text-white font-bold text-sm shadow-md"
               >
-                Request Proposal
+                Speak to our experts
               </Link>
             </div>
 

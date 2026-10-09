@@ -1,1428 +1,1010 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import HeroReel from "@/components/HeroReel";
-import { divisionLists, servicesData } from "@/data/servicesData";
 
 interface ProjectItem {
   id: string;
   title: string;
+  client: string;
   category: string;
-  division: "digital" | "labs" | "startup";
+  division: "Design" | "Marketing" | "Technology";
   description: string;
-  fullDescription: string;
-  tech: string[];
+  impactMetric: string;
   image: string;
   link: string;
-  goals: string[];
-  metrics: { label: string; value: string }[];
-  problemDetails: string;
-  solutionBreakdown: string;
+  tags: string[];
 }
 
-const SELECTED_WORKS = [
-  { id: "nutrigpt-landing", title: "NutriGPT", category: "AI Landing Page", image: "https://picsum.photos/seed/nutrition/1200/800", link: "https://nutrigpt-h37z.vercel.app/" },
-  { id: "market-store", title: "Little Heart Bakes", category: "E-Commerce", image: "https://picsum.photos/seed/bakery/1200/800", link: "https://little-heart-bakes.base44.app/" },
-  { id: "aurum-bookings", title: "Aurum Bookings", category: "AI Software", image: "https://picsum.photos/seed/booking/1200/800", link: "https://aurum-bookings.vercel.app/login" },
-  { id: "vork-global", title: "Vork Global", category: "Corporate Web", image: "https://picsum.photos/seed/corporate/1200/800", link: "https://vorkglobal.vercel.app/" }
-];
-
-const ALL_PROJECTS: ProjectItem[] = [
+const PROJECTS: ProjectItem[] = [
   {
-    id: "animal-vision",
-    title: "Animal Vision Camera – People's Bank",
-    category: "Marketing",
-    division: "digital",
-    description: "An animal-vision simulator that uses camera input + pixel manipulation to recreate how animals see.",
-    fullDescription: "A creative campaign required a unique interactive experience to visualize 'different perspectives.' Built an animal-vision simulator that uses camera input + pixel manipulation to recreate how cats, snakes, bees, and birds see.",
-    tech: ["JavaScript", "TypeScript", "Canvas API", "WebRTC"],
-    image: "https://picsum.photos/seed/vision/800/600",
+    id: "pickher",
+    title: "PickHer Mobility Platform",
+    client: "PickHer Global",
+    category: "Mobile & AI Engineering",
+    division: "Technology",
+    description: "Women-first ride and mobility network engineered for high-concurrency dispatch, geo-fencing safety, and real-time biometric driver verification.",
+    impactMetric: "+180% User Velocity",
+    image: "/assets/case-pickher.jpg",
     link: "https://merry-phoenix-e0c270.netlify.app/",
-    goals: ["Visualize multiple animal perspectives", "Real-time canvas shader manipulation", "Low-latency camera frame mapping"],
-    metrics: [{ label: "Frame Rate", value: "60 FPS" }, { label: "Campaign Reach", value: "85K+" }],
-    problemDetails: "The campaign needed an intuitive digital experience without forcing visitors to download native mobile apps.",
-    solutionBreakdown: "Engineered in-browser WebRTC video stream processing with GPU canvas filters."
+    tags: ["React Native", "WebRTC", "Geo-Clustering", "Safety AI"]
   },
   {
-    id: "goya-spin",
-    title: "GOYA Spin The Wheel",
-    category: "Marketing",
-    division: "digital",
-    description: "A fully animated promotional spinning wheel with easing, confetti, and sound.",
-    fullDescription: "A promotional campaign needed an engaging digital mechanic to attract participants. Developed a fully animated spinning wheel with easing physics, confetti bursts, sound effects, and result logic.",
-    tech: ["HTML5", "CSS3", "JavaScript", "Canvas API"],
-    image: "https://picsum.photos/seed/goya/800/600",
-    link: "https://www.goyacompetition.com",
-    goals: ["Engage consumers", "Smooth physical easing", "Immediate prize reveal"],
-    metrics: [{ label: "Conversion Lift", value: "+42%" }, { label: "Wheel Spins", value: "120K+" }],
-    problemDetails: "Static giveaway forms suffered high drop-off rates.",
-    solutionBreakdown: "Replaced dull forms with interactive reward physics and celebratory micro-interactions."
+    id: "speechxyz",
+    title: "SpeechXYZ Voice Intelligence",
+    client: "SpeechXYZ Labs",
+    category: "AI & ML Architecture",
+    division: "Technology",
+    description: "Real-time speech synthesis and neural transcription pipeline capable of low-latency multilingual voice agent interactions.",
+    impactMetric: "35ms Stream Latency",
+    image: "/assets/case-speechxyz.jpg",
+    link: "https://aurum-bookings.vercel.app/login",
+    tags: ["Whisper AI", "FastAPI", "WebSocket", "Neural TTS"]
   },
   {
-    id: "mental-health",
-    title: "Mental Health Reflection App",
-    category: "Branding",
-    division: "digital",
-    description: "A mood-check app with reflective questions inspired by CBT and reward psychology.",
-    fullDescription: "Created a gentle, privacy-conscious interactive app for wellness initiatives with reflective prompts and calming visual feedbacks.",
-    tech: ["React", "CSS Transitions", "Local Storage"],
-    image: "https://picsum.photos/seed/mental/800/600",
-    link: "https://heroic-quokka-a46c13.netlify.app/",
-    goals: ["Mental wellness reflection", "Zero data leakage", "Soothing user flows"],
-    metrics: [{ label: "Daily Active Users", value: "14K" }, { label: "Privacy Rating", value: "100%" }],
-    problemDetails: "Users hesitate to log emotions into platforms requiring logins and tracking cookies.",
-    solutionBreakdown: "Built a client-only mood tracker that saves reflections exclusively inside local browser storage."
-  },
-  {
-    id: "nutrigpt-landing",
-    title: "NutriGPT Landing Page",
-    category: "Website",
-    division: "digital",
-    description: "A high-conversion landing page for an AI-powered nutrition assistant.",
-    fullDescription: "Conversion-optimized landing page for NutriGPT, showcasing automated meal analysis, macros breakdown, and personalized health recommendations.",
-    tech: ["React", "Next.js", "Tailwind CSS", "Framer Motion"],
-    image: "https://picsum.photos/seed/nutrition/800/600",
-    link: "https://nutrigpt-h37z.vercel.app/",
-    goals: ["High conversion waitlist", "Feature demo animations", "Responsive speed"],
-    metrics: [{ label: "Lighthouse Score", value: "99/100" }, { label: "Waitlist Signups", value: "18.5K" }],
-    problemDetails: "Explaining multi-step AI reasoning to health consumers without overwhelming them.",
-    solutionBreakdown: "Segmented features into interactive interactive demonstration snippets."
-  },
-  {
-    id: "market-store",
-    title: "Online Store - Little Heart Bakes",
-    category: "Website",
-    division: "digital",
-    description: "A full-featured e-commerce platform for an artisan bakery with dynamic order management.",
-    fullDescription: "Artisan e-commerce platform featuring custom cake specification options, date pickers, visual order tracking, and fluid checkout.",
-    tech: ["React", "Stripe API", "Tailwind CSS"],
-    image: "https://picsum.photos/seed/bakery/800/600",
+    id: "samaranna",
+    title: "Samaranna Luxury Marketplace",
+    client: "Samaranna Resorts",
+    category: "E-Commerce & Digital Experience",
+    division: "Design",
+    description: "Ultra-luxury booking engine and dynamic packaging experience for high-net-worth travellers with personalized concierge integrations.",
+    impactMetric: "$4.2M Bookings GMV",
+    image: "/assets/case-samaranna.jpg",
     link: "https://little-heart-bakes.base44.app/",
-    goals: ["Custom pastry options", "Frictionless mobile ordering", "Live inventory sync"],
-    metrics: [{ label: "Order Inquiry Lift", value: "+35%" }, { label: "Checkout Duration", value: "1.2s" }],
-    problemDetails: "The bakery lost hours handling manual order chats across WhatsApp.",
-    solutionBreakdown: "Engineered an interactive product configurator allowing custom text and cake tiers."
+    tags: ["Next.js", "Stripe Connect", "Tailwind CSS", "Micro-Interactions"]
+  },
+  {
+    id: "nutrigpt",
+    title: "NutriGPT Automated Assistant",
+    client: "HealthScale Bio",
+    category: "AI Landing Page & Funnel",
+    division: "Marketing",
+    description: "Conversion-optimized AI nutrition diagnostic engine that analyzes dietary inputs and generates personalized macro regimens in seconds.",
+    impactMetric: "18.5K Signups • 99 Lighthouse",
+    image: "https://picsum.photos/seed/nutrition/1200/800",
+    link: "https://nutrigpt-h37z.vercel.app/",
+    tags: ["Next.js", "Growth Loops", "AI Reasoning", "Framer Motion"]
+  },
+  {
+    id: "little-heart-bakes",
+    title: "Little Heart Bakes E-Store",
+    client: "Little Heart Bakes",
+    category: "E-Commerce & Brand",
+    division: "Design",
+    description: "Artisan confectionery e-commerce with visual 3D cake customization, live date scheduling, and frictionless WhatsApp order sync.",
+    impactMetric: "+42% Conversion Lift",
+    image: "https://picsum.photos/seed/bakery/1200/800",
+    link: "https://little-heart-bakes.base44.app/",
+    tags: ["Interactive 3D", "Cart Optimization", "Brand Systems"]
   },
   {
     id: "aurum-bookings",
-    title: "Aurum Bookings Platform",
-    category: "Software",
-    division: "labs",
-    description: "An AI-enhanced booking and resource management system for luxury operations.",
-    fullDescription: "A sophisticated platform using intelligent scheduling heuristics to optimize slot allocations, staff assignment, and client concierge services.",
-    tech: ["React", "Node.js", "PostgreSQL", "AI Engine"],
-    image: "https://picsum.photos/seed/booking/800/600",
+    title: "Aurum Executive Concierge",
+    client: "Aurum Global",
+    category: "Enterprise Cloud Software",
+    division: "Technology",
+    description: "AI-enhanced booking matrix and resource allocation engine managing multi-tier VIP scheduling with zero calendar collisions.",
+    impactMetric: "0 Double-Bookings • 99.99% Uptime",
+    image: "https://picsum.photos/seed/booking/1200/800",
     link: "https://aurum-bookings.vercel.app/login",
-    goals: ["Smart scheduling", "Multi-tier role management", "Zero double bookings"],
-    metrics: [{ label: "Efficiency Gain", value: "+45%" }, { label: "Latency", value: "35ms" }],
-    problemDetails: "High-end clients experienced calendar collisions and manual coordination delays.",
-    solutionBreakdown: "Created an automated allocation matrix that calculates buffer times and VIP preferences."
-  },
-  {
-    id: "vork-global",
-    title: "Vork Global Workforce Portal",
-    category: "Website",
-    division: "startup",
-    description: "A corporate platform for global workforce solutions and talent deployment.",
-    fullDescription: "A multinational platform for Vork Global, facilitating enterprise talent screening, compliance verification, and international workforce deployment.",
-    tech: ["React", "Next.js", "Tailwind CSS", "REST API"],
-    image: "https://picsum.photos/seed/corporate/800/600",
-    link: "https://vorkglobal.vercel.app/",
-    goals: ["Corporate branding", "Global compliance portal", "Fast candidate intake"],
-    metrics: [{ label: "Crawl Speed", value: "45ms" }, { label: "Client Inquiries", value: "+60%" }],
-    problemDetails: "Enterprise partners demanded an authoritative, SOC-grade corporate portal.",
-    solutionBreakdown: "Constructed structured division pathways with localized language routing."
-  },
-  {
-    id: "visage-ai",
-    title: "VisageAI - Face & Style Scanner",
-    category: "AI",
-    division: "labs",
-    description: "AI-powered face scanner identifying facial proportions to recommend optimal hairstyles.",
-    fullDescription: "A computer vision tool that computes facial geometry vector ratios in-browser without sending private photos to cloud servers.",
-    tech: ["Computer Vision", "Canvas Context", "Neural Vectors"],
-    image: "https://picsum.photos/seed/face/800/600",
-    link: "https://visageai-iota.vercel.app/",
-    goals: ["100% on-device vision", "Zero server GPU costs", "Instant styling lookup"],
-    metrics: [{ label: "Scan Time", value: "340ms" }, { label: "Accuracy", value: "94%" }],
-    problemDetails: "Users distrust uploading selfies to unknown remote databases.",
-    solutionBreakdown: "Calculated geometry metrics directly inside the browser using HTML5 Canvas mathematical vectors."
+    tags: ["PostgreSQL", "Node.js", "Role Architecture", "Heuristics"]
   }
 ];
 
-const VENTURES_DATA = [
+const INDUSTRIES = [
   {
-    id: "yeqari-crm",
-    title: "Yeqari CRM Lite",
-    tagline: "Privacy-first lightweight CRM for digital agencies and boutique studios.",
-    description: "A fast, local-first CRM featuring drag-and-drop pipeline stages and localized SQLite storage. Built to replace heavy, expensive sales platforms for small teams.",
-    status: "Active SaaS",
-    problemSolved: "Traditional CRMs are complex, slow, and store client data in centralized public clouds, causing privacy and cost overhead for boutique studios.",
-    solutionDetails: "A light, clean sales board that compiles client logs locally. Uses SQLite for zero latency, allowing teams to manage prospects, timeline dates, and proposals in one dashboard.",
-    expectedImpact: "Saves up to $150 per user monthly in licensing fees and cuts lead logging time by 60%.",
-    techStack: ["React", "Express", "SQLite", "Tailwind CSS"]
+    id: "education",
+    name: "Education",
+    headline: "Transforming the learning lifecycle through interactive digital ecosystems.",
+    description: "We build student portals, admissions automation pipelines, and high-engagement LMS architectures that connect learners, educators, and global institutions seamlessly.",
+    stats: "250K+ Students Reached",
+    tags: ["Admissions Automation", "Interactive LMS", "Applicant Funnels", "Global Verification"]
   },
   {
-    id: "kala-vision",
-    title: "Kala Vision Shelf Analyzer",
-    tagline: "AI compliance auditor for retail product placement using computer vision.",
-    description: "An experimental neural network pipeline that processes in-store security camera frames to detect out-of-stock items and compliance mistakes on shelves in real-time.",
-    status: "AI Experiment",
-    problemSolved: "Retail brands lose millions annually due to stock outs and incorrect shelf positioning that goes unnoticed by staff for hours.",
-    solutionDetails: "An object detection module trained to recognize specific packaging designs. It flags empty hooks or misaligned items and triggers instant notifications to store staff.",
-    expectedImpact: "Ensures 98% shelf compliance and increases overall sales velocity by preventing empty-shelf scenarios.",
-    techStack: ["Python", "PyTorch", "OpenCV", "FastAPI", "React"]
+    id: "government",
+    name: "Government & Enterprise",
+    headline: "Public-sector products engineered with zero-compromise security.",
+    description: "We support ministries, state departments, and large enterprises with modernizing legacy infrastructure, digitizing citizen services, and enforcing multi-tier compliance standards.",
+    stats: "99.99% Enterprise SLA",
+    tags: ["Citizen Experience", "High Concurrency", "ISO Compliance", "Zero-Trust Data"]
   },
   {
-    id: "pace-headless",
-    title: "Pace Headless Commerce Bridge",
-    tagline: "Next-gen Shopify API adapter compiling catalog queries in under 50ms.",
-    description: "A developer tool designed to bridge old monolith e-commerce systems to high-speed Next.js frontends without rebuilding the billing databases.",
-    status: "Concept Rebuild",
-    problemSolved: "Migrating legacy online stores to modern frontend platforms usually requires complex, risky, and expensive backend overhauls.",
-    solutionDetails: "Exposes a standardized schema query wrapper that maps old databases into modular React components, preserving orders and inventory systems intact.",
-    expectedImpact: "Boosts e-commerce page speeds by 300% and reduces rebuild migrations from months to days.",
-    techStack: ["Next.js", "GraphQL", "TypeScript", "Shopify API"]
+    id: "retail",
+    name: "Retail & E-Commerce",
+    headline: "Raising the bar for frictionless commerce and customer lifetime value.",
+    description: "From custom headless storefronts to real-time omnichannel inventory engines, we build commerce machines that convert curious browsers into compounding brand advocates.",
+    stats: "+38% Avg Conversion Lift",
+    tags: ["Headless Shopify / Next.js", "Stripe Architecture", "Dynamic Bundling", "Instant Checkout"]
   },
   {
-    id: "agent-desk",
-    title: "Agent Desk Support Hub",
-    tagline: "Collaborative workspaces for AI agents and support teams.",
-    description: "A customer ticket workspace coordinating multi-agent loops. Support agents can prompt research agents, translation modules, and auto-drafting tools side-by-side.",
-    status: "Prototype",
-    problemSolved: "Support teams struggle to research complex technical tickets under pressure, leading to long customer wait times and high churn.",
-    solutionDetails: "Orchestrates background tasks where agents retrieve text fragments from technical manuals (RAG) and generate response alternatives for agents to review.",
-    expectedImpact: "Reduces ticket resolution loops from 3 hours to under 3 minutes with 90% human approval on initial drafts.",
-    techStack: ["Node.js", "WebSockets", "Gemini API", "React"]
+    id: "fitness",
+    name: "Health & Fitness",
+    headline: "Connecting wellness enthusiasts through habit-forming digital interfaces.",
+    description: "We develop client apps, booking engines, telemetry health trackers, and coach-client communities that drive retention through psychological reward mechanics.",
+    stats: "14K Daily Active Users",
+    tags: ["Biometric Telemetry", "Class Schedulers", "Gamified Habits", "Zero-Leakage Privacy"]
   },
   {
-    id: "yeqari-cortex",
-    title: "Yeqari Cortex AI Layer",
-    tagline: "Unified AI orchestration and intelligence layer for enterprise workflows.",
-    description: "An advanced intelligence product layer designed to deploy secure LLM pipelines, Retrieval-Augmented Generation (RAG), and agentic workflows directly onto local infrastructure without training data leaks.",
-    status: "Active SaaS",
-    problemSolved: "Enterprises want to harness the power of LLMs and generative agents, but compliance rules and privacy concerns prevent sending sensitive corporate data to external APIs.",
-    solutionDetails: "A modular AI pipeline that bridges private local vector stores and databases with secure model endpoints, supporting real-time data ingestion, local memory, and multi-agent coordination.",
-    expectedImpact: "Eliminates public API leakage risks completely and lowers token processing expenses by 45% via local caching layers.",
-    techStack: ["Python", "FastAPI", "LangChain", "Vector DB", "React"]
+    id: "fintech",
+    name: "Fintech & Web3",
+    headline: "Architecting high-frequency financial platforms and asset pipelines.",
+    description: "Building automated ledger systems, payment routers, crypto wallets, and algorithmic scheduling engines that process mission-critical transactions flawlessly.",
+    stats: "$50M+ Volume Processed",
+    tags: ["Smart Contracts", "Idempotent Payments", "Fraud Heuristics", "Real-Time BI"]
   }
 ];
 
 export default function HomePage() {
-  const [showcaseIdx, setShowcaseIdx] = useState(0);
-  const [portfolioCategory, setPortfolioCategory] = useState("All");
-  const [venturesStatus, setVenturesStatus] = useState("All");
-  const [activeCaseStudy, setActiveCaseStudy] = useState<ProjectItem | null>(null);
-  const [proposalSubmitted, setProposalSubmitted] = useState(false);
-  const [formName, setFormName] = useState("");
-  const [formService, setFormService] = useState("");
+  const [activeIndustry, setActiveIndustry] = useState("education");
+  const [reelMode, setReelMode] = useState<"phone" | "widescreen">("phone");
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const heroContainerRef = useRef<HTMLDivElement | null>(null);
 
-  const currentShowcase = SELECTED_WORKS[showcaseIdx];
+  const phoneVideoSrc = "/assets/intro video/YEQARI_GLOBAL_brand_film_production_20261009145209.mp4";
+  const wideVideoSrc = "/assets/intro video/yeqari global hero reel.mp4";
 
-  // Auto rotate showcase
+  // Auto-play on mount
   useEffect(() => {
-    const timer = setInterval(() => {
-      setShowcaseIdx((prev) => (prev + 1) % SELECTED_WORKS.length);
-    }, 6000);
-    return () => clearInterval(timer);
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {
+        if (videoRef.current) {
+          videoRef.current.muted = true;
+          setIsMuted(true);
+          videoRef.current.play().catch(() => setIsPlaying(false));
+        }
+      });
+    }
   }, []);
 
-  const filteredProjects = portfolioCategory === "All"
-    ? ALL_PROJECTS
-    : ALL_PROJECTS.filter((p) => p.category === portfolioCategory);
+  const switchReelMode = (mode: "phone" | "widescreen") => {
+    setReelMode(mode);
+    if (videoRef.current) {
+      videoRef.current.src = mode === "phone" ? phoneVideoSrc : wideVideoSrc;
+      videoRef.current.load();
+      videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+    }
+  };
 
-  const filteredVentures = venturesStatus === "All"
-    ? VENTURES_DATA
-    : VENTURES_DATA.filter((v) => v.status === venturesStatus);
+  const togglePlay = () => {
+    if (!videoRef.current) return;
+    if (videoRef.current.paused) {
+      videoRef.current.play();
+      setIsPlaying(true);
+    } else {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    }
+  };
 
-  const handleProposalSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setProposalSubmitted(true);
+  const toggleMute = () => {
+    if (!videoRef.current) return;
+    const nextMuted = !videoRef.current.muted;
+    videoRef.current.muted = nextMuted;
+    setIsMuted(nextMuted);
+  };
+
+  const toggleFullscreen = () => {
+    if (!heroContainerRef.current) return;
+    if (!document.fullscreenElement) {
+      heroContainerRef.current.requestFullscreen?.().catch(() => {});
+      setIsFullscreen(true);
+    } else {
+      document.exitFullscreen?.().catch(() => {});
+      setIsFullscreen(false);
+    }
   };
 
   return (
-    <div className="pt-20">
+    <div className="bg-[#FFFFFF] text-slate-900 selection:bg-purple-200 selection:text-[#0D0422] min-h-screen">
       
-      {/* =====================================================================
-          HERO SECTION WITH 3D KINETIC CUBE
-          ===================================================================== */}
-      <section className="relative min-h-[92vh] flex items-center grid-bg overflow-hidden px-4 sm:px-6 lg:px-8">
-        {/* Ambient atmospheric glow orbs */}
-        <div className="absolute top-1/4 left-1/10 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-1/4 right-1/10 w-96 h-96 bg-fuchsia-600/10 rounded-full blur-[120px] pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto w-full py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          
-          {/* Hero Typography */}
-          <div className="text-left z-10">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-[#7C3AED] text-xs font-mono font-bold mb-8 shadow-sm">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" strokeWidth="2.5" />
+      {/* =========================================================================
+          1. HERO REEL SECTION (SURGE GLOBAL ARCHITECTURE WITH YEQARI BRAND)
+          ========================================================================= */}
+      <section className="pt-28 pb-12 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto">
+        
+        {/* Mode Switcher Tabs above Video Container */}
+        <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
+          <div className="flex items-center gap-2 bg-slate-100 p-1 rounded-full border border-slate-200">
+            <button
+              type="button"
+              onClick={() => switchReelMode("phone")}
+              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-['Outfit'] font-bold transition-all cursor-pointer ${
+                reelMode === "phone"
+                  ? "bg-[#0D0422] text-white shadow-md"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <rect x="5" y="2" width="14" height="20" rx="3" /><line x1="12" y1="18" x2="12.01" y2="18" />
               </svg>
-              <span>EST. 2024 • GLOBAL TECH STUDIO</span>
+              <span>Phone Hero Reel (Brand Film)</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => switchReelMode("widescreen")}
+              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-['Outfit'] font-bold transition-all cursor-pointer ${
+                reelMode === "widescreen"
+                  ? "bg-[#0D0422] text-white shadow-md"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <rect x="2" y="4" width="20" height="16" rx="2" /><path d="m10 9 5 3-5 3V9z" />
+              </svg>
+              <span>Widescreen Studio Reel</span>
+            </button>
+          </div>
+
+          <span className="font-mono text-xs font-bold text-slate-500 hidden sm:inline-flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#D946EF] animate-ping" />
+            <span>4K PRO RES PRODUCTION 2026</span>
+          </span>
+        </div>
+
+        {/* Hero Reel Video Container */}
+        <div
+          ref={heroContainerRef}
+          className={`relative overflow-hidden bg-[#0D0422] border border-slate-200/90 shadow-2xl shadow-purple-950/20 group transition-all duration-500 ${
+            reelMode === "phone"
+              ? "aspect-[9/16] max-w-[420px] mx-auto rounded-[36px] border-4 border-slate-800 shadow-[0_0_60px_rgba(124,58,237,0.35)]"
+              : "w-full aspect-[16/10] sm:aspect-[16/9] lg:aspect-[21/9] rounded-[24px] sm:rounded-[32px]"
+          }`}
+        >
+          {/* Ambient Video Backlight Glow */}
+          <div className="absolute -inset-4 bg-gradient-to-r from-[#7C3AED]/30 via-[#D946EF]/20 to-[#7C3AED]/30 rounded-[40px] blur-2xl -z-10 pointer-events-none" />
+
+          {/* Hero Video */}
+          <video
+            ref={videoRef}
+            onClick={togglePlay}
+            className="w-full h-full object-cover cursor-pointer"
+            autoPlay
+            loop
+            muted={isMuted}
+            playsInline
+            preload="auto"
+            poster="/assets/case-yeqari.jpg"
+            src={reelMode === "phone" ? phoneVideoSrc : wideVideoSrc}
+          >
+            <source src={phoneVideoSrc} type="video/mp4" />
+            <source src={wideVideoSrc} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+
+          {/* Floating Subtle Top Overlay Badge */}
+          <div className="absolute top-4 sm:top-6 left-4 sm:left-6 z-20 flex items-center gap-2.5 bg-black/40 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/15">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D946EF] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#D946EF]"></span>
+            </span>
+            <span className="font-['Outfit'] font-bold text-xs tracking-wider text-white">
+              YEQARI GLOBAL <span className="text-[#C084FC]">{reelMode === "phone" ? "PHONE REEL" : "STUDIO REEL"}</span>
+            </span>
+          </div>
+
+          {/* Floating Action Controls: Sound & Fullscreen */}
+          <div className="absolute top-4 sm:top-6 right-4 sm:right-6 z-20 flex items-center gap-2">
+            <button
+              type="button"
+              onClick={toggleMute}
+              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-bold backdrop-blur-md border transition-all duration-200 cursor-pointer ${
+                isMuted
+                  ? "bg-black/50 text-white border-white/20 hover:bg-black/70"
+                  : "bg-gradient-to-r from-[#7C3AED] to-[#D946EF] text-white border-white/40 shadow-lg shadow-purple-500/30"
+              }`}
+            >
+              {isMuted ? (
+                <>
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+                  </svg>
+                  <span>Sound Off</span>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-center gap-0.5 h-3">
+                    <span className="w-0.5 h-3 bg-white animate-[bounce_0.8s_infinite]" />
+                    <span className="w-0.5 h-2 bg-white animate-[bounce_0.6s_infinite_0.2s]" />
+                    <span className="w-0.5 h-3.5 bg-white animate-[bounce_0.7s_infinite_0.4s]" />
+                  </div>
+                  <span>Sound On</span>
+                </>
+              )}
+            </button>
+
+            <button
+              type="button"
+              onClick={toggleFullscreen}
+              className="p-2 rounded-full bg-black/50 hover:bg-[#7C3AED] text-white backdrop-blur-md border border-white/20 transition-all cursor-pointer"
+              title="Full Screen"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0 0l-5-5m5 11v4m0 0h-4m4 0l-5-5M4 16v4m0 0h4m-4 0l5-5" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Center Play/Pause button on hover */}
+          {!isPlaying && (
+            <div
+              onClick={togglePlay}
+              className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-[2px] cursor-pointer"
+            >
+              <div className="w-20 h-20 rounded-full bg-white/20 hover:bg-[#7C3AED] text-white flex items-center justify-center backdrop-blur-xl border border-white/30 shadow-2xl transition-all">
+                <svg className="w-8 h-8 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Hero Title & Subtitle Just Like Surge Global with YEQARI Logo Gradient */}
+        <div className="mt-12 sm:mt-16 lg:mt-20">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[84px] font-['Outfit'] font-black tracking-tight leading-[0.98] text-slate-950 max-w-6xl">
+            Best-in-class{" "}
+            <span className="bg-gradient-to-r from-[#7C3AED] via-[#C084FC] to-[#D946EF] bg-clip-text text-transparent">
+              design, marketing
+            </span>{" "}
+            and{" "}
+            <span className="bg-gradient-to-r from-[#7C3AED] via-[#C084FC] to-[#D946EF] bg-clip-text text-transparent">
+              technology
+            </span>
+          </h1>
+
+          <p className="mt-8 text-xl sm:text-2xl text-slate-600 max-w-3xl leading-relaxed">
+            <strong className="text-slate-900 font-bold">BUILT FOR MORE</strong> — Ambitious companies leverage our capabilities to ideate, build and scale exponential digital systems.
+          </p>
+
+          <div className="mt-10 flex flex-wrap items-center gap-4">
+            <Link
+              href="/contact"
+              className="px-8 py-4 rounded-full bg-gradient-to-r from-[#7C3AED] to-[#D946EF] hover:opacity-95 text-white font-bold text-base shadow-xl shadow-purple-600/25 transition-all hover:scale-105 flex items-center gap-2 group"
+            >
+              <span>Speak to our experts</span>
+              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </Link>
+
+            <Link
+              href="#capabilities"
+              className="px-8 py-4 rounded-full bg-white hover:bg-slate-50 text-slate-900 font-bold text-base border border-slate-200 transition-all hover:border-slate-400"
+            >
+              Explore Capabilities
+            </Link>
+
+            <Link
+              href="/startup"
+              className="px-6 py-4 rounded-full bg-purple-50 hover:bg-purple-100/80 text-[#7C3AED] font-bold text-base border border-purple-200/80 transition-all flex items-center gap-2"
+            >
+              <span className="w-2 h-2 rounded-full bg-[#D946EF] animate-pulse" />
+              <span>Not Another Startup Program</span>
+            </Link>
+          </div>
+        </div>
+
+      </section>
+
+      {/* =========================================================================
+          2. CLIENTS & TRUST TICKER
+          ========================================================================= */}
+      <section className="py-12 border-y border-slate-200/80 bg-slate-50/60">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-center font-mono text-xs uppercase tracking-widest text-slate-500 font-bold mb-8">
+            Trusted by ambitious teams & industry leaders worldwide
+          </p>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6 items-center justify-items-center opacity-80 hover:opacity-100 transition-opacity">
+            <span className="font-['Outfit'] font-black text-xl text-slate-700 tracking-wider">PEOPLE&apos;S BANK</span>
+            <span className="font-['Outfit'] font-black text-xl text-slate-700 tracking-widest">GOYA</span>
+            <span className="font-['Outfit'] font-black text-xl text-slate-700 tracking-wider">SAMARANNA</span>
+            <span className="font-['Outfit'] font-black text-xl text-slate-700 tracking-wide">SPEECHXYZ</span>
+            <span className="font-['Outfit'] font-black text-xl text-slate-700 tracking-wide">PICKHER</span>
+            <span className="font-['Outfit'] font-black text-xl text-slate-700 tracking-wide">AURUM GROUP</span>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          3. CORE CAPABILITIES (SURGE 3-COLUMN BENTO: DESIGN, MARKETING, TECHNOLOGY)
+          ========================================================================= */}
+      <section id="capabilities" className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto">
+        
+        <div className="mb-16 max-w-4xl">
+          <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#7C3AED] mb-3">
+            01 / CAPABILITIES
+          </p>
+          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-['Outfit'] font-black tracking-tight leading-[1.05] text-slate-950">
+            Ambitious companies leverage <br />
+            <span className="bg-gradient-to-r from-[#7C3AED] via-[#C084FC] to-[#D946EF] bg-clip-text text-transparent">
+              our capabilities to ideate, build and scale
+            </span>
+          </h2>
+        </div>
+
+        {/* 3 Column Capabilities Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          {/* Card 1: DESIGN */}
+          <div className="group relative bg-[#0D0422] rounded-[32px] p-8 sm:p-10 flex flex-col justify-between text-white border border-white/10 shadow-2xl overflow-hidden transition-all duration-300 hover:border-[#C084FC]/40 hover:-translate-y-1">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-[#7C3AED]/15 rounded-full blur-3xl pointer-events-none" />
+            
+            <div>
+              <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-[#C084FC] mb-8 font-mono font-bold text-sm">
+                01
+              </div>
+
+              <h3 className="text-3xl sm:text-4xl font-['Outfit'] font-black mb-4">
+                Design
+              </h3>
+
+              <p className="text-slate-300 text-base leading-relaxed mb-8">
+                Crafting iconic brand systems, human-centered UI/UX architectures, and captivating motion experiences that command industry attention.
+              </p>
+
+              {/* Capability Pills */}
+              <div className="flex flex-wrap gap-2 mb-10">
+                {["Branding", "Creative Design", "Motion Design", "Product Design", "Web Design", "UI/UX Audits", "Design Systems"].map((pill) => (
+                  <span
+                    key={pill}
+                    className="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-[#7C3AED]/40 text-xs font-semibold text-purple-200 border border-white/10 transition-colors"
+                  >
+                    {pill}
+                  </span>
+                ))}
+                <span className="px-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#7C3AED] to-[#D946EF] text-xs font-bold text-white">
+                  + More
+                </span>
+              </div>
             </div>
 
-            <h1 className="text-6xl sm:text-7xl lg:text-[108px] font-['Outfit'] font-black tracking-tight leading-[0.88] mb-8 text-slate-950">
-              YEQARI <br />
-              <span className="text-gradient-magenta">STUDIO</span>
-            </h1>
+            <Link
+              href="/services#design"
+              className="inline-flex items-center gap-2 text-[#C084FC] font-mono text-xs uppercase tracking-wider font-bold group-hover:text-white transition-colors"
+            >
+              <span>Explore Design Services</span>
+              <span>→</span>
+            </Link>
+          </div>
 
-            <p className="max-w-xl text-slate-600 text-lg sm:text-xl lg:text-2xl mb-10 leading-snug">
-              <strong className="text-slate-900 font-bold">BUILT FOR MORE</strong> — On a mission to help 1,000 small businesses scale up online and create a revolution to revaluate people&apos;s lives.
+          {/* Card 2: MARKETING */}
+          <div className="group relative bg-[#0D0422] rounded-[32px] p-8 sm:p-10 flex flex-col justify-between text-white border border-white/10 shadow-2xl overflow-hidden transition-all duration-300 hover:border-[#D946EF]/40 hover:-translate-y-1">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-[#D946EF]/15 rounded-full blur-3xl pointer-events-none" />
+            
+            <div>
+              <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-[#D946EF] mb-8 font-mono font-bold text-sm">
+                02
+              </div>
+
+              <h3 className="text-3xl sm:text-4xl font-['Outfit'] font-black mb-4">
+                Marketing
+              </h3>
+
+              <p className="text-slate-300 text-base leading-relaxed mb-8">
+                Data-backed growth engines, high-intent customer acquisition funnels, and precision SEO that turn digital curiosity into compounding ARR.
+              </p>
+
+              {/* Capability Pills */}
+              <div className="flex flex-wrap gap-2 mb-10">
+                {["Growth Strategy", "Performance Marketing", "SEO & Search Dominance", "Lead Nurturing", "Go-To-Market", "Conversion Optimization", "Content Engine"].map((pill) => (
+                  <span
+                    key={pill}
+                    className="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-[#D946EF]/40 text-xs font-semibold text-pink-200 border border-white/10 transition-colors"
+                  >
+                    {pill}
+                  </span>
+                ))}
+                <span className="px-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#7C3AED] to-[#D946EF] text-xs font-bold text-white">
+                  + More
+                </span>
+              </div>
+            </div>
+
+            <Link
+              href="/services#marketing"
+              className="inline-flex items-center gap-2 text-[#D946EF] font-mono text-xs uppercase tracking-wider font-bold group-hover:text-white transition-colors"
+            >
+              <span>Explore Marketing Services</span>
+              <span>→</span>
+            </Link>
+          </div>
+
+          {/* Card 3: TECHNOLOGY */}
+          <div className="group relative bg-[#0D0422] rounded-[32px] p-8 sm:p-10 flex flex-col justify-between text-white border border-white/10 shadow-2xl overflow-hidden transition-all duration-300 hover:border-[#7C3AED]/40 hover:-translate-y-1">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-[#7C3AED]/20 rounded-full blur-3xl pointer-events-none" />
+            
+            <div>
+              <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-[#7C3AED] mb-8 font-mono font-bold text-sm">
+                03
+              </div>
+
+              <h3 className="text-3xl sm:text-4xl font-['Outfit'] font-black mb-4">
+                Technology
+              </h3>
+
+              <p className="text-slate-300 text-base leading-relaxed mb-8">
+                Building resilient software, cloud-native Web & Mobile apps, enterprise AI/ML integrations, and secure data infrastructures that never slow down.
+              </p>
+
+              {/* Capability Pills */}
+              <div className="flex flex-wrap gap-2 mb-10">
+                {["Web & Mobile Apps", "AI & Machine Learning", "Data Engineering & BI", "Cloud Infrastructure", "Cyber Security", "API Platforms", "DevOps Pipelines"].map((pill) => (
+                  <span
+                    key={pill}
+                    className="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-[#7C3AED]/40 text-xs font-semibold text-purple-200 border border-white/10 transition-colors"
+                  >
+                    {pill}
+                  </span>
+                ))}
+                <span className="px-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#7C3AED] to-[#D946EF] text-xs font-bold text-white">
+                  + More
+                </span>
+              </div>
+            </div>
+
+            <Link
+              href="/services#technology"
+              className="inline-flex items-center gap-2 text-[#7C3AED] font-mono text-xs uppercase tracking-wider font-bold group-hover:text-white transition-colors"
+            >
+              <span>Explore Technology Services</span>
+              <span>→</span>
+            </Link>
+          </div>
+
+        </div>
+      </section>
+
+      {/* =========================================================================
+          4. SPOTLIGHT: NOT ANOTHER STARTUP PROGRAM
+          ========================================================================= */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto">
+        <div className="relative rounded-[36px] bg-gradient-to-br from-[#0D0422] via-[#14052E] to-[#2B075C] text-white p-8 sm:p-16 border border-purple-500/30 shadow-2xl overflow-hidden">
+          
+          {/* Ambient Glows */}
+          <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#D946EF]/20 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute bottom-0 left-10 w-96 h-96 bg-[#7C3AED]/30 rounded-full blur-[120px] pointer-events-none" />
+
+          <div className="relative z-10 max-w-4xl">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-[#7C3AED]/30 to-[#D946EF]/30 border border-[#D946EF]/50 text-xs font-mono font-bold tracking-widest text-[#C084FC] mb-6">
+              <span className="w-2 h-2 rounded-full bg-[#D946EF] animate-ping" />
+              <span>THE ZERO-TO-ONE VENTURE ENGINE</span>
+            </div>
+
+            <h2 className="text-4xl sm:text-6xl font-['Outfit'] font-black tracking-tight leading-[1.05] mb-6">
+              NOT ANOTHER STARTUP — <br />
+              <span className="bg-gradient-to-r from-[#7C3AED] via-[#C084FC] to-[#D946EF] bg-clip-text text-transparent">
+                Turn your raw idea into a live, market-validated venture.
+              </span>
+            </h2>
+
+            <p className="text-slate-300 text-lg sm:text-xl max-w-3xl leading-relaxed mb-10">
+              Most startup ideas die in pitch decks. The <strong>Not Another Startup</strong> program provides early founders, university innovators, and ambitious creators with 3 concrete technical execution pathways to launch in weeks — with zero equity traps.
             </p>
+
+            {/* 3 Concrete Pathways */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                <span className="font-mono text-xs text-[#C084FC] font-bold block mb-2">PATHWAY 01</span>
+                <h4 className="text-xl font-bold font-['Outfit'] mb-2">IDEA → MVP</h4>
+                <p className="text-sm text-slate-300">
+                  A high-velocity 4-week sprint building a functional, real-world prototype ready for early user signups and initial validation.
+                </p>
+              </div>
+
+              <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                <span className="font-mono text-xs text-[#D946EF] font-bold block mb-2">PATHWAY 02</span>
+                <h4 className="text-xl font-bold font-['Outfit'] mb-2">IDEA → ROADMAP</h4>
+                <p className="text-sm text-slate-300">
+                  Comprehensive architectural PRD, UX wireframe specifications, technical stack selection, and precision budget forecasting.
+                </p>
+              </div>
+
+              <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                <span className="font-mono text-xs text-[#7C3AED] font-bold block mb-2">PATHWAY 03</span>
+                <h4 className="text-xl font-bold font-['Outfit'] mb-2">IDEA → STARTUP</h4>
+                <p className="text-sm text-slate-300">
+                  Full zero-to-one co-engineering partnership: product development, growth architecture, GTM launch, and seed investor decks.
+                </p>
+              </div>
+            </div>
 
             <div className="flex flex-wrap items-center gap-4">
               <Link
-                href="/portfolio"
-                className="px-8 py-4 bg-[#0D0422] text-white rounded-full font-bold text-lg hover:bg-[#7C3AED] hover:scale-105 transition-all shadow-xl shadow-purple-900/20 flex items-center gap-2"
+                href="/startup"
+                className="px-8 py-4 rounded-full bg-gradient-to-r from-[#7C3AED] to-[#D946EF] hover:scale-105 text-white font-bold text-base shadow-xl shadow-purple-900/40 transition-all flex items-center gap-2"
               >
-                <span>View Portfolio</span>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span>Explore Startup Program</span>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </Link>
               <Link
                 href="/contact"
-                className="px-8 py-4 glass text-slate-900 rounded-full font-bold text-lg hover:bg-slate-100 transition-all border border-slate-200"
+                className="px-8 py-4 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-base border border-white/20 transition-all"
               >
-                Start Project
+                Apply for Founder Intake
               </Link>
             </div>
-          </div>
 
-          {/* Hero Reel Showcase */}
-          <div className="relative w-full">
-            <HeroReel />
           </div>
-
         </div>
       </section>
 
-      {/* =====================================================================
-          CORE CAPABILITIES BENTO SECTION
-          ===================================================================== */}
-      <section className="py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      {/* =========================================================================
+          5. EXPANSIVE AREAS OF EXPERTISE (INDUSTRIES TABS)
+          ========================================================================= */}
+      <section id="expertise" className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto">
+        
         <div className="mb-16">
-          <h2 className="text-5xl sm:text-7xl font-['Outfit'] font-black tracking-tight mb-4">
-            CORE <span className="text-slate-400">CAPABILITIES</span>
+          <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#7C3AED] mb-3">
+            02 / INDUSTRY VERTICALS
+          </p>
+          <h2 className="text-4xl sm:text-6xl font-['Outfit'] font-black tracking-tight text-slate-950 mb-4">
+            Expansive areas of expertise
           </h2>
-          <p className="text-slate-600 text-xl max-w-2xl">
-            Our expertise spans across the entire digital spectrum, from high-end web engineering to advanced AI integration.
+          <p className="text-slate-600 text-lg sm:text-xl max-w-2xl">
+            We provide customized digital solutions to help you capture market opportunities in a variety of complex industries.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-          {/* Bento 1: Web Engineering (8 cols) */}
-          <div className="md:col-span-8 bento-card p-10 flex flex-col justify-between min-h-[380px]">
-            <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none">
-              <svg className="w-64 h-64" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <polygon points="12 2 2 7 12 12 22 7 12 2" strokeWidth="1.5" />
-                <polyline points="2 17 12 22 22 17" strokeWidth="1.5" />
-                <polyline points="2 12 12 17 22 12" strokeWidth="1.5" />
-              </svg>
-            </div>
-            <div>
-              <div className="w-12 h-12 rounded-2xl bg-purple-100/80 text-[#7C3AED] flex items-center justify-center mb-6">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <polyline points="16 18 22 12 16 6" strokeWidth="2.5" />
-                  <polyline points="8 6 2 12 8 18" strokeWidth="2.5" />
-                </svg>
-              </div>
-              <h3 className="text-3xl font-['Outfit'] font-bold mb-4">Web Engineering</h3>
-              <p className="text-slate-600 text-lg max-w-md leading-relaxed">
-                Building lightning-fast, scalable web platforms using the most modern tech stacks available today: Next.js, React, and cloud native architectures.
-              </p>
-            </div>
-            <Link
-              href="/services"
-              className="inline-flex items-center gap-2 text-[#7C3AED] font-mono text-sm uppercase tracking-widest font-bold mt-8 group"
-            >
-              <span>Explore Tech</span>
-              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </Link>
-          </div>
-
-          {/* Bento 2: AI Integration (4 cols) */}
-          <div className="md:col-span-4 bento-card p-8 flex flex-col justify-between bg-purple-50/40 border-purple-200/60">
-            <div>
-              <div className="w-11 h-11 rounded-xl bg-purple-100 text-[#7C3AED] flex items-center justify-center mb-6">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-['Outfit'] font-bold mb-2">AI Integration</h3>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                Smart solutions powered by cutting-edge machine learning models, autonomous pipelines, and conversational agents.
-              </p>
-            </div>
-            <Link
-              href="/services"
-              className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center bg-white hover:bg-slate-950 hover:text-white transition-all mt-6"
-            >
-              ↗
-            </Link>
-          </div>
-
-          {/* Bento 3: Creative Digital (4 cols) */}
-          <div className="md:col-span-4 bento-card p-8 flex flex-col justify-between">
-            <div>
-              <div className="w-11 h-11 rounded-xl bg-pink-100 text-[#D946EF] flex items-center justify-center mb-6">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="10" strokeWidth="2" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m4.93 4.93 4.24 4.24M14.83 9.17l4.24-4.24M14.83 14.83l4.24 4.24M9.17 14.83l-4.24 4.24" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-['Outfit'] font-bold mb-2">Creative Digital</h3>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                Interactive experiences, bespoke branding identity, and WebGL animations that push the boundaries of modern browsers.
-              </p>
-            </div>
-            <Link
-              href="/portfolio"
-              className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center bg-white hover:bg-slate-950 hover:text-white transition-all mt-6"
-            >
-              ↗
-            </Link>
-          </div>
-
-          {/* Bento 4: Performance & Cloud Scale (8 cols, Cosmic Obsidian Theme) */}
-          <div className="md:col-span-8 bento-card p-10 flex flex-col justify-between min-h-[380px] bg-[#0D0422] text-white border-purple-500/30">
-            <div className="grid grid-cols-2 gap-8 mb-8">
-              <div>
-                <div className="text-6xl font-['Outfit'] font-black text-[#C084FC] mb-2">99%</div>
-                <div className="text-slate-400 font-mono text-xs uppercase tracking-wider">Performance Score</div>
-              </div>
-              <div>
-                <div className="text-6xl font-['Outfit'] font-black text-[#D946EF] mb-2">24/7</div>
-                <div className="text-slate-400 font-mono text-xs uppercase tracking-wider">Global Infrastructure</div>
-              </div>
-            </div>
-            <div>
-              <h4 className="text-2xl font-['Outfit'] font-bold mb-3">Ready to scale?</h4>
-              <p className="text-slate-300 text-base max-w-md mb-6 leading-relaxed">
-                Our infrastructure is engineered to handle millions of users with sub-second response times and zero downtime.
-              </p>
-              <Link
-                href="/contact"
-                className="px-6 py-3 rounded-full bg-gradient-to-r from-[#7C3AED] via-[#C084FC] to-[#D946EF] text-white font-bold text-sm inline-block shadow-lg"
-              >
-                Get Started
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* =====================================================================
-          SERVICES ARCHITECTURE (Three Dedicated Divisions)
-          ===================================================================== */}
-      <section id="services" className="py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-slate-200 scroll-mt-24">
-        <div className="mb-16">
-          <div className="text-[#7C3AED] font-mono text-xs uppercase tracking-[0.3em] font-bold mb-3">
-            Core Service Architecture
-          </div>
-          <h2 className="text-5xl sm:text-7xl font-['Outfit'] font-black tracking-tight leading-none mb-4">
-            THREE SPECIALIZED <br />
-            <span className="text-slate-400">DIVISIONS.</span>
-          </h2>
-          <p className="text-slate-600 text-lg sm:text-xl max-w-2xl leading-relaxed">
-            Every capability at YEQARI is delivered through dedicated specialized divisions. Every individual service has its own dedicated team and detailed architecture page.
-          </p>
-        </div>
-
-        {/* Division 01: IT Infrastructure (9 Services) */}
-        <div className="mb-24">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-6 mb-8">
-            <div>
-              <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#7C3AED] mb-1">
-                DIVISION 01
-              </div>
-              <h3 className="text-2xl sm:text-4xl font-extrabold font-['Outfit'] text-slate-900">
-                YEQARI IT INFRASTRUCTURE
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-600 mt-1">
-                The technology, development, and engineering backbone of YEQARI.
-              </p>
-            </div>
-            <Link href="/services#it-infrastructure" className="text-xs font-mono text-[#7C3AED] font-bold hover:underline">
-              View Division Overview →
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {divisionLists.itInfrastructure.map((item, idx) => (
-              <Link
-                key={item.slug}
-                href={`/services/${item.slug}`}
-                className="bg-white border border-slate-200 rounded-3xl p-6 hover:border-[#7C3AED] hover:shadow-xl transition-all group flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-3 text-xs font-mono text-slate-400 group-hover:text-[#7C3AED]">
-                    <span>0{idx + 1}</span>
-                    <span>→</span>
-                  </div>
-                  <h4 className="text-lg font-bold text-slate-900 group-hover:text-[#7C3AED] transition-colors mb-2">
-                    {item.name}
-                  </h4>
-                  <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                    {servicesData[item.slug]?.tagline || servicesData[item.slug]?.heroSummary.slice(0, 95) + "..."}
-                  </p>
-                </div>
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-400">
-                  <span>Dedicated Page</span>
-                  <span className="text-[#7C3AED] font-semibold group-hover:translate-x-1 transition-transform">Explore →</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* Division 02: YEQARI Digital (6 Services) */}
-        <div className="mb-24">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-6 mb-8">
-            <div>
-              <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#D946EF] mb-1">
-                DIVISION 02
-              </div>
-              <h3 className="text-2xl sm:text-4xl font-extrabold font-['Outfit'] text-slate-900">
-                YEQARI DIGITAL
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-600 mt-1">
-                Branding, marketing, content, and digital presence engineering.
-              </p>
-            </div>
-            <Link href="/services#digital" className="text-xs font-mono text-[#D946EF] font-bold hover:underline">
-              View Division Overview →
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {divisionLists.digital.map((item, idx) => (
-              <Link
-                key={item.slug}
-                href={`/services/${item.slug}`}
-                className="bg-white border border-slate-200 rounded-3xl p-6 hover:border-[#D946EF] hover:shadow-xl transition-all group flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-3 text-xs font-mono text-slate-400 group-hover:text-[#D946EF]">
-                    <span>0{idx + 1}</span>
-                    <span>→</span>
-                  </div>
-                  <h4 className="text-lg font-bold text-slate-900 group-hover:text-[#D946EF] transition-colors mb-2">
-                    {item.name}
-                  </h4>
-                  <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                    {servicesData[item.slug]?.tagline || servicesData[item.slug]?.heroSummary.slice(0, 95) + "..."}
-                  </p>
-                </div>
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-400">
-                  <span>Dedicated Page</span>
-                  <span className="text-[#D946EF] font-semibold group-hover:translate-x-1 transition-transform">Explore →</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* Division 03: YEQARI Academy (5 Programs) */}
-        <div>
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-6 mb-8">
-            <div>
-              <div className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 mb-1">
-                DIVISION 03
-              </div>
-              <h3 className="text-2xl sm:text-4xl font-extrabold font-['Outfit'] text-slate-900">
-                YEQARI ACADEMY
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-600 mt-1">
-                Education, corporate workshops, AI awareness, and youth innovation programs.
-              </p>
-            </div>
-            <Link href="/academy" className="text-xs font-mono text-emerald-600 font-bold hover:underline">
-              Visit Full Academy Hub →
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {divisionLists.academy.map((item, idx) => (
-              <Link
-                key={item.slug}
-                href={`/services/${item.slug}`}
-                className="bg-white border border-slate-200 rounded-3xl p-6 hover:border-emerald-500 hover:shadow-xl transition-all group flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-3 text-xs font-mono text-slate-400 group-hover:text-emerald-600">
-                    <span>0{idx + 1}</span>
-                    <span>→</span>
-                  </div>
-                  <h4 className="text-lg font-bold text-slate-900 group-hover:text-emerald-700 transition-colors mb-2">
-                    {item.name}
-                  </h4>
-                  <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                    {servicesData[item.slug]?.tagline || servicesData[item.slug]?.heroSummary.slice(0, 95) + "..."}
-                  </p>
-                </div>
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-400">
-                  <span>Dedicated Program</span>
-                  <span className="text-emerald-600 font-semibold group-hover:translate-x-1 transition-transform">Explore →</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-
-
-      {/* =====================================================================
-          SELECTED WORKS DIAL SECTION (Cloned from Beulex Sticky Dial)
-          ===================================================================== */}
-      <section className="py-28 bg-slate-50/60 border-y border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            
-            {/* Left Dial Controls */}
-            <div>
-              <div className="text-[#7C3AED] font-mono text-xs uppercase tracking-[0.3em] font-bold mb-4">
-                Selected Works
-              </div>
-              <h2 className="text-5xl sm:text-7xl font-['Outfit'] font-black tracking-tight leading-none mb-10">
-                OUR <br />
-                <span className="text-slate-400">PROJECTS</span>
-              </h2>
-
-              <div className="flex items-center gap-10 mb-8">
-                {/* Dial Circle Widget */}
-                <div className="relative w-36 h-36 rounded-full border border-slate-200 flex items-center justify-center bg-white shadow-sm shrink-0">
-                  <div
-                    className="absolute inset-0 rounded-full transition-transform duration-500"
-                    style={{ transform: `rotate(${showcaseIdx * 90}deg)` }}
-                  >
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-[#7C3AED] rounded-full shadow-[0_0_12px_rgba(124,58,237,0.6)]" />
-                  </div>
-                  <div className="text-5xl font-['Outfit'] font-black text-slate-950">
-                    0{showcaseIdx + 1}
-                  </div>
-                </div>
-
-                {/* Project Info */}
-                <div className="flex-1">
-                  <h3 className="text-3xl font-['Outfit'] font-bold mb-2 text-slate-900">
-                    {currentShowcase.title}
-                  </h3>
-                  <p className="text-slate-500 font-mono text-xs uppercase tracking-widest mb-6">
-                    {currentShowcase.category}
-                  </p>
-                  <div className="flex items-center gap-4">
-                    <a
-                      href={currentShowcase.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm font-bold text-slate-900 group"
-                    >
-                      <span>View Project</span>
-                      <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              {/* Number Buttons */}
-              <div className="flex gap-2">
-                {SELECTED_WORKS.map((item, idx) => (
-                  <button
-                    key={item.id}
-                    onClick={() => setShowcaseIdx(idx)}
-                    className={`w-11 h-11 rounded-full font-mono text-xs font-bold border transition-all ${
-                      showcaseIdx === idx
-                        ? "bg-[#0D0422] text-white border-[#0D0422] shadow-md"
-                        : "bg-white text-slate-600 border-slate-200 hover:border-slate-400"
-                    }`}
-                  >
-                    0{idx + 1}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Right Project Frame */}
-            <div className="relative aspect-[16/10] rounded-[36px] overflow-hidden border border-slate-200 p-2 bg-white shadow-xl">
-              <div className="w-full h-full rounded-[28px] overflow-hidden relative">
-                <img
-                  src={currentShowcase.image}
-                  alt={currentShowcase.title}
-                  className="w-full h-full object-cover transition-all duration-700 hover:scale-105"
-                />
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* =====================================================================
-          ABOUT THE STUDIO SECTION
-          ===================================================================== */}
-      <section id="about" className="py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="mb-16">
-          <div className="text-[#7C3AED] font-mono text-xs uppercase tracking-[0.3em] font-bold mb-3">
-            The Studio
-          </div>
-          <h2 className="text-5xl sm:text-7xl font-['Outfit'] font-black tracking-tight leading-none">
-            YEQARI <br />
-            <span className="text-slate-400">STUDIO</span>
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mb-20">
-          {/* Mission */}
-          <div className="md:col-span-8 bento-card p-10 flex flex-col justify-between min-h-[380px]">
-            <div>
-              <h3 className="text-3xl font-['Outfit'] font-bold mb-6">Our Mission</h3>
-              <p className="text-slate-600 text-xl leading-relaxed max-w-xl">
-                The mission of YEQARI GLOBAL is to help 1,000 small businesses scale up their business online, converting high-level technical expertise into direct market advantage.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-3 mt-8">
-              <span className="px-4 py-2 rounded-full bg-slate-100 font-mono text-xs uppercase tracking-wider text-slate-600">Innovation</span>
-              <span className="px-4 py-2 rounded-full bg-slate-100 font-mono text-xs uppercase tracking-wider text-slate-600">Creativity</span>
-              <span className="px-4 py-2 rounded-full bg-slate-100 font-mono text-xs uppercase tracking-wider text-slate-600">Performance</span>
-            </div>
-          </div>
-
-          {/* Vision */}
-          <div className="md:col-span-4 bento-card p-8 bg-purple-50/40 border-purple-200/60 flex flex-col justify-between">
-            <div>
-              <div className="w-12 h-12 rounded-xl bg-purple-100 text-[#7C3AED] flex items-center justify-center mb-6">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="10" strokeWidth="2" />
-                  <path d="m10 15 5-3-5-3v6Z" strokeWidth="2" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-['Outfit'] font-bold mb-3">Our Vision</h3>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                Create a revolution to revaluate people&apos;s lives through transformative, human-centered technology.
-              </p>
-            </div>
-            <div className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-[#7C3AED]">
-              ✓
-            </div>
-          </div>
-
-          {/* Founder Photo */}
-          <div className="md:col-span-5 bento-card min-h-[420px] overflow-hidden relative group">
-            <img
-              src="https://picsum.photos/seed/founder/800/1000"
-              alt="Dinusha Pushparajah"
-              className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0D0422] via-transparent to-transparent p-8 flex flex-col justify-end text-white">
-              <h3 className="text-3xl font-['Outfit'] font-bold">Dinusha Pushparajah</h3>
-              <p className="text-[#C084FC] font-mono text-xs uppercase tracking-widest">Founder & CEO</p>
-            </div>
-          </div>
-
-          {/* Founder Bio */}
-          <div className="md:col-span-7 bento-card p-10 flex flex-col justify-between">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 border border-purple-200 text-[#7C3AED] text-xs font-mono font-bold mb-6">
-                <span>MEET THE FOUNDER</span>
-              </div>
-              <p className="text-slate-700 text-lg leading-relaxed mb-6">
-                YEQARI GLOBAL was founded by Dinusha Pushparajah, a young evolving Entrepreneur. Dinusha is the driving force behind YEQARI GLOBAL and the founder of <strong>SLMC² (Sri Lanka Mathematical Circle)</strong>.
-              </p>
-              <div className="space-y-3 text-sm font-semibold text-slate-600 mb-6">
-                <div className="flex items-center gap-3">
-                  <span className="text-[#7C3AED]">✓</span> Startup Mindset & Agile Execution
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-[#7C3AED]">✓</span> Impact-Driven Engineering
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-[#7C3AED]">✓</span> Creative Digital Problem Solving
-                </div>
-              </div>
-
-              {/* SLMC² Card Showcase with Official Logo */}
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-center gap-4">
-                <div className="w-16 h-16 rounded-xl bg-white border border-slate-200 p-1.5 shrink-0 flex items-center justify-center shadow-sm">
-                  <img src="/assets/slmc-logo.jpg" alt="SLMC² Sri Lanka Mathematical Circle" className="w-full h-full object-contain" />
-                </div>
-                <div>
-                  <div className="text-[10px] font-mono font-bold text-slate-500 uppercase tracking-widest">
-                    FOUNDER-LED MOVEMENT
-                  </div>
-                  <div className="text-sm font-bold text-slate-900 font-['Outfit']">
-                    SLMC² — Sri Lanka Mathematical Circle
-                  </div>
-                  <a
-                    href="https://chat.whatsapp.com/BbKNlFjHcUQ2uBucvWzjXX"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs font-semibold text-[#7C3AED] hover:underline flex items-center gap-1 mt-0.5"
-                  >
-                    <span>Join Mathematical Circle WhatsApp</span>
-                    <span>↗</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 text-sm font-bold text-slate-900 hover:text-[#7C3AED] transition-colors mt-8"
-            >
-              <span>Work with Dinusha</span>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </Link>
-          </div>
-        </div>
-
-        {/* Technical Stack */}
-        <div className="mb-24">
-          <h3 className="text-3xl sm:text-4xl font-['Outfit'] font-bold mb-8">
-            TECHNICAL <span className="text-slate-400">STACK</span>
-          </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
-            {["TypeScript", "React", "Next.js", "Node.js", "Python", "Three.js", "Tailwind CSS", "PostgreSQL", "Docker", "AWS"].map((tech) => (
-              <div
-                key={tech}
-                className="bento-card p-6 text-center font-mono text-sm font-bold uppercase tracking-widest text-slate-700 hover:bg-slate-950 hover:text-white transition-all cursor-default"
-              >
-                {tech}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* =====================================================================
-          PORTFOLIO SHOWCASE (24 Curated Projects with Filters)
-          ===================================================================== */}
-      <section id="portfolio" className="py-28 bg-slate-50/70 border-y border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 text-[#7C3AED] font-mono text-xs font-bold uppercase tracking-widest mb-4 shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-[#7C3AED]" />
-              <span>YEQARI GROUP PORTFOLIO</span>
-            </div>
-            <h2 className="text-4xl sm:text-6xl font-['Outfit'] font-black tracking-tight mb-4">
-              Featured <span className="text-gradient-magenta">Works</span>
-            </h2>
-            <p className="text-slate-600 text-lg max-w-2xl mx-auto">
-              Explore solutions across our primary divisions: Yeqari Digital, Yeqari Labs, and Yeqari Startup.
-            </p>
-          </div>
-
-          {/* Category Filter */}
-          <div className="flex justify-center gap-2 flex-wrap mb-12">
-            {["All", "Website", "AI", "Branding", "Software", "Marketing"].map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setPortfolioCategory(cat)}
-                className={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all border ${
-                  portfolioCategory === cat
-                    ? "bg-[#0D0422] text-white border-[#0D0422] shadow-md"
-                    : "bg-white text-slate-600 border-slate-200 hover:border-slate-400"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          {/* Projects Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProjects.map((p) => (
-              <div key={p.id} className="bento-card p-4 flex flex-col justify-between">
-                <div>
-                  <div className="aspect-[16/10] rounded-2xl overflow-hidden mb-5 relative group">
-                    <img
-                      src={p.image}
-                      alt={p.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm font-mono text-[10px] font-bold uppercase tracking-wider text-[#7C3AED] shadow-sm">
-                      {p.category}
-                    </span>
-                  </div>
-
-                  <div className="flex flex-wrap gap-1.5 mb-3">
-                    {p.tech.map((t) => (
-                      <span key={t} className="px-2 py-0.5 rounded bg-slate-100 font-mono text-[10px] text-slate-500">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-
-                  <h3 className="text-xl font-['Outfit'] font-bold mb-2 text-slate-900 leading-snug">
-                    {p.title}
-                  </h3>
-                  <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                    {p.description}
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-between gap-3 pt-4 border-t border-slate-100 mt-2">
-                  <button
-                    onClick={() => setActiveCaseStudy(p)}
-                    className="flex-1 py-2 px-3 rounded-full text-xs font-bold uppercase tracking-wider bg-slate-100 hover:bg-slate-200 text-slate-800 text-center transition-colors"
-                  >
-                    Case Study
-                  </button>
-                  {p.link !== "#" && (
-                    <a
-                      href={p.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="py-2 px-4 rounded-full text-xs font-bold uppercase tracking-wider bg-[#0D0422] text-white hover:bg-[#7C3AED] transition-colors"
-                    >
-                      Live Demo ↗
-                    </a>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-
-        </div>
-      </section>
-
-      {/* =====================================================================
-          VENTURES LAB (Incubating Internal Products)
-          ===================================================================== */}
-      <section id="ventures" className="py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-50 text-[#7C3AED] font-mono text-xs font-bold uppercase tracking-widest mb-4">
-            <span>YEQARI VENTURES</span>
-          </div>
-          <h2 className="text-4xl sm:text-6xl font-['Outfit'] font-black tracking-tight mb-4">
-            Incubating the <span className="text-gradient-magenta">Future</span>
-          </h2>
-          <p className="text-slate-600 text-lg max-w-2xl mx-auto">
-            We don&apos;t just build software for clients — we design and launch our own internal SaaS platforms and AI tools.
-          </p>
-        </div>
-
-        <div className="flex justify-center gap-2 flex-wrap mb-12">
-          {["All", "Active SaaS", "AI Experiment", "Concept Rebuild", "Prototype"].map((st) => (
+        {/* Industry Navigation Tabs */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-12 border-b border-slate-200">
+          {INDUSTRIES.map((ind) => (
             <button
-              key={st}
-              onClick={() => setVenturesStatus(st)}
-              className={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all border ${
-                venturesStatus === st
-                  ? "bg-[#0D0422] text-white border-[#0D0422] shadow-md"
-                  : "bg-white text-slate-600 border-slate-200 hover:border-slate-400"
+              key={ind.id}
+              onClick={() => setActiveIndustry(ind.id)}
+              className={`px-6 py-3 rounded-full text-sm font-['Outfit'] font-bold transition-all whitespace-nowrap cursor-pointer ${
+                activeIndustry === ind.id
+                  ? "bg-[#0D0422] text-white shadow-md shadow-purple-900/20 scale-105"
+                  : "bg-slate-100 hover:bg-slate-200 text-slate-700"
               }`}
             >
-              {st}
+              {ind.name}
             </button>
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {filteredVentures.map((v) => (
-            <div key={v.id} className="bento-card p-8 flex flex-col justify-between">
-              <div>
-                <div className="flex justify-between items-start gap-4 mb-4">
-                  <div>
-                    <h3 className="text-2xl font-['Outfit'] font-bold text-slate-900">{v.title}</h3>
-                    <div className="text-xs font-medium italic text-slate-500 mt-1">{v.tagline}</div>
-                  </div>
-                  <span className="px-3 py-1 rounded-full bg-purple-100 text-[#7C3AED] font-mono text-[10px] font-bold uppercase tracking-wider shrink-0">
-                    {v.status}
-                  </span>
-                </div>
+        {/* Selected Industry Detail Card */}
+        {(() => {
+          const selected = INDUSTRIES.find((i) => i.id === activeIndustry) || INDUSTRIES[0];
+          return (
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-slate-50 rounded-[32px] p-8 sm:p-14 border border-slate-200">
+              
+              <div className="lg:col-span-7">
+                <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#7C3AED] mb-3 block">
+                  {selected.name} FOCUS
+                </span>
+                <h3 className="text-3xl sm:text-5xl font-['Outfit'] font-bold text-slate-950 mb-6 leading-tight">
+                  {selected.headline}
+                </h3>
+                <p className="text-slate-600 text-lg leading-relaxed mb-8">
+                  {selected.description}
+                </p>
 
-                <p className="text-slate-600 text-sm leading-relaxed mb-6">{v.description}</p>
-
-                <div className="bg-slate-50 rounded-2xl p-4 mb-6 text-xs space-y-3">
-                  <div>
-                    <div className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#7C3AED] mb-1">The Problem</div>
-                    <div className="text-slate-700">{v.problemSolved}</div>
-                  </div>
-                  <div>
-                    <div className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#7C3AED] mb-1">Our Solution</div>
-                    <div className="text-slate-700">{v.solutionDetails}</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 text-xs font-bold text-emerald-600 mb-6">
-                  <span>📈 Expected Impact:</span>
-                  <span>{v.expectedImpact}</span>
-                </div>
-
-                <div className="flex flex-wrap gap-1.5 mb-6">
-                  {v.techStack.map((tech) => (
-                    <span key={tech} className="px-2.5 py-1 rounded bg-white border border-slate-200 font-mono text-[10px] text-slate-600">
-                      {tech}
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {selected.tags.map((t) => (
+                    <span
+                      key={t}
+                      className="px-3.5 py-1.5 rounded-full bg-white text-slate-800 text-xs font-mono font-bold border border-slate-200"
+                    >
+                      {t}
                     </span>
                   ))}
                 </div>
+
+                <div className="flex items-center gap-6">
+                  <Link
+                    href="/contact"
+                    className="px-6 py-3 rounded-full bg-[#0D0422] hover:bg-[#7C3AED] text-white font-bold text-sm transition-all"
+                  >
+                    Build for {selected.name} →
+                  </Link>
+                  <span className="font-mono text-xs font-bold text-slate-500">
+                    Proven in Production
+                  </span>
+                </div>
               </div>
 
-              <Link
-                href="/contact"
-                className="w-full py-3 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-900 font-bold text-xs uppercase tracking-wider text-center transition-colors block"
-              >
-                Inquire About Product ↗
-              </Link>
+              <div className="lg:col-span-5 flex flex-col justify-center items-center p-8 bg-white rounded-3xl border border-slate-200 text-center shadow-lg">
+                <span className="font-mono text-xs uppercase tracking-widest text-slate-400 font-bold mb-2">
+                  VERIFIED IMPACT
+                </span>
+                <div className="text-4xl sm:text-5xl font-['Outfit'] font-black bg-gradient-to-r from-[#7C3AED] to-[#D946EF] bg-clip-text text-transparent mb-4">
+                  {selected.stats}
+                </div>
+                <p className="text-slate-500 text-sm max-w-xs leading-relaxed">
+                  Engineered with end-to-end security compliance, high-availability microservices, and dedicated analytics.
+                </p>
+              </div>
+
+            </div>
+          );
+        })()}
+
+      </section>
+
+      {/* =========================================================================
+          6. SELECTED WORK / CASE STUDIES (SURGE STRUCTURE)
+          ========================================================================= */}
+      <section id="work" className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto bg-slate-50/50 rounded-[40px] my-12 border border-slate-100">
+        
+        <div className="mb-16 flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+          <div>
+            <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#7C3AED] mb-3">
+              03 / PROVEN CASE STUDIES
+            </p>
+            <h2 className="text-4xl sm:text-6xl font-['Outfit'] font-black tracking-tight text-slate-950">
+              Work that moves the needle
+            </h2>
+          </div>
+          <Link
+            href="/work"
+            className="inline-flex items-center gap-2 text-sm font-mono font-bold uppercase tracking-wider text-[#7C3AED] hover:text-[#D946EF] transition-colors"
+          >
+            <span>Browse All Work (30+ Projects)</span>
+            <span>→</span>
+          </Link>
+        </div>
+
+        {/* Case Studies Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {PROJECTS.map((project) => (
+            <div
+              key={project.id}
+              className="group bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-purple-300 transition-all duration-300 flex flex-col justify-between"
+            >
+              <div>
+                {/* Image Frame */}
+                <div className="relative aspect-[16/10] overflow-hidden bg-slate-900">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute top-3 left-3 bg-[#0D0422]/80 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-mono text-[#C084FC] font-bold border border-white/10">
+                    {project.category}
+                  </div>
+                </div>
+
+                {/* Details */}
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-mono text-xs font-bold text-slate-400 uppercase">
+                      {project.client}
+                    </span>
+                    <span className="text-xs font-mono font-extrabold text-[#7C3AED] bg-purple-50 px-2.5 py-0.5 rounded-full">
+                      {project.impactMetric}
+                    </span>
+                  </div>
+
+                  <h3 className="text-2xl font-['Outfit'] font-bold text-slate-950 mb-3 group-hover:text-[#7C3AED] transition-colors">
+                    {project.title}
+                  </h3>
+
+                  <p className="text-slate-600 text-sm leading-relaxed mb-6">
+                    {project.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-[11px] font-mono font-medium px-2 py-0.5 bg-slate-100 text-slate-600 rounded-md"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-6 pt-0 border-t border-slate-100 mt-4 flex items-center justify-between">
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-slate-900 group-hover:text-[#7C3AED] transition-colors"
+                >
+                  <span>Launch Live Site</span>
+                  <span>↗</span>
+                </a>
+                <span className="text-xs font-mono text-slate-400">{project.division}</span>
+              </div>
+
             </div>
           ))}
         </div>
+
       </section>
 
-      {/* =====================================================================
-          PRICING PACKAGES & ESTIMATES
-          ===================================================================== */}
-      <section id="packages" className="py-28 bg-slate-50/70 border-y border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 text-[#7C3AED] font-mono text-xs font-bold uppercase tracking-widest mb-4 shadow-sm">
-              <span>Transparent Pricing</span>
-            </div>
-            <h2 className="text-4xl sm:text-6xl font-['Outfit'] font-black tracking-tight mb-4">
-              Digital <span className="text-gradient-magenta">Packages</span>
-            </h2>
-            <p className="text-slate-600 text-lg max-w-2xl mx-auto">
-              Choose the perfect plan for your business growth. From simple starters to complex enterprise solutions.
+      {/* =========================================================================
+          7. TRUSTED PARTNERSHIPS & TESTIMONIALS
+          ========================================================================= */}
+      <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto">
+        <div className="mb-16 text-center max-w-3xl mx-auto">
+          <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#7C3AED] mb-3">
+            04 / TESTIMONIALS
+          </p>
+          <h2 className="text-4xl sm:text-6xl font-['Outfit'] font-black tracking-tight text-slate-950 mb-4">
+            Trusted partnerships and successful collaborations
+          </h2>
+          <p className="text-slate-600 text-lg sm:text-xl">
+            We’re true partners — not vendors. Our relationships with our clients are long term, high-trust, and value-compounding.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <div className="bg-slate-50 p-8 sm:p-10 rounded-3xl border border-slate-200 flex flex-col justify-between">
+            <p className="text-slate-700 text-base leading-relaxed mb-8 italic">
+              &ldquo;The YEQARI team has done a fantastic job getting us to a position where we have a live pipeline of data coming into the organization, helping us make real-time decisions. This allows us to move away from retroactive thinking and focus on tackling exponential business opportunities.&rdquo;
             </p>
+            <div>
+              <div className="font-['Outfit'] font-bold text-slate-950 text-lg">Andrew McKee</div>
+              <div className="font-mono text-xs text-[#7C3AED] font-bold">Chief Information Officer (CIO)</div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            
-            {/* Starter */}
-            <div className="bento-card p-8 flex flex-col justify-between">
-              <div>
-                <h3 className="text-2xl font-['Outfit'] font-bold mb-2">Starter Website</h3>
-                <p className="text-xs text-slate-500 mb-6">Small businesses, personal brands, small shops.</p>
-                <div className="mb-6">
-                  <div className="font-mono text-xs text-slate-400 uppercase">Starting from</div>
-                  <div className="text-3xl font-['Outfit'] font-black text-slate-950">Rs 45,000</div>
-                  <div className="text-xs text-slate-400 italic">LKR 30,000 – 60,000</div>
-                </div>
-                <div className="space-y-2.5 text-xs text-slate-600">
-                  <div>✓ 3–5 Professional Pages</div>
-                  <div>✓ Mobile Responsive Design</div>
-                  <div>✓ Contact Form Integration</div>
-                  <div>✓ Social Media Links</div>
-                  <div>✓ Basic SEO Setup</div>
-                  <div>✓ 1 Business Email Account</div>
-                  <div>✓ Free Domain (1 Year)</div>
-                  <div>✓ Free Hosting (1 Year)</div>
-                </div>
-              </div>
-              <Link
-                href="/contact"
-                className="w-full mt-8 py-3 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-900 font-bold text-xs uppercase tracking-wider text-center transition-colors block"
-              >
-                Get Started
-              </Link>
+          <div className="bg-slate-50 p-8 sm:p-10 rounded-3xl border border-slate-200 flex flex-col justify-between">
+            <p className="text-slate-700 text-base leading-relaxed mb-8 italic">
+              &ldquo;I’ve largely felt like YEQARI is a natural extension of our team and our business. It feels like we’re working together as one unit with one common goal, and I think that’s critical in a venture. I feel like we have a dedicated engineering team just as passionate about delivery as we are.&rdquo;
+            </p>
+            <div>
+              <div className="font-['Outfit'] font-bold text-slate-950 text-lg">Luke Jecks</div>
+              <div className="font-mono text-xs text-[#D946EF] font-bold">Co-founder &amp; CEO</div>
             </div>
-
-            {/* Business (POPULAR) */}
-            <div className="bento-card p-8 border-purple-300 shadow-xl shadow-purple-500/10 relative flex flex-col justify-between">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 px-4 py-1 rounded-b-xl bg-[#7C3AED] text-white font-mono text-[10px] font-bold uppercase tracking-widest">
-                Most Popular
-              </div>
-              <div>
-                <h3 className="text-2xl font-['Outfit'] font-bold mb-2">Business Website</h3>
-                <p className="text-xs text-slate-500 mb-6">Growing companies, restaurants, agencies.</p>
-                <div className="mb-6">
-                  <div className="font-mono text-xs text-slate-400 uppercase">Starting from</div>
-                  <div className="text-3xl font-['Outfit'] font-black text-[#7C3AED]">Rs 95,000</div>
-                  <div className="text-xs text-slate-400 italic">LKR 70,000 – 150,000</div>
-                </div>
-                <div className="space-y-2.5 text-xs text-slate-600">
-                  <div>✓ 8–15 Custom Pages</div>
-                  <div>✓ Custom UI/UX Design</div>
-                  <div>✓ CMS / Blog & News Section</div>
-                  <div>✓ Advanced SEO Optimization</div>
-                  <div>✓ Google Analytics Setup</div>
-                  <div>✓ WhatsApp Integration</div>
-                  <div>✓ 5 Business Email Accounts</div>
-                  <div>✓ High Speed Optimization</div>
-                </div>
-              </div>
-              <Link
-                href="/contact"
-                className="w-full mt-8 py-3 rounded-full bg-gradient-to-r from-[#7C3AED] via-[#C084FC] to-[#D946EF] text-white font-bold text-xs uppercase tracking-wider text-center transition-transform hover:scale-105 block shadow-md"
-              >
-                Get Started
-              </Link>
-            </div>
-
-            {/* E-Commerce */}
-            <div className="bento-card p-8 flex flex-col justify-between">
-              <div>
-                <h3 className="text-2xl font-['Outfit'] font-bold mb-2">E-Commerce Store</h3>
-                <p className="text-xs text-slate-500 mb-6">Online retailers & digital merchants.</p>
-                <div className="mb-6">
-                  <div className="font-mono text-xs text-slate-400 uppercase">Starting from</div>
-                  <div className="text-3xl font-['Outfit'] font-black text-slate-950">Rs 220,000</div>
-                  <div className="text-xs text-slate-400 italic">LKR 150,000 – 350,000+</div>
-                </div>
-                <div className="space-y-2.5 text-xs text-slate-600">
-                  <div>✓ Full Product Catalog</div>
-                  <div>✓ Shopping Cart & Checkout</div>
-                  <div>✓ PayHere / Stripe Gateway</div>
-                  <div>✓ Order Management System</div>
-                  <div>✓ Product Search & Filters</div>
-                  <div>✓ Shipping Calculator</div>
-                  <div>✓ Customer Account Vault</div>
-                  <div>✓ Admin Sales Dashboard</div>
-                </div>
-              </div>
-              <Link
-                href="/contact"
-                className="w-full mt-8 py-3 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-900 font-bold text-xs uppercase tracking-wider text-center transition-colors block"
-              >
-                Get Started
-              </Link>
-            </div>
-
-            {/* Premium Web App */}
-            <div className="bento-card p-8 flex flex-col justify-between">
-              <div>
-                <h3 className="text-2xl font-['Outfit'] font-bold mb-2">Premium Web App</h3>
-                <p className="text-xs text-slate-500 mb-6">Startups, SaaS, enterprise platforms.</p>
-                <div className="mb-6">
-                  <div className="font-mono text-xs text-slate-400 uppercase">Starting from</div>
-                  <div className="text-3xl font-['Outfit'] font-black text-slate-950">Rs 350,000+</div>
-                  <div className="text-xs text-slate-400 italic">LKR 350,000 – 1M+</div>
-                </div>
-                <div className="space-y-2.5 text-xs text-slate-600">
-                  <div>✓ Custom UI/UX Design System</div>
-                  <div>✓ Full-Stack Engineering</div>
-                  <div>✓ Scalable Database Architecture</div>
-                  <div>✓ Secure User Auth & Roles</div>
-                  <div>✓ Third-party API Integrations</div>
-                  <div>✓ Custom Admin Dashboards</div>
-                  <div>✓ AI / LLM Model Integration</div>
-                  <div>✓ Enterprise Cloud Deployment</div>
-                </div>
-              </div>
-              <Link
-                href="/contact"
-                className="w-full mt-8 py-3 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-900 font-bold text-xs uppercase tracking-wider text-center transition-colors block"
-              >
-                Get Started
-              </Link>
-            </div>
-
           </div>
 
-          {/* Sri Lanka Market Localizations & Transparent Payment Policy */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bento-card p-8">
-              <h4 className="text-xl font-['Outfit'] font-bold mb-4">Optimized for Sri Lanka</h4>
-              <p className="text-slate-600 text-sm mb-6 leading-relaxed">
-                Every package includes essential localized integrations to ensure your business thrives in the Sri Lankan digital landscape.
-              </p>
-              <div className="grid grid-cols-2 gap-4 text-xs font-semibold text-slate-700">
-                <div>💬 WhatsApp Float Integration</div>
-                <div>🇱🇰 Sinhala & Tamil Support</div>
-                <div>💳 PayHere Payment Gateway</div>
-                <div>📍 Google Maps Verification</div>
-                <div>📱 Mobile-First 4G Caching</div>
-                <div>⚡ Sub-Second Speed Delivery</div>
-              </div>
-            </div>
-
-            <div className="bento-card p-8 bg-purple-50/50 border-purple-200">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-100 text-[#7C3AED] font-mono text-[10px] font-bold uppercase tracking-wider mb-4">
-                TRANSPARENT PAYMENT
-              </div>
-              <h4 className="text-xl font-['Outfit'] font-bold mb-2">50/50 Milestone Structure</h4>
-              <p className="text-slate-700 text-sm leading-relaxed mb-4">
-                To guarantee complete project security and client confidence, we follow the established industry standard: <strong>50% upfront payment</strong> to commence sprint execution, and <strong>50% upon successful demonstration and production release</strong>.
-              </p>
-              <div className="text-xs text-slate-500">
-                No hidden charges. Full source code and intellectual property transferred upon completion.
-              </div>
+          <div className="bg-slate-50 p-8 sm:p-10 rounded-3xl border border-slate-200 flex flex-col justify-between">
+            <p className="text-slate-700 text-base leading-relaxed mb-8 italic">
+              &ldquo;Every week I would look forward to what other discoveries they engineered, performance benchmarks they achieved, and architectural efficiencies they deployed. Working with YEQARI raised our entire organization&apos;s technical standard.&rdquo;
+            </p>
+            <div>
+              <div className="font-['Outfit'] font-bold text-slate-950 text-lg">Husam Al-Saleh</div>
+              <div className="font-mono text-xs text-[#7C3AED] font-bold">Deputy CEO • Enterprise Operations</div>
             </div>
           </div>
 
         </div>
       </section>
 
-      {/* =====================================================================
-          MEGA "LET'S BUILD" CTA
-          ===================================================================== */}
-      <section className="py-32 bg-[#0D0422] text-white text-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(124,58,237,0.15),transparent_70%)] pointer-events-none" />
-        <div className="max-w-4xl mx-auto px-4 relative z-10">
-          <h2 className="text-6xl sm:text-8xl lg:text-[120px] font-['Outfit'] font-black tracking-tight leading-[0.85] mb-8">
-            LET&apos;S <br />
-            <span className="text-gradient-magenta">BUILD</span>
-          </h2>
-          <p className="text-slate-300 text-xl sm:text-2xl max-w-xl mx-auto mb-12 leading-relaxed">
-            Ready to transform your digital presence? We&apos;re currently accepting new client partnerships and ambitious builds.
-          </p>
+      {/* =========================================================================
+          8. IMPACT & METRICS ("WE FOCUS ON VALUE AND IMPACT")
+          ========================================================================= */}
+      <section className="py-20 bg-[#0D0422] text-white">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="mb-14 text-center">
+            <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#C084FC] mb-2">
+              05 / MEASURABLE RESULTS
+            </p>
+            <h2 className="text-4xl sm:text-6xl font-['Outfit'] font-black tracking-tight">
+              We focus on{" "}
+              <span className="bg-gradient-to-r from-[#7C3AED] via-[#C084FC] to-[#D946EF] bg-clip-text text-transparent">
+                value and impact
+              </span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            
+            <div className="p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <div className="text-5xl sm:text-6xl lg:text-7xl font-['Outfit'] font-black bg-gradient-to-r from-[#7C3AED] to-[#C084FC] bg-clip-text text-transparent mb-2">
+                400+
+              </div>
+              <div className="font-mono text-sm text-slate-300 font-bold">
+                Specialists in Network
+              </div>
+            </div>
+
+            <div className="p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <div className="text-5xl sm:text-6xl lg:text-7xl font-['Outfit'] font-black bg-gradient-to-r from-[#C084FC] to-[#D946EF] bg-clip-text text-transparent mb-2">
+                12+
+              </div>
+              <div className="font-mono text-sm text-slate-300 font-bold">
+                Countries of Deployment
+              </div>
+            </div>
+
+            <div className="p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <div className="text-5xl sm:text-6xl lg:text-7xl font-['Outfit'] font-black bg-gradient-to-r from-[#D946EF] to-[#7C3AED] bg-clip-text text-transparent mb-2">
+                75%
+              </div>
+              <div className="font-mono text-sm text-slate-300 font-bold">
+                Remain Engaged After 1 Year
+              </div>
+            </div>
+
+            <div className="p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <div className="text-5xl sm:text-6xl lg:text-7xl font-['Outfit'] font-black bg-gradient-to-r from-[#7C3AED] via-[#C084FC] to-[#D946EF] bg-clip-text text-transparent mb-2">
+                1,000
+              </div>
+              <div className="font-mono text-sm text-slate-300 font-bold">
+                Small Businesses Mission
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* =========================================================================
+          9. CAREERS CALLOUT
+          ========================================================================= */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto">
+        <div className="rounded-3xl bg-slate-50 border border-slate-200 p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div>
+            <span className="font-mono text-xs font-bold text-[#7C3AED] uppercase tracking-wider block mb-2">
+              CAREERS &amp; CULTURE
+            </span>
+            <h3 className="text-2xl sm:text-3xl font-['Outfit'] font-bold text-slate-950">
+              Interested in joining our team of experts?
+            </h3>
+            <p className="text-slate-600 text-sm mt-1">
+              We&apos;re always looking for world-class designers, full-stack engineers, and growth strategists.
+            </p>
+          </div>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-3 px-10 py-5 rounded-full bg-gradient-to-r from-[#7C3AED] via-[#C084FC] to-[#D946EF] text-white font-bold text-xl hover:scale-105 transition-all shadow-xl"
+            className="px-6 py-3.5 rounded-full bg-[#0D0422] hover:bg-[#7C3AED] text-white font-mono text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all shadow-md"
           >
-            <span>Start a Conversation</span>
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
+            Explore Opportunities →
           </Link>
         </div>
       </section>
 
-      {/* =====================================================================
-          REQUEST A PROPOSAL / CONTACT HUB
-          ===================================================================== */}
-      <section id="contact" className="py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 text-[#7C3AED] font-mono text-xs font-bold uppercase tracking-widest mb-4">
-            <span className="w-2 h-2 rounded-full bg-[#7C3AED]" />
-            <span>YEQARI PROPOSAL HUB</span>
-          </div>
-          <h2 className="text-4xl sm:text-6xl font-['Outfit'] font-black tracking-tight mb-4">
-            Request a <span className="text-gradient-magenta">Proposal</span>
-          </h2>
-          <p className="text-slate-600 text-lg max-w-2xl mx-auto">
-            Fill out your project parameters below. Our division leads review every submission and prepare a tailored roadmap within 24 hours.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      {/* =========================================================================
+          10. ACCELERATE YOUR GROWTH GOALS (FULL CTA BANNER)
+          ========================================================================= */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto">
+        <div className="relative rounded-[40px] bg-gradient-to-r from-[#0D0422] via-[#2B075C] to-[#0D0422] text-white p-10 sm:p-20 text-center overflow-hidden border border-purple-500/20 shadow-2xl">
           
-          {/* Office Info (4 cols) */}
-          <div className="lg:col-span-4 space-y-6">
-            <div className="bento-card p-8">
-              <h3 className="text-2xl font-['Outfit'] font-bold mb-6">Our Offices</h3>
-              <div className="space-y-6">
-                <div>
-                  <div className="font-mono text-[10px] text-slate-400 uppercase font-bold mb-1">Proposal Inquiries</div>
-                  <a href="mailto:hello@yeqari.global" className="text-slate-900 font-bold hover:text-[#7C3AED] transition-colors">
-                    hello@yeqari.global
-                  </a>
-                </div>
-                <div>
-                  <div className="font-mono text-[10px] text-slate-400 uppercase font-bold mb-1">Direct Helpline</div>
-                  <div className="text-slate-900 font-bold">+94 77 000 0000</div>
-                </div>
-                <div>
-                  <div className="font-mono text-[10px] text-slate-400 uppercase font-bold mb-1">HQ Location</div>
-                  <div className="text-slate-900 font-bold">Colombo, Sri Lanka</div>
-                </div>
-              </div>
-            </div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-[#7C3AED]/30 via-[#D946EF]/20 to-transparent rounded-full blur-[140px] pointer-events-none" />
 
-            <div className="bento-card p-8">
-              <h4 className="text-lg font-bold mb-2">Incubating Networks</h4>
-              <p className="text-xs text-slate-500 mb-6">Connect with our open channels and developer tool pipelines.</p>
-              <div className="flex gap-3">
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition-colors">
-                  Git
-                </a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition-colors">
-                  In
-                </a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition-colors">
-                  X
-                </a>
-              </div>
-            </div>
-          </div>
+          <div className="relative z-10 max-w-3xl mx-auto">
+            <span className="font-mono text-xs font-bold tracking-widest text-[#C084FC] uppercase block mb-4">
+              READY TO SCALE?
+            </span>
 
-          {/* Proposal Form (8 cols) */}
-          <div className="lg:col-span-8 bento-card p-8 sm:p-12">
-            <form onSubmit={handleProposalSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div>
-                  <label className="block font-mono text-xs uppercase font-bold text-slate-500 mb-2">Full Name *</label>
-                  <input
-                    required
-                    type="text"
-                    value={formName}
-                    onChange={(e) => setFormName(e.target.value)}
-                    placeholder="Dinusha Pushparajah"
-                    className="w-full px-4 py-3.5 rounded-2xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-[#7C3AED] focus:bg-white text-sm"
-                  />
-                </div>
-                <div>
-                  <label className="block font-mono text-xs uppercase font-bold text-slate-500 mb-2">Company / Brand *</label>
-                  <input
-                    required
-                    type="text"
-                    placeholder="Acme Corp"
-                    className="w-full px-4 py-3.5 rounded-2xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-[#7C3AED] focus:bg-white text-sm"
-                  />
-                </div>
-              </div>
+            <h2 className="text-4xl sm:text-6xl font-['Outfit'] font-black tracking-tight mb-6">
+              Accelerate your{" "}
+              <span className="bg-gradient-to-r from-[#7C3AED] via-[#C084FC] to-[#D946EF] bg-clip-text text-transparent">
+                growth goals
+              </span>
+            </h2>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div>
-                  <label className="block font-mono text-xs uppercase font-bold text-slate-500 mb-2">Email Address *</label>
-                  <input
-                    required
-                    type="email"
-                    placeholder="you@company.com"
-                    className="w-full px-4 py-3.5 rounded-2xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-[#7C3AED] focus:bg-white text-sm"
-                  />
-                </div>
-                <div>
-                  <label className="block font-mono text-xs uppercase font-bold text-slate-500 mb-2">Phone Number *</label>
-                  <input
-                    required
-                    type="tel"
-                    placeholder="+94 77 123 4567"
-                    className="w-full px-4 py-3.5 rounded-2xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-[#7C3AED] focus:bg-white text-sm"
-                  />
-                </div>
-              </div>
+            <p className="text-slate-300 text-lg sm:text-xl leading-relaxed mb-10">
+              Speak directly with our senior architects, design directors, and venture strategists to build your next breakthrough product.
+            </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div>
-                  <label className="block font-mono text-xs uppercase font-bold text-slate-500 mb-2">Service Division *</label>
-                  <select
-                    required
-                    value={formService}
-                    onChange={(e) => setFormService(e.target.value)}
-                    className="w-full px-4 py-3.5 rounded-2xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-[#7C3AED] focus:bg-white text-sm"
-                  >
-                    <option value="">Select a service</option>
-                    <option value="Website Development">Website Development</option>
-                    <option value="E-Commerce Store">E-Commerce Development</option>
-                    <option value="Branding & Identity">Branding & Identity</option>
-                    <option value="Custom Software Development">Custom Software Development</option>
-                    <option value="SaaS MVP Development">SaaS MVP Development</option>
-                    <option value="AI Solutions & LLMs">AI Solutions & LLMs</option>
-                    <option value="Startup Launch Package">Startup Launch Package</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block font-mono text-xs uppercase font-bold text-slate-500 mb-2">Timeline *</label>
-                  <select
-                    required
-                    className="w-full px-4 py-3.5 rounded-2xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-[#7C3AED] focus:bg-white text-sm"
-                  >
-                    <option value="">Select expected timeline</option>
-                    <option value="ASAP">As soon as possible (Urgent)</option>
-                    <option value="1-3 Months">1 – 3 Months</option>
-                    <option value="3-6 Months">3 – 6 Months</option>
-                    <option value="Flexible">Flexible / Ongoing</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label className="block font-mono text-xs uppercase font-bold text-slate-500 mb-2">Project Scope *</label>
-                <textarea
-                  required
-                  rows={4}
-                  placeholder="Outline your project scope, problems you are facing, and expected features..."
-                  className="w-full px-4 py-3.5 rounded-2xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-[#7C3AED] focus:bg-white text-sm resize-none"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full py-4.5 rounded-full bg-[#0D0422] hover:bg-[#7C3AED] text-white font-bold text-base transition-all shadow-lg shadow-purple-900/20"
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <Link
+                href="/contact"
+                className="px-9 py-4 rounded-full bg-gradient-to-r from-[#7C3AED] to-[#D946EF] hover:scale-105 text-white font-bold text-lg shadow-xl shadow-purple-900/40 transition-all flex items-center gap-2"
               >
-                Submit Proposal Request
-              </button>
-            </form>
+                <span>Speak to our experts</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </Link>
+              <Link
+                href="/startup"
+                className="px-8 py-4 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-lg border border-white/20 transition-all"
+              >
+                Join Not Another Startup
+              </Link>
+            </div>
           </div>
 
         </div>
       </section>
-
-      {/* =====================================================================
-          CASE STUDY MODAL
-          ===================================================================== */}
-      {activeCaseStudy && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm overflow-y-auto">
-          <div className="bg-white rounded-[36px] max-w-4xl w-full p-8 sm:p-12 shadow-2xl relative my-8 max-h-[90vh] overflow-y-auto">
-            <button
-              onClick={() => setActiveCaseStudy(null)}
-              className="absolute top-6 right-6 w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-500 hover:text-slate-900"
-            >
-              ✕
-            </button>
-
-            <span className="inline-block px-3 py-1 rounded-full bg-purple-100 text-[#7C3AED] font-mono text-xs font-bold uppercase tracking-wider mb-4">
-              {activeCaseStudy.category} Case Study
-            </span>
-
-            <h2 className="text-3xl sm:text-5xl font-['Outfit'] font-black tracking-tight mb-4">
-              {activeCaseStudy.title}
-            </h2>
-            <p className="text-slate-600 text-lg leading-relaxed mb-8">
-              {activeCaseStudy.description}
-            </p>
-
-            <div className="aspect-[16/9] rounded-2xl overflow-hidden mb-8 border border-slate-200">
-              <img src={activeCaseStudy.image} alt={activeCaseStudy.title} className="w-full h-full object-cover" />
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-              <div className="p-6 rounded-2xl bg-slate-50">
-                <h4 className="font-bold text-[#7C3AED] mb-2 font-mono text-xs uppercase tracking-wider">The Challenge</h4>
-                <p className="text-slate-700 text-sm leading-relaxed">{activeCaseStudy.problemDetails}</p>
-              </div>
-              <div className="p-6 rounded-2xl bg-slate-50">
-                <h4 className="font-bold text-emerald-600 mb-2 font-mono text-xs uppercase tracking-wider">The Solution</h4>
-                <p className="text-slate-700 text-sm leading-relaxed">{activeCaseStudy.solutionBreakdown}</p>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-slate-100">
-              <div className="flex flex-wrap gap-2">
-                {activeCaseStudy.tech.map((t) => (
-                  <span key={t} className="px-3 py-1 rounded-full bg-slate-100 font-mono text-xs text-slate-600">
-                    {t}
-                  </span>
-                ))}
-              </div>
-              {activeCaseStudy.link !== "#" && (
-                <a
-                  href={activeCaseStudy.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-6 py-2.5 rounded-full bg-[#0D0422] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#7C3AED] transition-colors"
-                >
-                  Visit Live Site ↗
-                </a>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* =====================================================================
-          SUCCESS MODAL
-          ===================================================================== */}
-      {proposalSubmitted && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
-          <div className="bg-white rounded-3xl max-w-md w-full p-8 text-center shadow-2xl">
-            <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
-              ✓
-            </div>
-            <h3 className="text-2xl font-['Outfit'] font-bold text-slate-900 mb-2">Proposal Requested!</h3>
-            <p className="text-slate-600 text-sm leading-relaxed mb-6">
-              Thank you, {formName || "there"}! Your parameters have been securely registered. Our division heads will contact you with a structured proposal within 24 hours.
-            </p>
-            <button
-              onClick={() => setProposalSubmitted(false)}
-              className="px-8 py-3 rounded-full bg-[#0D0422] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#7C3AED] transition-colors"
-            >
-              Close & Continue
-            </button>
-          </div>
-        </div>
-      )}
 
     </div>
   );
