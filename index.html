@@ -543,40 +543,24 @@
     .hero-reel-viewport {
       position: relative;
       width: 100%;
+      aspect-ratio: 9 / 16;
       background: #000000;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    /* Phone Hero Reel Mode (9:16 Portrait Reel - Optimized for Phone Size) */
-    .hero-reel-viewport.mode-phone {
-      aspect-ratio: 9 / 16;
-      max-width: 420px;
-      margin: 0 auto;
-      border-radius: 36px;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 0 60px rgba(124, 58, 237, 0.45);
-    }
-
-    @media (max-width: 640px) {
-      .hero-reel-viewport.mode-phone {
-        max-width: 100%;
-        border-radius: 24px;
-      }
-    }
-
-    /* Widescreen Cinematic Mode (16:9 / 21:9) */
-    .hero-reel-viewport.mode-widescreen {
-      aspect-ratio: 16 / 10;
-      max-width: 100%;
       border-radius: 24px;
     }
 
     @media (min-width: 640px) {
-      .hero-reel-viewport.mode-widescreen {
+      .hero-reel-viewport {
+        aspect-ratio: 16 / 9;
+        border-radius: 36px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .hero-reel-viewport {
         aspect-ratio: 21 / 9;
       }
     }
@@ -587,6 +571,13 @@
       object-fit: cover;
       display: block;
       cursor: pointer;
+    }
+
+    .sm-only { display: block; }
+    .desktop-only { display: none; }
+    @media (min-width: 640px) {
+      .sm-only { display: none !important; }
+      .desktop-only { display: block !important; }
     }
 
     .hero-reel-controls-overlay {
@@ -884,43 +875,13 @@
         <div class="hero-reel-glow"></div>
         
         <div class="hero-reel-card" id="hero-reel-card" style="border-radius: 28px;">
-          <!-- Card Header & Mode Switcher -->
-          <div class="hero-reel-header">
-            <div style="display: flex; align-items: center; gap: 10px;">
-              <span style="position: relative; display: flex; width: 10px; height: 10px;">
-                <span style="position: absolute; width: 100%; height: 100%; border-radius: 50%; background: #D946EF; opacity: 0.75; animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;"></span>
-                <span style="position: relative; width: 10px; height: 10px; border-radius: 50%; background: #D946EF;"></span>
-              </span>
-              <span style="font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; color: #ffffff; letter-spacing: 0.02em;">
-                YEQARI <span style="color: #C084FC;">HERO REEL</span>
-              </span>
-              <span style="font-family: var(--font-mono); font-size: 0.65rem; padding: 2px 8px; border-radius: 999px; background: rgba(255,255,255,0.1); color: #e9d5ff; border: 1px solid rgba(255,255,255,0.1);">
-                4K STUDIO
-              </span>
-            </div>
-
-            <!-- Switcher Pills -->
-            <div style="display: flex; align-items: center; background: rgba(255,255,255,0.06); padding: 3px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.1);">
-              <button type="button" id="btn-mode-phone" class="hero-mode-pill active" onclick="switchHeroMode('phone')">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="3"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-                <span>Phone Reel</span>
-              </button>
-              <button type="button" id="btn-mode-wide" class="hero-mode-pill" onclick="switchHeroMode('widescreen')">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m10 9 5 3-5 3V9z"/></svg>
-                <span>Widescreen</span>
-              </button>
-              <button type="button" id="btn-mode-3d" class="hero-mode-pill" onclick="switchHeroMode('3d')">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 2v20M17 2v20M2 7h20M2 17h20"/></svg>
-                <span>3D Cube</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Video Viewport (Surge Reel Architecture with Phone Hero Reel Support) -->
-          <div class="hero-reel-viewport mode-phone" id="hero-reel-viewport">
+          <!-- Video Viewport (Spreading & Filling Screen Responsively like Surge Global) -->
+          <div class="hero-reel-viewport" id="hero-reel-viewport">
+            
+            <!-- Phone Video Version (Displays on Phone / Mobile Screens) -->
             <video
-              id="hero-reel-video"
-              class="hero-reel-video"
+              id="hero-reel-video-mobile"
+              class="hero-reel-video sm-only"
               autoplay
               loop
               muted
@@ -930,6 +891,20 @@
             >
               <source src="./assets/intro video/YEQARI_GLOBAL_brand_film_production_20261009145209.mp4" type="video/mp4">
               <source src="./assets/hero-reel-mobile.mp4" type="video/mp4">
+              Your browser does not support HTML5 video.
+            </video>
+
+            <!-- Laptop / Desktop Video Version (Displays on Laptop / Desktop Screens) -->
+            <video
+              id="hero-reel-video-desktop"
+              class="hero-reel-video desktop-only"
+              autoplay
+              loop
+              muted
+              playsinline
+              preload="auto"
+              poster="./assets/case-yeqari.jpg"
+            >
               <source src="./assets/intro video/yeqari global hero reel.mp4" type="video/mp4">
               <source src="./assets/hero-reel.mp4" type="video/mp4">
               Your browser does not support HTML5 video.
@@ -3049,63 +3024,7 @@
     ];
 
     /* --------------------------------------------------------------------------
-       2. HERO REEL CONTROLLER & MODE SWITCHER
-       -------------------------------------------------------------------------- */
-    const HERO_VIDEOS = {
-      phone: "./assets/intro video/YEQARI_GLOBAL_brand_film_production_20261009145209.mp4",
-      widescreen: "./assets/intro video/yeqari global hero reel.mp4"
-    };
-
-    function switchHeroMode(mode) {
-      const reelViewport = document.getElementById("hero-reel-viewport");
-      const canvasContainer = document.getElementById("hero-canvas-container");
-      const btnPhone = document.getElementById("btn-mode-phone");
-      const btnWide = document.getElementById("btn-mode-wide");
-      const btn3D = document.getElementById("btn-mode-3d");
-      const video = document.getElementById("hero-reel-video");
-
-      if (mode === "phone" || mode === "widescreen") {
-        if (reelViewport) {
-          reelViewport.style.display = "flex";
-          reelViewport.classList.remove("mode-phone", "mode-widescreen");
-          reelViewport.classList.add(mode === "phone" ? "mode-phone" : "mode-widescreen");
-        }
-        if (canvasContainer) canvasContainer.style.display = "none";
-
-        if (btnPhone) btnPhone.classList.toggle("active", mode === "phone");
-        if (btnWide) btnWide.classList.toggle("active", mode === "widescreen");
-        if (btn3D) btn3D.classList.remove("active");
-
-        if (video) {
-          const targetSrc = HERO_VIDEOS[mode];
-          const currentSrc = video.currentSrc || video.src;
-          if (!currentSrc.includes("YEQARI_GLOBAL") && mode === "phone") {
-            video.src = targetSrc;
-            video.load();
-          } else if (!currentSrc.includes("yeqari global hero reel") && mode === "widescreen") {
-            video.src = targetSrc;
-            video.load();
-          }
-          video.play().catch(() => {});
-        }
-      } else if (mode === "3d") {
-        if (reelViewport) reelViewport.style.display = "none";
-        if (canvasContainer) {
-          canvasContainer.style.display = "block";
-          init3DHeroCube();
-          setTimeout(() => {
-            window.dispatchEvent(new Event("resize"));
-          }, 50);
-        }
-        if (btnPhone) btnPhone.classList.remove("active");
-        if (btnWide) btnWide.classList.remove("active");
-        if (btn3D) btn3D.classList.add("active");
-        if (video) video.pause();
-      }
-    }
-
-    /* --------------------------------------------------------------------------
-       2.5 INDUSTRY EXPERTISE TABS CONTROLLER (SURGE GLOBAL ARCHITECTURE)
+       2. INDUSTRY EXPERTISE TABS CONTROLLER (SURGE GLOBAL ARCHITECTURE)
        -------------------------------------------------------------------------- */
     const INDUSTRY_DATA = {
       education: {
@@ -3191,7 +3110,8 @@
     }
 
     function initHeroReel() {
-      const video = document.getElementById("hero-reel-video");
+      const mobVideo = document.getElementById("hero-reel-video-mobile");
+      const deskVideo = document.getElementById("hero-reel-video-desktop");
       const playBtn = document.getElementById("hero-reel-play-btn");
       const muteBtn = document.getElementById("hero-reel-mute-btn");
       const fsBtn = document.getElementById("hero-reel-fs-btn");
@@ -3199,7 +3119,9 @@
       const timeline = document.getElementById("hero-reel-timeline");
       const timeDisplay = document.getElementById("hero-reel-time");
 
-      if (!video) return;
+      function getActiveVideo() {
+        return window.innerWidth < 640 ? mobVideo : deskVideo;
+      }
 
       function formatTime(s) {
         if (isNaN(s)) return "0:00";
@@ -3209,8 +3131,9 @@
       }
 
       function updatePlayState() {
-        if (!playBtn) return;
-        if (video.paused) {
+        const v = getActiveVideo();
+        if (!playBtn || !v) return;
+        if (v.paused) {
           playBtn.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" style="margin-left: 2px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
           playBtn.style.opacity = "1";
         } else {
@@ -3220,18 +3143,24 @@
       }
 
       function togglePlay() {
-        if (video.paused) {
-          video.play().catch(() => {});
+        const v = getActiveVideo();
+        if (!v) return;
+        if (v.paused) {
+          if (mobVideo) mobVideo.play().catch(() => {});
+          if (deskVideo) deskVideo.play().catch(() => {});
         } else {
-          video.pause();
+          if (mobVideo) mobVideo.pause();
+          if (deskVideo) deskVideo.pause();
         }
         updatePlayState();
       }
 
       function toggleMute() {
-        video.muted = !video.muted;
+        const nextMuted = !(mobVideo ? mobVideo.muted : true);
+        if (mobVideo) mobVideo.muted = nextMuted;
+        if (deskVideo) deskVideo.muted = nextMuted;
         if (muteBtn) {
-          if (video.muted) {
+          if (nextMuted) {
             muteBtn.innerHTML = `
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
               <span>Sound Off</span>
@@ -3249,20 +3178,37 @@
         }
       }
 
-      function toggleFullscreen() {
-        const wrapper = document.getElementById("hero-reel-wrapper");
-        if (!wrapper) return;
-        if (!document.fullscreenElement) {
-          wrapper.requestFullscreen?.().catch(() => {});
-        } else {
-          document.exitFullscreen?.().catch(() => {});
-        }
+      if (playBtn) playBtn.addEventListener("click", togglePlay);
+      if (mobVideo) mobVideo.addEventListener("click", togglePlay);
+      if (deskVideo) deskVideo.addEventListener("click", togglePlay);
+      if (muteBtn) muteBtn.addEventListener("click", toggleMute);
+
+      if (fsBtn) {
+        fsBtn.addEventListener("click", () => {
+          const wrapper = document.getElementById("hero-reel-viewport");
+          if (!document.fullscreenElement) {
+            wrapper?.requestFullscreen?.().catch(() => {});
+          } else {
+            document.exitFullscreen?.().catch(() => {});
+          }
+        });
       }
 
-      video.addEventListener("play", updatePlayState);
-      video.addEventListener("pause", updatePlayState);
-
-      video.addEventListener("timeupdate", () => {
+      [mobVideo, deskVideo].forEach(v => {
+        if (!v) return;
+        v.addEventListener("timeupdate", () => {
+          if (v !== getActiveVideo()) return;
+          if (progressFill && v.duration) {
+            progressFill.style.width = ((v.currentTime / v.duration) * 100) + "%";
+          }
+          if (timeDisplay) {
+            timeDisplay.innerText = `${formatTime(v.currentTime)} / ${formatTime(v.duration || 0)}`;
+          }
+        });
+        v.addEventListener("play", updatePlayState);
+        v.addEventListener("pause", updatePlayState);
+      });
+    }
         const cur = video.currentTime;
         const dur = video.duration || 1;
         const pct = (cur / dur) * 100;

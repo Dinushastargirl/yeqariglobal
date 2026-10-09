@@ -136,53 +136,46 @@ const INDUSTRIES = [
 
 export default function HomePage() {
   const [activeIndustry, setActiveIndustry] = useState("education");
-  const [reelMode, setReelMode] = useState<"phone" | "widescreen">("phone");
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const desktopVideoRef = useRef<HTMLVideoElement | null>(null);
+  const mobileVideoRef = useRef<HTMLVideoElement | null>(null);
   const heroContainerRef = useRef<HTMLDivElement | null>(null);
-
-  const phoneVideoSrc = "/assets/intro video/YEQARI_GLOBAL_brand_film_production_20261009145209.mp4";
-  const wideVideoSrc = "/assets/intro video/yeqari global hero reel.mp4";
 
   // Auto-play on mount
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play().catch(() => {
-        if (videoRef.current) {
-          videoRef.current.muted = true;
-          setIsMuted(true);
-          videoRef.current.play().catch(() => setIsPlaying(false));
-        }
-      });
-    }
+    const playVideos = () => {
+      if (desktopVideoRef.current) {
+        desktopVideoRef.current.muted = true;
+        desktopVideoRef.current.play().catch(() => {});
+      }
+      if (mobileVideoRef.current) {
+        mobileVideoRef.current.muted = true;
+        mobileVideoRef.current.play().catch(() => {});
+      }
+    };
+    playVideos();
   }, []);
 
-  const switchReelMode = (mode: "phone" | "widescreen") => {
-    setReelMode(mode);
-    if (videoRef.current) {
-      videoRef.current.src = mode === "phone" ? phoneVideoSrc : wideVideoSrc;
-      videoRef.current.load();
-      videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
-    }
-  };
-
   const togglePlay = () => {
-    if (!videoRef.current) return;
-    if (videoRef.current.paused) {
-      videoRef.current.play();
+    const v = window.innerWidth < 640 ? mobileVideoRef.current : desktopVideoRef.current;
+    if (!v) return;
+    if (v.paused) {
+      desktopVideoRef.current?.play().catch(() => {});
+      mobileVideoRef.current?.play().catch(() => {});
       setIsPlaying(true);
     } else {
-      videoRef.current.pause();
+      desktopVideoRef.current?.pause();
+      mobileVideoRef.current?.pause();
       setIsPlaying(false);
     }
   };
 
   const toggleMute = () => {
-    if (!videoRef.current) return;
-    const nextMuted = !videoRef.current.muted;
-    videoRef.current.muted = nextMuted;
+    const nextMuted = !isMuted;
+    if (desktopVideoRef.current) desktopVideoRef.current.muted = nextMuted;
+    if (mobileVideoRef.current) mobileVideoRef.current.muted = nextMuted;
     setIsMuted(nextMuted);
   };
 
@@ -203,90 +196,51 @@ export default function HomePage() {
       {/* =========================================================================
           1. HERO REEL SECTION (SURGE GLOBAL ARCHITECTURE WITH YEQARI BRAND)
           ========================================================================= */}
-      <section className="pt-28 pb-12 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto">
+      <section className="pt-24 sm:pt-28 pb-12 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto">
         
-        {/* Mode Switcher Tabs above Video Container */}
-        <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
-          <div className="flex items-center gap-2 bg-slate-100 p-1 rounded-full border border-slate-200">
-            <button
-              type="button"
-              onClick={() => switchReelMode("phone")}
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-['Outfit'] font-bold transition-all cursor-pointer ${
-                reelMode === "phone"
-                  ? "bg-[#0D0422] text-white shadow-md"
-                  : "text-slate-600 hover:text-slate-900"
-              }`}
-            >
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <rect x="5" y="2" width="14" height="20" rx="3" /><line x1="12" y1="18" x2="12.01" y2="18" />
-              </svg>
-              <span>Phone Hero Reel (Brand Film)</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => switchReelMode("widescreen")}
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-['Outfit'] font-bold transition-all cursor-pointer ${
-                reelMode === "widescreen"
-                  ? "bg-[#0D0422] text-white shadow-md"
-                  : "text-slate-600 hover:text-slate-900"
-              }`}
-            >
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <rect x="2" y="4" width="20" height="16" rx="2" /><path d="m10 9 5 3-5 3V9z" />
-              </svg>
-              <span>Widescreen Studio Reel</span>
-            </button>
-          </div>
-
-          <span className="font-mono text-xs font-bold text-slate-500 hidden sm:inline-flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#D946EF] animate-ping" />
-            <span>4K PRO RES PRODUCTION 2026</span>
-          </span>
-        </div>
-
-        {/* Hero Reel Video Container */}
+        {/* Full-Width Hero Reel Video Container (Spreading & Filling Screen Like Surge Global) */}
         <div
           ref={heroContainerRef}
-          className={`relative overflow-hidden bg-[#0D0422] border border-slate-200/90 shadow-2xl shadow-purple-950/20 group transition-all duration-500 ${
-            reelMode === "phone"
-              ? "aspect-[9/16] max-w-[420px] mx-auto rounded-[36px] border-4 border-slate-800 shadow-[0_0_60px_rgba(124,58,237,0.35)]"
-              : "w-full aspect-[16/10] sm:aspect-[16/9] lg:aspect-[21/9] rounded-[24px] sm:rounded-[32px]"
-          }`}
+          className="relative w-full aspect-[9/16] sm:aspect-[16/9] lg:aspect-[21/9] rounded-[24px] sm:rounded-[36px] overflow-hidden bg-[#0D0422] border border-slate-200/90 shadow-2xl shadow-purple-950/20 group"
         >
           {/* Ambient Video Backlight Glow */}
           <div className="absolute -inset-4 bg-gradient-to-r from-[#7C3AED]/30 via-[#D946EF]/20 to-[#7C3AED]/30 rounded-[40px] blur-2xl -z-10 pointer-events-none" />
 
-          {/* Hero Video */}
+          {/* Phone Video Version (Displays on Phone / Mobile Screens) */}
           <video
-            ref={videoRef}
+            ref={mobileVideoRef}
             onClick={togglePlay}
-            className="w-full h-full object-cover cursor-pointer"
+            className="block sm:hidden w-full h-full object-cover cursor-pointer"
             autoPlay
             loop
             muted={isMuted}
             playsInline
             preload="auto"
             poster="/assets/case-yeqari.jpg"
-            src={reelMode === "phone" ? phoneVideoSrc : wideVideoSrc}
           >
-            <source src={phoneVideoSrc} type="video/mp4" />
-            <source src={wideVideoSrc} type="video/mp4" />
+            <source src="/assets/intro video/YEQARI_GLOBAL_brand_film_production_20261009145209.mp4" type="video/mp4" />
+            <source src="/assets/hero-reel-mobile.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
 
-          {/* Floating Subtle Top Overlay Badge */}
-          <div className="absolute top-4 sm:top-6 left-4 sm:left-6 z-20 flex items-center gap-2.5 bg-black/40 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/15">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D946EF] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#D946EF]"></span>
-            </span>
-            <span className="font-['Outfit'] font-bold text-xs tracking-wider text-white">
-              YEQARI GLOBAL <span className="text-[#C084FC]">{reelMode === "phone" ? "PHONE REEL" : "STUDIO REEL"}</span>
-            </span>
-          </div>
+          {/* Laptop / Desktop Video Version (Displays on Laptop / Desktop Screens) */}
+          <video
+            ref={desktopVideoRef}
+            onClick={togglePlay}
+            className="hidden sm:block w-full h-full object-cover cursor-pointer"
+            autoPlay
+            loop
+            muted={isMuted}
+            playsInline
+            preload="auto"
+            poster="/assets/case-yeqari.jpg"
+          >
+            <source src="/assets/intro video/yeqari global hero reel.mp4" type="video/mp4" />
+            <source src="/assets/hero-reel.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
 
-          {/* Floating Action Controls: Sound & Fullscreen */}
+          {/* Clean Top-Right Controls: Sound & Fullscreen */}
           <div className="absolute top-4 sm:top-6 right-4 sm:right-6 z-20 flex items-center gap-2">
             <button
               type="button"
@@ -329,7 +283,7 @@ export default function HomePage() {
             </button>
           </div>
 
-          {/* Center Play/Pause button on hover */}
+          {/* Center Play/Pause button on hover / pause */}
           {!isPlaying && (
             <div
               onClick={togglePlay}
