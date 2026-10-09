@@ -792,9 +792,65 @@
 
         <!-- Desktop Navigation Links (Surge Global Structure with YEQARI Brand) -->
         <nav class="nav-links">
-          <a href="#capabilities" class="nav-link-btn">Design</a>
-          <a href="#capabilities" class="nav-link-btn">Marketing</a>
-          <a href="#capabilities" class="nav-link-btn">Technology</a>
+          <!-- SERVICES MEGA DROPDOWN (DESIGN, MARKETING, TECHNOLOGY) -->
+          <div class="dropdown-parent">
+            <a href="#capabilities" class="nav-link-btn" style="display: inline-flex; align-items: center; gap: 4px;">
+              <span>Services</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transition: transform 0.2s;"><path d="m6 9 6 6 6-6"/></svg>
+            </a>
+            <div class="mega-menu" style="width: 780px;">
+              <!-- 01 DESIGN -->
+              <div>
+                <div class="mega-col-title" style="color: var(--yeqari-ultraviolet);">
+                  <span style="font-size: 0.7rem; background: rgba(124, 58, 237, 0.1); padding: 2px 6px; border-radius: 6px;">01</span>
+                  <span>DESIGN</span>
+                </div>
+                <div class="mega-col-items">
+                  <a href="#capabilities" class="mega-item">Branding & Identity</a>
+                  <a href="#capabilities" class="mega-item">UI/UX Engineering</a>
+                  <a href="#capabilities" class="mega-item">Creative Content</a>
+                  <a href="#capabilities" class="mega-item">Product & Web Design</a>
+                  <a href="#capabilities" class="mega-item">Motion Design</a>
+                  <a href="#capabilities" class="mega-item">Design Systems</a>
+                  <a href="#capabilities" class="mega-item" style="color: var(--yeqari-ultraviolet); font-weight: 700; font-size: 0.78rem; margin-top: 4px;">Explore Design →</a>
+                </div>
+              </div>
+
+              <!-- 02 MARKETING -->
+              <div>
+                <div class="mega-col-title" style="color: var(--yeqari-fuchsia);">
+                  <span style="font-size: 0.7rem; background: rgba(217, 70, 239, 0.1); padding: 2px 6px; border-radius: 6px;">02</span>
+                  <span>MARKETING</span>
+                </div>
+                <div class="mega-col-items">
+                  <a href="#capabilities" class="mega-item">Digital Marketing</a>
+                  <a href="#capabilities" class="mega-item">Marketing Strategy</a>
+                  <a href="#capabilities" class="mega-item">Social Media Management</a>
+                  <a href="#capabilities" class="mega-item">Content Strategy</a>
+                  <a href="#capabilities" class="mega-item">SEO & Search Dominance</a>
+                  <a href="#capabilities" class="mega-item">Performance Funnels</a>
+                  <a href="#capabilities" class="mega-item" style="color: var(--yeqari-fuchsia); font-weight: 700; font-size: 0.78rem; margin-top: 4px;">Explore Marketing →</a>
+                </div>
+              </div>
+
+              <!-- 03 TECHNOLOGY -->
+              <div>
+                <div class="mega-col-title" style="color: var(--yeqari-ultraviolet);">
+                  <span style="font-size: 0.7rem; background: rgba(124, 58, 237, 0.1); padding: 2px 6px; border-radius: 6px;">03</span>
+                  <span>TECHNOLOGY</span>
+                </div>
+                <div class="mega-col-items">
+                  <a href="#capabilities" class="mega-item">Website Development</a>
+                  <a href="#capabilities" class="mega-item">Web App Development</a>
+                  <a href="#capabilities" class="mega-item">Mobile App Development</a>
+                  <a href="#capabilities" class="mega-item">Custom Software</a>
+                  <a href="#capabilities" class="mega-item">Cloud & IT Infrastructure</a>
+                  <a href="#capabilities" class="mega-item">AI Engineering</a>
+                  <a href="#capabilities" class="mega-item" style="color: var(--yeqari-ultraviolet); font-weight: 700; font-size: 0.78rem; margin-top: 4px;">Explore Technology →</a>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <!-- NOT ANOTHER STARTUP: Prominent Headline in Navbar -->
           <a href="startup.html" class="nav-link-btn" style="background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(217, 70, 239, 0.15)); border: 1px solid rgba(217, 70, 239, 0.4); color: var(--yeqari-ultraviolet); font-weight: 800; border-radius: 999px; padding: 6px 16px; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 10px rgba(124, 58, 237, 0.1);">
@@ -836,9 +892,17 @@
       </button>
     </div>
     <div style="display: flex; flex-direction: column; gap: 8px;">
-      <a href="#capabilities" class="nav-link-btn" style="font-size: 1.05rem; padding: 10px 14px; font-weight: 700;" onclick="closeDrawer()">Design</a>
-      <a href="#capabilities" class="nav-link-btn" style="font-size: 1.05rem; padding: 10px 14px; font-weight: 700;" onclick="closeDrawer()">Marketing</a>
-      <a href="#capabilities" class="nav-link-btn" style="font-size: 1.05rem; padding: 10px 14px; font-weight: 700;" onclick="closeDrawer()">Technology</a>
+      <!-- SERVICES GROUP IN MOBILE -->
+      <div style="background: var(--color-bg-subtle); border: 1px solid var(--color-border); border-radius: 16px; padding: 12px 14px;">
+        <div style="font-family: var(--font-mono); font-size: 0.72rem; font-weight: 800; color: var(--yeqari-ultraviolet); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">
+          SERVICES (3 PILLARS)
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 4px; padding-left: 6px;">
+          <a href="#capabilities" class="nav-link-btn" style="font-size: 0.95rem; padding: 6px 10px; font-weight: 700; color: var(--color-text-main);" onclick="closeDrawer()">01 — Design (Branding, UI/UX, Motion)</a>
+          <a href="#capabilities" class="nav-link-btn" style="font-size: 0.95rem; padding: 6px 10px; font-weight: 700; color: var(--color-text-main);" onclick="closeDrawer()">02 — Marketing (Growth, Search, Content)</a>
+          <a href="#capabilities" class="nav-link-btn" style="font-size: 0.95rem; padding: 6px 10px; font-weight: 700; color: var(--color-text-main);" onclick="closeDrawer()">03 — Technology (Web, Apps, AI, Cloud)</a>
+        </div>
+      </div>
 
       <!-- NOT ANOTHER STARTUP: Prominent Headline in Mobile Menu -->
       <a href="startup.html" class="nav-link-btn" style="font-size: 1.05rem; padding: 12px 16px; background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(217, 70, 239, 0.15)); border: 1px solid rgba(217, 70, 239, 0.4); border-radius: 16px; display: flex; align-items: center; justify-content: space-between;">
@@ -2648,7 +2712,6 @@
     const SELECTED_WORKS = [
       { id: "nutrigpt-landing", title: "NutriGPT", category: "AI Landing Page", image: "https://picsum.photos/seed/nutrition/1200/800", link: "https://nutrigpt-h37z.vercel.app/" },
       { id: "market-store", title: "Little Heart Bakes", category: "E-Commerce", image: "https://picsum.photos/seed/bakery/1200/800", link: "https://little-heart-bakes.base44.app/" },
-      { id: "aurum-bookings", title: "Aurum Bookings", category: "AI Software", image: "https://picsum.photos/seed/booking/1200/800", link: "https://aurum-bookings.vercel.app/login" },
       { id: "vork-global", title: "Vork Global", category: "Corporate Web", image: "https://picsum.photos/seed/corporate/1200/800", link: "https://vorkglobal.vercel.app/" }
     ];
 
@@ -2742,24 +2805,6 @@
         uiuxDesign: "Warm palette with mouth-watering photography and high-readability price buttons.",
         developmentApproach: "Component-driven React store with streamlined single-page checkout.",
         resultsImpact: "Reduced manual order intake toil by 80%."
-      },
-      {
-        id: "aurum-bookings",
-        title: "Aurum Bookings Platform",
-        category: "Software",
-        division: "labs",
-        description: "An AI-enhanced booking and resource management system for luxury operations.",
-        fullDescription: "A sophisticated platform using intelligent scheduling heuristics to optimize slot allocations, staff assignment, and client concierge services.",
-        tech: ["React", "Node.js", "PostgreSQL", "AI Engine"],
-        image: "https://picsum.photos/seed/booking/800/600",
-        link: "https://aurum-bookings.vercel.app/login",
-        goals: ["Smart scheduling", "Multi-tier role management", "Zero double bookings"],
-        metrics: [{ label: "Efficiency Gain", value: "+45%" }, { label: "Latency", value: "35ms" }],
-        problemDetails: "High-end clients experienced calendar collisions and manual coordination delays.",
-        solutionBreakdown: "Created an automated allocation matrix that calculates buffer times and VIP preferences.",
-        uiuxDesign: "Monochrome obsidian aesthetic with sleek violet accent indicators.",
-        developmentApproach: "TypeScript backend with transactional row locks in PostgreSQL.",
-        resultsImpact: "Handled thousands of monthly bookings with zero conflicts."
       },
       {
         id: "vork-global",

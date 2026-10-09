@@ -38,7 +38,7 @@ const PROJECTS: ProjectItem[] = [
     description: "Real-time speech synthesis and neural transcription pipeline capable of low-latency multilingual voice agent interactions.",
     impactMetric: "35ms Stream Latency",
     image: "/assets/case-speechxyz.jpg",
-    link: "https://aurum-bookings.vercel.app/login",
+    link: "/work",
     tags: ["Whisper AI", "FastAPI", "WebSocket", "Neural TTS"]
   },
   {
@@ -76,18 +76,6 @@ const PROJECTS: ProjectItem[] = [
     image: "https://picsum.photos/seed/bakery/1200/800",
     link: "https://little-heart-bakes.base44.app/",
     tags: ["Interactive 3D", "Cart Optimization", "Brand Systems"]
-  },
-  {
-    id: "aurum-bookings",
-    title: "Aurum Executive Concierge",
-    client: "Aurum Global",
-    category: "Enterprise Cloud Software",
-    division: "Technology",
-    description: "AI-enhanced booking matrix and resource allocation engine managing multi-tier VIP scheduling with zero calendar collisions.",
-    impactMetric: "0 Double-Bookings • 99.99% Uptime",
-    image: "https://picsum.photos/seed/booking/1200/800",
-    link: "https://aurum-bookings.vercel.app/login",
-    tags: ["PostgreSQL", "Node.js", "Role Architecture", "Heuristics"]
   }
 ];
 
