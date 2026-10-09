@@ -464,6 +464,189 @@
       outline: none;
     }
 
+    /* Hero Reel Showcase Styles */
+    .hero-reel-outer {
+      position: relative;
+      width: 100%;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .hero-reel-glow {
+      position: absolute;
+      inset: -10px;
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.45), rgba(217, 70, 239, 0.35), rgba(124, 58, 237, 0.45));
+      border-radius: 36px;
+      filter: blur(28px);
+      opacity: 0.7;
+      z-index: 0;
+      pointer-events: none;
+      animation: pulseReelGlow 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulseReelGlow {
+      0% { opacity: 0.5; filter: blur(20px); }
+      100% { opacity: 0.85; filter: blur(32px); }
+    }
+
+    .hero-reel-card {
+      position: relative;
+      z-index: 1;
+      background: #0D0422;
+      border-radius: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 25px 60px -15px rgba(13, 4, 34, 0.55), 0 0 35px rgba(124, 58, 237, 0.2);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-reel-header {
+      padding: 12px 20px;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .hero-mode-pill {
+      border: none;
+      background: transparent;
+      color: #94a3b8;
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .hero-mode-pill:hover {
+      color: #ffffff;
+    }
+
+    .hero-mode-pill.active {
+      background: linear-gradient(135deg, #7C3AED, #D946EF);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.35);
+    }
+
+    .hero-reel-viewport {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      background: #000000;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (min-width: 640px) {
+      .hero-reel-viewport {
+        aspect-ratio: 16 / 9;
+      }
+    }
+
+    .hero-reel-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      cursor: pointer;
+    }
+
+    .hero-reel-controls-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, transparent 25%, transparent 65%, rgba(0,0,0,0.85) 100%);
+      transition: opacity 0.3s ease;
+    }
+
+    .hero-reel-btn {
+      pointer-events: auto;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .hero-reel-btn:hover {
+      background: #7C3AED;
+      border-color: #C084FC;
+      transform: scale(1.04);
+    }
+
+    .hero-play-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: all 0.2s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .hero-play-center:hover {
+      background: #7C3AED;
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    .hero-progress-track {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 999px;
+      cursor: pointer;
+      pointer-events: auto;
+      position: relative;
+      margin-bottom: 8px;
+      overflow: hidden;
+    }
+
+    .hero-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #7C3AED, #C084FC, #D946EF);
+      border-radius: 999px;
+      transition: width 0.1s linear;
+    }
+
     /* Selected Works Showcase Dial */
     .dial-circle-wrapper {
       position: relative;
@@ -735,11 +918,98 @@
           </div>
         </div>
 
-        <!-- 3D Kinetic Interactive Cube Canvas -->
-        <div style="position: relative; display: flex; align-items: center; justify-content: center;">
-          <div id="hero-canvas-container" title="Drag to rotate the 3D kinetic matrix"></div>
-          <div style="position: absolute; bottom: 10px; right: 20px; font-family: var(--font-mono); font-size: 0.72rem; color: var(--color-text-faint); pointer-events: none; text-transform: uppercase; letter-spacing: 0.1em; background: rgba(255,255,255,0.7); padding: 4px 10px; border-radius: 999px; border: 1px solid var(--color-border);">
-            Interactive 3D Matrix • Drag to Orbit
+        <!-- Hero Reel Showcase & 3D Matrix Container -->
+        <div class="hero-reel-outer" id="hero-reel-wrapper">
+          <div class="hero-reel-glow"></div>
+          
+          <div class="hero-reel-card" id="hero-reel-card">
+            <!-- Card Header & Mode Switcher -->
+            <div class="hero-reel-header">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="position: relative; display: flex; width: 10px; height: 10px;">
+                  <span style="position: absolute; width: 100%; height: 100%; border-radius: 50%; background: #D946EF; opacity: 0.75; animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;"></span>
+                  <span style="position: relative; width: 10px; height: 10px; border-radius: 50%; background: #D946EF;"></span>
+                </span>
+                <span style="font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; color: #ffffff; letter-spacing: 0.02em;">
+                  YEQARI <span style="color: #C084FC;">HERO REEL</span>
+                </span>
+                <span style="font-family: var(--font-mono); font-size: 0.65rem; padding: 2px 8px; border-radius: 999px; background: rgba(255,255,255,0.1); color: #e9d5ff; border: 1px solid rgba(255,255,255,0.1);">
+                  4K STUDIO
+                </span>
+              </div>
+
+              <!-- Switcher Pills -->
+              <div style="display: flex; align-items: center; background: rgba(255,255,255,0.06); padding: 3px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.1);">
+                <button type="button" id="btn-mode-reel" class="hero-mode-pill active" onclick="switchHeroMode('reel')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                  <span>Hero Reel</span>
+                </button>
+                <button type="button" id="btn-mode-3d" class="hero-mode-pill" onclick="switchHeroMode('3d')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 2v20M17 2v20M2 7h20M2 17h20"/></svg>
+                  <span>3D Cube</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Video Viewport -->
+            <div class="hero-reel-viewport" id="hero-reel-viewport">
+              <video
+                id="hero-reel-video"
+                class="hero-reel-video"
+                autoplay
+                loop
+                muted
+                playsinline
+                preload="auto"
+                poster="./assets/case-yeqari.jpg"
+              >
+                <source src="./assets/intro video/yeqari global hero reel.mp4" type="video/mp4">
+                <source src="./assets/hero-reel.mp4" type="video/mp4">
+                Your browser does not support HTML5 video.
+              </video>
+
+              <!-- Center Play/Pause Overlay Button -->
+              <div id="hero-reel-play-btn" class="hero-play-center" title="Toggle Play / Pause">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                  <rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>
+                </svg>
+              </div>
+
+              <!-- Top Overlay Quick Controls -->
+              <div style="position: absolute; top: 14px; right: 14px; z-index: 10; display: flex; gap: 8px;">
+                <button type="button" id="hero-reel-mute-btn" class="hero-reel-btn" title="Toggle Sound">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+                  </svg>
+                  <span id="hero-reel-mute-text">Sound Off</span>
+                </button>
+
+                <button type="button" id="hero-reel-fs-btn" class="hero-reel-btn" style="padding: 6px 10px;" title="Full Screen">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0 0l-5-5m5 11v4m0 0h-4m4 0l-5-5M4 16v4m0 0h4m-4 0l5-5"/>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Bottom Progress & Time Bar -->
+              <div style="position: absolute; bottom: 0; left: 0; right: 0; z-index: 10; padding: 14px 18px; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);">
+                <div id="hero-reel-timeline" class="hero-progress-track" title="Click to seek">
+                  <div id="hero-reel-progress" class="hero-progress-fill"></div>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: space-between; font-family: var(--font-mono); font-size: 0.72rem; color: #cbd5e1;">
+                  <div id="hero-reel-time" style="font-weight: 600; color: #ffffff;">0:00 / 0:00</div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="color: #c084fc; font-weight: 600;">YEQARI DIGITAL INNOVATION</span>
+                    <span style="color: #64748b;">•</span>
+                    <span style="color: #94a3b8;">REEL 2026</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3D Kinetic Canvas Matrix (Preserved & Switchable) -->
+            <div id="hero-canvas-container" style="display: none;" title="Drag to rotate the 3D kinetic matrix"></div>
           </div>
         </div>
 
@@ -2469,11 +2739,147 @@
     ];
 
     /* --------------------------------------------------------------------------
+       2. HERO REEL CONTROLLER & MODE SWITCHER
+       -------------------------------------------------------------------------- */
+    function switchHeroMode(mode) {
+      const reelViewport = document.getElementById("hero-reel-viewport");
+      const canvasContainer = document.getElementById("hero-canvas-container");
+      const btnReel = document.getElementById("btn-mode-reel");
+      const btn3D = document.getElementById("btn-mode-3d");
+      const video = document.getElementById("hero-reel-video");
+
+      if (mode === "reel") {
+        if (reelViewport) reelViewport.style.display = "flex";
+        if (canvasContainer) canvasContainer.style.display = "none";
+        if (btnReel) btnReel.classList.add("active");
+        if (btn3D) btn3D.classList.remove("active");
+        if (video) video.play().catch(() => {});
+      } else {
+        if (reelViewport) reelViewport.style.display = "none";
+        if (canvasContainer) {
+          canvasContainer.style.display = "block";
+          init3DHeroCube();
+          setTimeout(() => {
+            window.dispatchEvent(new Event("resize"));
+          }, 50);
+        }
+        if (btnReel) btnReel.classList.remove("active");
+        if (btn3D) btn3D.classList.add("active");
+        if (video) video.pause();
+      }
+    }
+
+    function initHeroReel() {
+      const video = document.getElementById("hero-reel-video");
+      const playBtn = document.getElementById("hero-reel-play-btn");
+      const muteBtn = document.getElementById("hero-reel-mute-btn");
+      const fsBtn = document.getElementById("hero-reel-fs-btn");
+      const progressFill = document.getElementById("hero-reel-progress");
+      const timeline = document.getElementById("hero-reel-timeline");
+      const timeDisplay = document.getElementById("hero-reel-time");
+
+      if (!video) return;
+
+      function formatTime(s) {
+        if (isNaN(s)) return "0:00";
+        const m = Math.floor(s / 60);
+        const sec = Math.floor(s % 60);
+        return `${m}:${sec < 10 ? "0" : ""}${sec}`;
+      }
+
+      function updatePlayState() {
+        if (!playBtn) return;
+        if (video.paused) {
+          playBtn.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" style="margin-left: 2px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
+          playBtn.style.opacity = "1";
+        } else {
+          playBtn.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>`;
+          playBtn.style.opacity = "0.75";
+        }
+      }
+
+      function togglePlay() {
+        if (video.paused) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+        updatePlayState();
+      }
+
+      function toggleMute() {
+        video.muted = !video.muted;
+        if (muteBtn) {
+          if (video.muted) {
+            muteBtn.innerHTML = `
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+              <span>Sound Off</span>
+            `;
+            muteBtn.style.background = "rgba(0, 0, 0, 0.65)";
+            muteBtn.style.borderColor = "rgba(255, 255, 255, 0.2)";
+          } else {
+            muteBtn.innerHTML = `
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+              <span>Sound On</span>
+            `;
+            muteBtn.style.background = "rgba(124, 58, 237, 0.9)";
+            muteBtn.style.borderColor = "rgba(192, 132, 252, 0.6)";
+          }
+        }
+      }
+
+      function toggleFullscreen() {
+        const wrapper = document.getElementById("hero-reel-wrapper");
+        if (!wrapper) return;
+        if (!document.fullscreenElement) {
+          wrapper.requestFullscreen?.().catch(() => {});
+        } else {
+          document.exitFullscreen?.().catch(() => {});
+        }
+      }
+
+      video.addEventListener("play", updatePlayState);
+      video.addEventListener("pause", updatePlayState);
+
+      video.addEventListener("timeupdate", () => {
+        const cur = video.currentTime;
+        const dur = video.duration || 1;
+        const pct = (cur / dur) * 100;
+        if (progressFill) progressFill.style.width = `${pct}%`;
+        if (timeDisplay) timeDisplay.innerText = `${formatTime(cur)} / ${formatTime(dur)}`;
+      });
+
+      if (timeline) {
+        timeline.addEventListener("click", (e) => {
+          const rect = timeline.getBoundingClientRect();
+          const pos = (e.clientX - rect.left) / rect.width;
+          if (video.duration) {
+            video.currentTime = pos * video.duration;
+          }
+        });
+      }
+
+      if (playBtn) playBtn.addEventListener("click", togglePlay);
+      video.addEventListener("click", togglePlay);
+      if (muteBtn) muteBtn.addEventListener("click", toggleMute);
+      if (fsBtn) fsBtn.addEventListener("click", toggleFullscreen);
+
+      // Autoplay attempt
+      video.play().catch(() => {
+        video.muted = true;
+        video.play().catch(() => {});
+      });
+    }
+
+    /* --------------------------------------------------------------------------
        2. THREE.JS 3D KINETIC CUBE ENGINE (HERO)
        -------------------------------------------------------------------------- */
+    let heroCubeInitialized = false;
     function init3DHeroCube() {
       const container = document.getElementById("hero-canvas-container");
-      if (!container) return;
+      if (!container || heroCubeInitialized) return;
+      if (container.clientWidth === 0) return;
+      heroCubeInitialized = true;
 
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(42, container.clientWidth / container.clientHeight, 0.1, 1000);
@@ -3001,7 +3407,7 @@
 
     // Document Ready
     document.addEventListener("DOMContentLoaded", () => {
-      init3DHeroCube();
+      initHeroReel();
       filterServicesDivision("all");
       filterPortfolio("All");
       filterVentures("All");

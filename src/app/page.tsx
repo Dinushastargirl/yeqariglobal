@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import KineticHeroCube from "@/components/KineticHeroCube";
+import HeroReel from "@/components/HeroReel";
 import { divisionLists, servicesData } from "@/data/servicesData";
 
 interface ProjectItem {
@@ -291,9 +291,9 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* 3D Kinetic Canvas Matrix */}
-          <div className="relative">
-            <KineticHeroCube />
+          {/* Hero Reel Showcase */}
+          <div className="relative w-full">
+            <HeroReel />
           </div>
 
         </div>
